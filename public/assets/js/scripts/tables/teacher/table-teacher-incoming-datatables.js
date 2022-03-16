@@ -18,6 +18,7 @@ $(document).ready(function () {
                 { data: 'incoming.id' },
                 { data: 'date' },
                 { data: 'incoming.title' },
+                { data: 'letter' },
                 { data: 'incoming.id' },
                 { data: 'incoming.letter' },
                 { data: 'incoming.status_teacher' },
@@ -59,6 +60,18 @@ $(document).ready(function () {
                     render: function (data) {
                         return (
                             '<a href="' +
+                            data +
+                            '" class="btn btn-primary waves-effect waves-float waves-light" target="_blank">' +
+                            feather.icons['mail'].toSvg({ class: 'font-small-4' }) +
+                            '</a>'
+                        )
+                    }
+                },
+                {
+                    targets: 6,
+                    render: function (data) {
+                        return (
+                            '<a href="' +
                             read +
                             '/' +
                             data +
@@ -69,7 +82,7 @@ $(document).ready(function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 7,
                     visible: false
                 },
                 {

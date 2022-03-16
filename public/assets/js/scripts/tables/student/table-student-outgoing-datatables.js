@@ -6,7 +6,6 @@ $(document).ready(function () {
         hapus = $('#delete').attr('value');
 
     if (dt_basic_table.length) {
-        console.log(assetPath);
         $('.datatables-basic').DataTable({
             paging: true,
             processing: true,
@@ -61,9 +60,9 @@ $(document).ready(function () {
                         var status = full['status'];
 
                         if (status == 3) {
-                            read = $('#read').attr('value');
+                            var read = $('#read').attr('value');
                         } else {
-                            read = '#';
+                            var read = '#';
                         }
                         return (
                             '<a href="' +
