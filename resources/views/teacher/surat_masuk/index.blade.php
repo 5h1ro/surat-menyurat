@@ -49,6 +49,7 @@
                                 <th>ID</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Judul Surat</th>
+                                <th>Surat Disposisi</th>
                                 <th>Surat</th>
                                 <th>Link Surat</th>
                                 <th>Status</th>
