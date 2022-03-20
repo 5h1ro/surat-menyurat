@@ -2,18 +2,24 @@
 
 use App\Http\Controllers\Admin\DashboardController as ADashboardController;
 use App\Http\Controllers\Admin\DispositionController as ADispositionController;
+use App\Http\Controllers\Admin\ProfileController as AProfileController;
+use App\Http\Controllers\Admin\SettingController as ASettingController;
 use App\Http\Controllers\Admin\SuratKeluarController as ASuratKeluarController;
 use App\Http\Controllers\Admin\SuratMasukController as ASuratMasukController;
 use App\Http\Controllers\Headmaster\DashboardController as HDashboardController;
 use App\Http\Controllers\Headmaster\DispositionController as HDispositionController;
+use App\Http\Controllers\Headmaster\ProfileController as HProfileController;
 use App\Http\Controllers\Headmaster\SuratKeluarController as HSuratKeluarController;
 use App\Http\Controllers\Headmaster\SuratMasukController as HSuratMasukController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\DashboardController as SDashboardController;
+use App\Http\Controllers\Student\ProfileController as SProfileController;
 use App\Http\Controllers\Student\SuratKeluarController as SSuratKeluarController;
 use App\Http\Controllers\Superadmin\DashboardController as SUDashboardController;
+use App\Http\Controllers\Superadmin\ProfileController as SUProfileController;
 use App\Http\Controllers\Superadmin\RoleController as SURoleController;
 use App\Http\Controllers\Teacher\DashboardController as TDashboardController;
+use App\Http\Controllers\Teacher\ProfileController as TProfileController;
 use App\Http\Controllers\Teacher\SuratKeluarController as TSuratKeluarController;
 use App\Http\Controllers\Teacher\SuratMasukController as TSuratMasukController;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +66,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/create', [TSuratKeluarController::class, 'create'])->name('teacher.suratkeluar.create');
                 Route::post('/upload/{id}', [TSuratKeluarController::class, 'upload'])->name('teacher.suratkeluar.upload');
             });
+            Route::prefix('profil')->group(function () {
+                Route::get('/index', [TProfileController::class, 'index'])->name('teacher.profil.index');
+                Route::post('/edit/{id}', [TProfileController::class, 'edit'])->name('teacher.profil.edit');
+            });
         });
     });
     Route::middleware(['admin'])->group(function () {
@@ -83,6 +93,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/acc/{id}', [ASuratKeluarController::class, 'acc'])->name('admin.suratkeluar.acc');
                 Route::get('/not_acc/{id}', [ASuratKeluarController::class, 'not_acc'])->name('admin.suratkeluar.not_acc');
                 Route::post('/upload/{id}', [ASuratKeluarController::class, 'upload'])->name('admin.suratkeluar.upload');
+            });
+            Route::prefix('pengaturan')->group(function () {
+                Route::get('/index', [ASettingController::class, 'index'])->name('admin.pengaturan.index');
+                Route::post('/edit', [ASettingController::class, 'edit'])->name('admin.pengaturan.edit');
+            });
+            Route::prefix('profil')->group(function () {
+                Route::get('/index', [AProfileController::class, 'index'])->name('admin.profil.index');
+                Route::post('/edit/{id}', [AProfileController::class, 'edit'])->name('admin.profil.edit');
             });
         });
     });
@@ -108,6 +126,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/acc/{id}', [HSuratKeluarController::class, 'acc'])->name('headmaster.suratkeluar.acc');
                 Route::get('/not_acc/{id}', [HSuratKeluarController::class, 'not_acc'])->name('headmaster.suratkeluar.not_acc');
             });
+
+            Route::prefix('profil')->group(function () {
+                Route::get('/index', [HProfileController::class, 'index'])->name('headmaster.profil.index');
+                Route::post('/edit/{id}', [HProfileController::class, 'edit'])->name('headmaster.profil.edit');
+            });
         });
     });
     Route::middleware(['student'])->group(function () {
@@ -120,6 +143,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/delete/{id}', [SSuratKeluarController::class, 'delete'])->name('student.suratkeluar.delete');
                 Route::post('/create', [SSuratKeluarController::class, 'create'])->name('student.suratkeluar.create');
             });
+
+            Route::prefix('profil')->group(function () {
+                Route::get('/index', [SProfileController::class, 'index'])->name('student.profil.index');
+                Route::post('/edit/{id}', [SProfileController::class, 'edit'])->name('student.profil.edit');
+            });
         });
     });
     Route::middleware(['superadmin'])->group(function () {
@@ -129,6 +157,10 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('role')->group(function () {
             Route::get('/index', [SURoleController::class, 'index'])->name('superadmin.role.index');
             Route::post('/edit/{id}', [SURoleController::class, 'edit'])->name('superadmin.role.edit');
+        });
+        Route::prefix('profil')->group(function () {
+            Route::get('/index', [SUProfileController::class, 'index'])->name('superadmin.profil.index');
+            Route::post('/edit/{id}', [SUProfileController::class, 'edit'])->name('superadmin.profil.edit');
         });
     });
 });

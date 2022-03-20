@@ -202,4 +202,5 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets/js') }}/scripts/pages/dashboard-ecommerce.js"></script>
 @endsection

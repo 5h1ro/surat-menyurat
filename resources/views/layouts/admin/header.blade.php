@@ -353,7 +353,8 @@
                     @if ($user->id_role == 3)
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->admin->name }}</span>
-                            <span class="user-status">{{ $user->admin->status == 1 ? 'Kepala TU' : 'Admin' }}</span>
+                            <span
+                                class="user-status">{{ $user->admin->status == 1 ? 'Kepala TU' : 'Admin' }}</span>
                         </div>
                         <span class="avatar bg-light-primary">
                             <span class="avatar-content">{{ substr($user->admin->name, 0, 1) }}</span>
@@ -385,13 +386,42 @@
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="#">
-                        <i class="me-50" data-feather="user"> </i>
-                        Profile</a>
+                    @if ($user->id_role == 1)
+                        <a class="dropdown-item" href="{{ route('teacher.profil.index') }}">
+                            <i class="me-50" data-feather="user"> </i>
+                            Profile
+                        </a>
+                    @endif
+                    @if ($user->id_role == 2)
+                        <a class="dropdown-item" href="{{ route('headmaster.profil.index') }}">
+                            <i class="me-50" data-feather="user"> </i>
+                            Profile
+                        </a>
+                    @endif
+                    @if ($user->id_role == 3)
+                        <a class="dropdown-item" href="{{ route('admin.profil.index') }}">
+                            <i class="me-50" data-feather="user"> </i>
+                            Profile
+                        </a>
+                    @endif
+                    @if ($user->id_role == 4)
+                        <a class="dropdown-item" href="{{ route('student.profil.index') }}">
+                            <i class="me-50" data-feather="user"> </i>
+                            Profile
+                        </a>
+                    @endif
+                    @if ($user->id_role == 5)
+                        <a class="dropdown-item" href="{{ route('superadmin.profil.index') }}">
+                            <i class="me-50" data-feather="user"> </i>
+                            Profile
+                        </a>
+                    @endif
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                        <i class="me-50" data-feather="settings"></i>
-                        Settings</a>
+                    @if ($user->id_role == 3)
+                        <a class="dropdown-item" href="{{ route('admin.pengaturan.index') }}">
+                            <i class="me-50" data-feather="settings"></i>
+                            Settings</a>
+                    @endif
                     <a class="dropdown-item" href="{{ route('end') }}">
                         <i class="me-50" data-feather="power"></i>
                         Logout</a>
