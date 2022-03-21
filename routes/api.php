@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\SuratMasukController as ASuratMasukController;
 use App\Http\Controllers\Headmaster\DispositionController as HDispositionController;
 use App\Http\Controllers\Headmaster\SuratKeluarController as HSuratKeluarController;
 use App\Http\Controllers\Headmaster\SuratMasukController as HSuratMasukController;
+use App\Http\Controllers\Staff\SuratKeluarController as STSuratKeluarController;
+use App\Http\Controllers\Staff\SuratMasukController as STSuratMasukController;
 use App\Http\Controllers\Student\SuratKeluarController as SSuratKeluarController;
 use App\Http\Controllers\Superadmin\RoleController as SURoleController;
 use Illuminate\Http\Request;
@@ -31,6 +33,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('teacher/surat-masuk/index/get/{id}', [TSuratMasukController::class, 'getData'])->name('teacher.suratmasuk.index.get');
 Route::get('teacher/surat-keluar/index/get/{id}', [TSuratKeluarController::class, 'getData'])->name('teacher.suratkeluar.index.get');
+Route::get('staff/surat-masuk/index/get/{id}', [STSuratMasukController::class, 'getData'])->name('staff.suratmasuk.index.get');
+Route::get('staff/surat-keluar/index/get/{id}', [STSuratKeluarController::class, 'getData'])->name('staff.suratkeluar.index.get');
 Route::get('admin/surat-masuk/index/get', [ASuratMasukController::class, 'getData'])->name('admin.suratmasuk.index.get');
 Route::get('admin/disposisi/index/get', [ADispositionController::class, 'getData'])->name('admin.disposisi.index.get');
 Route::get('admin/surat-keluar/index/get/{id}', [ASuratKeluarController::class, 'getData'])->name('admin.suratkeluar.index.get');

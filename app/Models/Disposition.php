@@ -12,6 +12,7 @@ class Disposition extends Model
     protected $fillable = [
         'id_incoming',
         'id_teacher',
+        'id_staff',
         'letter',
         'status',
         'information',
@@ -31,6 +32,11 @@ class Disposition extends Model
 
     public function teacher()
     {
-        return $this->hasMany(Teacher::class, 'id_teacher');
+        return $this->belongsTo(Teacher::class, 'id_teacher');
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'id_staff');
     }
 }

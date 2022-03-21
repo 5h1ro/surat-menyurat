@@ -12,6 +12,10 @@ use App\Http\Controllers\Headmaster\ProfileController as HProfileController;
 use App\Http\Controllers\Headmaster\SuratKeluarController as HSuratKeluarController;
 use App\Http\Controllers\Headmaster\SuratMasukController as HSuratMasukController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Staff\DashboardController as STDashboardController;
+use App\Http\Controllers\Staff\ProfileController as STProfileController;
+use App\Http\Controllers\Staff\SuratKeluarController as STSuratKeluarController;
+use App\Http\Controllers\Staff\SuratMasukController as STSuratMasukController;
 use App\Http\Controllers\Student\DashboardController as SDashboardController;
 use App\Http\Controllers\Student\ProfileController as SProfileController;
 use App\Http\Controllers\Student\SuratKeluarController as SSuratKeluarController;
@@ -69,6 +73,28 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('profil')->group(function () {
                 Route::get('/index', [TProfileController::class, 'index'])->name('teacher.profil.index');
                 Route::post('/edit/{id}', [TProfileController::class, 'edit'])->name('teacher.profil.edit');
+            });
+        });
+    });
+    Route::middleware(['staff'])->group(function () {
+
+        Route::prefix('staff')->group(function () {
+            Route::get('/dashboard', [STDashboardController::class, 'index'])->name('staff');
+
+            Route::prefix('surat-masuk')->group(function () {
+                Route::get('/index', [STSuratMasukController::class, 'index'])->name('staff.suratmasuk.index');
+                Route::get('/read/{id}', [STSuratMasukController::class, 'read'])->name('staff.suratmasuk.read');
+            });
+            Route::prefix('surat-keluar')->group(function () {
+                Route::get('/index', [STSuratKeluarController::class, 'index'])->name('staff.suratkeluar.index');
+                Route::get('/read/{id}', [STSuratKeluarController::class, 'read'])->name('staff.suratkeluar.read');
+                Route::get('/delete/{id}', [STSuratKeluarController::class, 'delete'])->name('staff.suratkeluar.delete');
+                Route::post('/create', [STSuratKeluarController::class, 'create'])->name('staff.suratkeluar.create');
+                Route::post('/upload/{id}', [STSuratKeluarController::class, 'upload'])->name('staff.suratkeluar.upload');
+            });
+            Route::prefix('profil')->group(function () {
+                Route::get('/index', [STProfileController::class, 'index'])->name('staff.profil.index');
+                Route::post('/edit/{id}', [STProfileController::class, 'edit'])->name('staff.profil.edit');
             });
         });
     });

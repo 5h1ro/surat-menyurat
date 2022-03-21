@@ -12,7 +12,6 @@
         href="{{ asset('assets') }}/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/forms/select/select2.min.css">
     @csrf
 @endsection
 
@@ -20,10 +19,10 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h2 class="content-header-title float-start mb-0">Disposisi</h2>
+                <h2 class="content-header-title float-start mb-0">Surat Masuk</h2>
                 <div class="breadcrumb-wrapper">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('headmaster') }}">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="{{ route('staff') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">Index
                         </li>
@@ -39,8 +38,6 @@
     <section id="basic-datatable">
         <input type="hidden" id="link" value="{{ $data }}" />
         <input type="hidden" id="read" value="{{ $read }}" />
-        <input type="hidden" id="acc" value="{{ $acc }}" />
-        <input type="hidden" id="not_acc" value="{{ $not_acc }}" />
         <div class=" row">
             <div class="col-12">
                 <div class="card">
@@ -50,13 +47,12 @@
                                 <th></th>
                                 <th></th>
                                 <th>ID</th>
+                                <th>Tanggal Masuk</th>
                                 <th>Judul Surat</th>
-                                <th>Diteruskan ke Guru</th>
-                                <th>Diteruskan ke Staff</th>
+                                <th>Surat Disposisi</th>
                                 <th>Surat</th>
                                 <th>Link Surat</th>
                                 <th>Status</th>
-                                <th>Informasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -65,42 +61,49 @@
             </div>
         </div>
         <!-- Modal to add new record -->
-        @foreach ($disposition as $data)
-            <div class="modal modal-slide-in fade" id="edit{{ $data->id }}">
-                <div class="modal-dialog sidebar-sm">
-                    <form class="add-new-record modal-content pt-0" method="POST"
-                        action="{{ route('headmaster.disposisi.edit', $data->id) }}" enctype="multipart/form-data">
-                        @csrf
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-                        <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="exampleModalLabel">Data Disposisi</h5>
+        @foreach ($incomings as $data)
+            <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1" aria-labelledby="detailTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailTitle">Detail Surat</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                        <div class="modal-body flex-grow-1">
-                            <div class="mb-1">
-                                <label class="form-label" for="id_teacher">Nama Guru</label>
-                                <select class=" form-select" id="id_teacher" name="id_teacher[]" multiple>
-                                    @foreach ($teacher as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="modal-body">
+                            <div>
+                                <h5 class="mb-75">Tanggal Masuk</h5>
+                                <p class="card-text">{{ $data->date }}</p>
                             </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="id_staff">Nama Staff</label>
-                                <select class=" form-select" id="id_staff" name="id_staff[]" multiple>
-                                    @foreach ($staff as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mt-2">
+                                <h5 class="mb-75">Nomor Agenda</h5>
+                                <p class="card-text">{{ $data->incoming->number }}</p>
                             </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="instruction">Instruksi</label>
-                                <input type="text" id="instruction" name="instruction" class="form-control"
-                                    placeholder="Silahkan ..." />
+                            <div class="mt-2">
+                                <h5 class="mb-75">Nama dan Alamat</h5>
+                                <p class="card-text">{{ $data->incoming->title }}</p>
                             </div>
-                            <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <div class="mt-2">
+                                <h5 class="mb-75">Asal</h5>
+                                <p class="card-text">{{ $data->incoming->from }}</p>
+                            </div>
+                            <div class="mt-2">
+                                <h5 class="mb-75">Nomor Surat</h5>
+                                <p class="card-text">{{ $data->incoming->letter_number }}</p>
+                            </div>
+                            <div class="mt-2">
+                                <h5 class="mb-75">Tanggal Surat</h5>
+                                <p class="card-text">{{ $data->incoming->letter_date }}</p>
+                            </div>
+                            <div class="mt-2">
+                                <h5 class="mb-75">Isi Pokok Surat</h5>
+                                <p class="card-text">{{ $data->incoming->detail }}</p>
+                            </div>
                         </div>
-                    </form>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -109,8 +112,6 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('assets') }}/vendors/js/forms/select/select2.full.min.js"></script>
-    <script src="{{ asset('assets') }}/js/scripts/forms/form-select2.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
@@ -124,9 +125,5 @@
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/buttons.print.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
-    <script>
-        $("#id_teacher").select2();
-        $("#id_staff").select2();
-    </script>
-    <script src="{{ asset('assets/js/scripts/tables/headmaster/table-headmaster-disposition-datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts/tables/staff/table-staff-incoming-datatables.js') }}"></script>
 @endsection

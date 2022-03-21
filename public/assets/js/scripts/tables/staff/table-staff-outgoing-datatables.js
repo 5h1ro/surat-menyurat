@@ -3,9 +3,7 @@ $(document).ready(function () {
 
     var dt_basic_table = $('.datatables-basic'),
         assetPath = $('#link').attr('value'),
-        read = $('#read').attr('value'),
-        acc = $('#acc').attr('value'),
-        not_acc = $('#not_acc').attr('value');
+        hapus = $('#delete').attr('value');
 
     if (dt_basic_table.length) {
         console.log(assetPath);
@@ -18,13 +16,12 @@ $(document).ready(function () {
                 { data: 'responsive_id', name: 'responsive_id' },
                 { data: 'id' },
                 { data: 'id' },
-                { data: 'incoming.title' },
-                { data: 'teachers' },
-                { data: 'staffs' },
+                { data: 'date' },
+                { data: 'number' },
+                { data: 'to' },
                 { data: 'id' },
                 { data: 'letter' },
                 { data: 'status' },
-                { data: 'information' },
                 { data: 'id' },
             ],
             columnDefs: [
@@ -59,22 +56,21 @@ $(document).ready(function () {
                     visible: false
                 },
                 {
-                    targets: 4,
-                    defaultContent: "Belum Diteruskan",
-                },
-                {
-                    targets: 5,
-                    defaultContent: "Belum Diteruskan",
-                },
-                {
                     targets: 6,
-                    render: function (data) {
+                    render: function (data, type, full, meta) {
+                        var status = full['status'];
+
+                        if (status == 3) {
+                            read = $('#read').attr('value');
+                        } else {
+                            read = '#';
+                        }
                         return (
                             '<a href="' +
                             read +
                             '/' +
                             data +
-                            '" class="btn btn-primary waves-effect waves-float waves-light" target="_blank">' +
+                            '" class="btn btn-primary  waves-effect waves-float waves-light" target="_blank">' +
                             feather.icons['mail'].toSvg({ class: 'font-small-4' }) +
                             '</a>'
                         )
@@ -86,35 +82,15 @@ $(document).ready(function () {
                 },
                 {
                     // Label
-                    targets: -3,
+                    targets: -2,
                     render: function (data, type, full, meta) {
                         var $status_number = full['status'];
                         var $status = {
-                            0: { title: 'Belum Diputuskan', class: 'badge-light-warning' },
-                            1: { title: 'Diterima', class: 'badge-light-success' },
-                            2: { title: 'Tidak Diterima', class: 'badge-light-danger' },
-                        };
-                        if (typeof $status[$status_number] === 'undefined') {
-                            return data;
-                        }
-                        return (
-                            '<span class="badge rounded-pill ' +
-                            $status[$status_number].class +
-                            '">' +
-                            $status[$status_number].title +
-                            '</span>'
-                        );
-                    }
-                },
-                {
-                    // Label
-                    targets: -2,
-                    render: function (data, type, full, meta) {
-                        var $status_number = full['information'];
-                        var $status = {
-                            1: { title: 'Rahasia', class: 'badge-light-danger' },
-                            2: { title: 'Penting', class: 'badge-light-warning' },
-                            3: { title: 'Rutin', class: 'badge-light-blue' },
+                            0: { title: 'Belum Diverifikasi', class: 'badge-light-warning' },
+                            1: { title: 'Tidak Terverifikasi', class: 'badge-light-danger' },
+                            2: { title: 'Terverifikasi', class: 'badge-light-success' },
+                            3: { title: 'Disetujui', class: 'badge-light-success' },
+                            4: { title: 'Tidak Disetujui', class: 'badge-light-danger' },
                         };
                         if (typeof $status[$status_number] === 'undefined') {
                             return data;
@@ -134,6 +110,13 @@ $(document).ready(function () {
                     title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
+                        var status = full['status'];
+
+                        if (status == 3) {
+                            var url = full['letter'];
+                        } else {
+                            var url = '#';
+                        }
                         return (
                             '<div class="d-inline-flex">' +
                             '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
@@ -141,25 +124,23 @@ $(document).ready(function () {
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="' +
-                            acc +
+                            hapus +
                             '/' +
                             data +
                             '" class="dropdown-item delete-record">' +
-                            feather.icons['check'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Terima</a>' +
-                            '<a href="' +
-                            not_acc +
-                            '/' +
-                            data +
-                            '" class="dropdown-item delete-record">' +
-                            feather.icons['x'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Tidak Diterima</a>' +
+                            feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Delete</a>' +
                             '</div>' +
                             '</div>' +
-                            '<a href="" class="item-edit" delete-record" data-bs-toggle="modal" data-bs-target="#edit' +
+                            '<a href="" class="item-edit pe-1" data-bs-toggle="modal" data-bs-target="#detail' +
                             data +
                             '">' +
-                            feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
+                            feather.icons['info'].toSvg({ class: 'font-small-4' }) +
+                            '</a>' +
+                            '<a href="' +
+                            url +
+                            '" class="item-edit" target="_blank">' +
+                            feather.icons['printer'].toSvg({ class: 'font-small-4' }) +
                             '</a>'
                         );
                     }
@@ -214,6 +195,17 @@ $(document).ready(function () {
                         }, 50);
                     }
                 },
+                {
+                    text: feather.icons['plus'].toSvg({ class: 'me-50 font-small-4' }) + 'Tambah Data',
+                    className: 'create-new btn btn-primary',
+                    attr: {
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#modals-slide-in'
+                    },
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    }
+                }
             ],
             responsive: {
                 details: {
@@ -255,7 +247,7 @@ $(document).ready(function () {
                 }
             }
         });
-        $('div.head-label').html('<h6 class="mb-0">Data Disposisi</h6>');
+        $('div.head-label').html('<h6 class="mb-0">Data Surat Keluar</h6>');
     }
 
 });

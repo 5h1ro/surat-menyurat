@@ -3,9 +3,7 @@ $(document).ready(function () {
 
     var dt_basic_table = $('.datatables-basic'),
         assetPath = $('#link').attr('value'),
-        read = $('#read').attr('value'),
-        acc = $('#acc').attr('value'),
-        not_acc = $('#not_acc').attr('value');
+        read = $('#read').attr('value');
 
     if (dt_basic_table.length) {
         console.log(assetPath);
@@ -16,16 +14,15 @@ $(document).ready(function () {
             ajax: assetPath,
             columns: [
                 { data: 'responsive_id', name: 'responsive_id' },
-                { data: 'id' },
-                { data: 'id' },
+                { data: 'incoming.id' },
+                { data: 'incoming.id' },
+                { data: 'date' },
                 { data: 'incoming.title' },
-                { data: 'teachers' },
-                { data: 'staffs' },
-                { data: 'id' },
                 { data: 'letter' },
-                { data: 'status' },
-                { data: 'information' },
-                { data: 'id' },
+                { data: 'incoming.id' },
+                { data: 'incoming.letter' },
+                { data: 'incoming.status_teacher' },
+                { data: 'incoming.id' },
             ],
             columnDefs: [
                 {
@@ -59,12 +56,16 @@ $(document).ready(function () {
                     visible: false
                 },
                 {
-                    targets: 4,
-                    defaultContent: "Belum Diteruskan",
-                },
-                {
                     targets: 5,
-                    defaultContent: "Belum Diteruskan",
+                    render: function (data) {
+                        return (
+                            '<a href="' +
+                            data +
+                            '" class="btn btn-primary waves-effect waves-float waves-light" target="_blank">' +
+                            feather.icons['mail'].toSvg({ class: 'font-small-4' }) +
+                            '</a>'
+                        )
+                    }
                 },
                 {
                     targets: 6,
@@ -86,35 +87,12 @@ $(document).ready(function () {
                 },
                 {
                     // Label
-                    targets: -3,
-                    render: function (data, type, full, meta) {
-                        var $status_number = full['status'];
-                        var $status = {
-                            0: { title: 'Belum Diputuskan', class: 'badge-light-warning' },
-                            1: { title: 'Diterima', class: 'badge-light-success' },
-                            2: { title: 'Tidak Diterima', class: 'badge-light-danger' },
-                        };
-                        if (typeof $status[$status_number] === 'undefined') {
-                            return data;
-                        }
-                        return (
-                            '<span class="badge rounded-pill ' +
-                            $status[$status_number].class +
-                            '">' +
-                            $status[$status_number].title +
-                            '</span>'
-                        );
-                    }
-                },
-                {
-                    // Label
                     targets: -2,
                     render: function (data, type, full, meta) {
-                        var $status_number = full['information'];
+                        var $status_number = data;
                         var $status = {
-                            1: { title: 'Rahasia', class: 'badge-light-danger' },
-                            2: { title: 'Penting', class: 'badge-light-warning' },
-                            3: { title: 'Rutin', class: 'badge-light-blue' },
+                            0: { title: 'Belum Dibaca', class: 'badge-light-warning' },
+                            1: { title: 'Sudah Dibaca', class: 'badge-light-success' },
                         };
                         if (typeof $status[$status_number] === 'undefined') {
                             return data;
@@ -134,32 +112,15 @@ $(document).ready(function () {
                     title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
+                        console.log(data);
                         return (
                             '<div class="d-inline-flex">' +
-                            '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
-                            feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="' +
-                            acc +
-                            '/' +
-                            data +
-                            '" class="dropdown-item delete-record">' +
-                            feather.icons['check'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Terima</a>' +
-                            '<a href="' +
-                            not_acc +
-                            '/' +
-                            data +
-                            '" class="dropdown-item delete-record">' +
-                            feather.icons['x'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Tidak Diterima</a>' +
                             '</div>' +
                             '</div>' +
-                            '<a href="" class="item-edit" delete-record" data-bs-toggle="modal" data-bs-target="#edit' +
+                            '<a href="" class="item-edit" data-bs-toggle="modal" data-bs-target="#detail' +
                             data +
                             '">' +
-                            feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
+                            feather.icons['info'].toSvg({ class: 'font-small-4' }) +
                             '</a>'
                         );
                     }
@@ -255,7 +216,7 @@ $(document).ready(function () {
                 }
             }
         });
-        $('div.head-label').html('<h6 class="mb-0">Data Disposisi</h6>');
+        $('div.head-label').html('<h6 class="mb-0">Data Surat Masuk</h6>');
     }
 
 });

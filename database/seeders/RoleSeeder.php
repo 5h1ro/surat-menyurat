@@ -19,7 +19,8 @@ class RoleSeeder extends Seeder
             'Headmaster',
             'Admin',
             'Student',
-            'Superadmin'
+            'Superadmin',
+            'Staff'
         ];
 
         $incoming = [
@@ -27,7 +28,8 @@ class RoleSeeder extends Seeder
             1,
             1,
             0,
-            0
+            0,
+            1
         ];
 
         $outgoing = [
@@ -35,13 +37,15 @@ class RoleSeeder extends Seeder
             1,
             1,
             1,
-            0
+            0,
+            1
         ];
 
         $disposition = [
             0,
             1,
             1,
+            0,
             0,
             0
         ];

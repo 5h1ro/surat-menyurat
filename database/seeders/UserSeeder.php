@@ -22,7 +22,9 @@ class UserSeeder extends Seeder
             'admin@admin.com',
             'admin2@admin2.com',
             'student@student.com',
-            'superadmin@superadmin.com'
+            'superadmin@superadmin.com',
+            'staff@staff.com',
+            'staff2@staff2.com',
         ];
 
         $role = [
@@ -32,7 +34,9 @@ class UserSeeder extends Seeder
             '3',
             '3',
             '4',
-            '5'
+            '5',
+            '6',
+            '6',
         ];
 
         for ($i = 0; $i < count($email); $i++) {

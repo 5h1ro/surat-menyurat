@@ -17,6 +17,7 @@ class Outgoing extends Model
         'letter',
         'id_type',
         'id_teacher',
+        'id_staff',
         'id_student',
         'status',
     ];
@@ -35,6 +36,11 @@ class Outgoing extends Model
     public function teacher()
     {
         return $this->belongsTo(Teacher::class, 'id_teacher');
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'id_staff');
     }
 
     public function student()

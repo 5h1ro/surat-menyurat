@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Outgoing;
+use App\Models\Staff;
 use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
@@ -26,9 +27,12 @@ class SuratKeluarController extends Controller
             if ($value->id_teacher != null) {
                 $teacher = Teacher::find($value->id_teacher);
                 $value->sender = $teacher->name;
-            } else {
+            } elseif ($value->id_student != null) {
                 $student = Student::find($value->id_student);
                 $value->sender = $student->name;
+            } else {
+                $staff = Staff::find($value->id_staff);
+                $value->sender = $staff->name;
             }
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
         }
@@ -47,9 +51,12 @@ class SuratKeluarController extends Controller
                 if ($value->id_teacher != null) {
                     $teacher = Teacher::find($value->id_teacher);
                     $value->sender = $teacher->name;
-                } else {
+                } elseif ($value->id_student != null) {
                     $student = Student::find($value->id_student);
                     $value->sender = $student->name;
+                } else {
+                    $staff = Staff::find($value->id_staff);
+                    $value->sender = $staff->name;
                 }
                 $value->admin = $admin->status;
                 $value->type;
@@ -66,9 +73,12 @@ class SuratKeluarController extends Controller
                 if ($value->id_teacher != null) {
                     $teacher = Teacher::find($value->id_teacher);
                     $value->sender = $teacher->name;
-                } else {
+                } elseif ($value->id_student != null) {
                     $student = Student::find($value->id_student);
                     $value->sender = $student->name;
+                } else {
+                    $staff = Staff::find($value->id_staff);
+                    $value->sender = $staff->name;
                 }
                 $value->admin = $admin->status;
                 $value->type;

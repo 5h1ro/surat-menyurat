@@ -35,6 +35,8 @@ class HomeController extends Controller
             return redirect()->route('student');
         } else if ($role == "Superadmin") {
             return redirect()->route('superadmin');
+        } else if ($role == "Staff") {
+            return redirect()->route('staff');
         } else {
             return redirect()->to('logout');
         }

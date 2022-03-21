@@ -9,6 +9,7 @@ use App\Models\Incoming;
 use App\Models\Outgoing;
 use App\Models\OutgoingType;
 use App\Models\Role;
+use App\Models\Staff;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,18 +36,76 @@ class DispositionController extends Controller
 
     public function getData(Request $request)
     {
+        // if ($request->ajax()) {
+        //     $data = Disposition::all()->unique('id_incoming');
+        //     foreach ($data as $value) {
+        //         if ($value->id_teacher != null) {
+        //             $value->teacher = Teacher::where('id', $value->id_teacher)->first();
+        //             $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
+        //             $value->teachers = "";
+        //             foreach ($dispositions as $values) {
+        //                 $name = Teacher::where('id', $values->id_teacher)->first();
+        //                 $value->teachers = $value->teachers . $name->name . ', ';
+        //             }
+        //             $value->teachers = substr($value->teachers, 0, -2);
+        //         }
+        //         $value->incoming;
+        //         $value->responsive_id = "";
+        //     }
+        //     return DataTables::of($data)
+        //         ->make(true);
+        // } else {
+        //     $data = Disposition::all()->unique('id_incoming');
+        //     foreach ($data as $value) {
+        //         if ($value->id_teacher != null) {
+        //             $value->teacher = Teacher::where('id', $value->id_teacher)->first();
+        //             $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
+        //             $value->teachers = "";
+        //             foreach ($dispositions as $values) {
+        //                 $name = Teacher::where('id', $values->id_teacher)->first();
+        //                 $value->teachers = $value->teachers . $name->name . ', ';
+        //             }
+        //             $value->teachers = substr($value->teachers, 0, -2);
+        //         }
+        //         $value->incoming;
+        //         $value->responsive_id = "";
+        //     }
+        //     return DataTables::of($data)
+        //         ->make(true);
+        // }
         if ($request->ajax()) {
             $data = Disposition::all()->unique('id_incoming');
             foreach ($data as $value) {
+                $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
                 if ($value->id_teacher != null) {
-                    $value->teacher = Teacher::where('id', $value->id_teacher)->first();
-                    $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
                     $value->teachers = "";
+                    $value->staffs = "";
                     foreach ($dispositions as $values) {
-                        $name = Teacher::where('id', $values->id_teacher)->first();
-                        $value->teachers = $value->teachers . $name->name . ', ';
+                        if ($values->id_teacher != null) {
+                            $name = Teacher::where('id', $values->id_teacher)->first();
+                            $value->teachers = $value->teachers . $name->name . ', ';
+                        }
+                        if ($values->id_staff != null) {
+                            if ($values->id_staff != null) {
+                                $name_staff = Staff::where('id', $values->id_staff)->first();
+                                $value->staffs = $value->staffs . $name_staff->name . ', ';
+                            }
+                        }
+                    }
+                    $value->staffs = substr($value->staffs, 0, -2);
+                    if ($value->staffs == "") {
+                        $value->staffs = "Belum Diteruskan";
                     }
                     $value->teachers = substr($value->teachers, 0, -2);
+                } else {
+                    if ($value->id_staff != null) {
+                        $value->staffs = "";
+                        foreach ($dispositions as $values) {
+                            $name = Staff::where('id', $values->id_staff)->first();
+                            $value->staffs = $value->staffs . $name->name . ', ';
+                        }
+                        $value->staffs = substr($value->staffs, 0, -2);
+                    }
                 }
                 $value->incoming;
                 $value->responsive_id = "";
@@ -56,15 +115,36 @@ class DispositionController extends Controller
         } else {
             $data = Disposition::all()->unique('id_incoming');
             foreach ($data as $value) {
+                $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
                 if ($value->id_teacher != null) {
-                    $value->teacher = Teacher::where('id', $value->id_teacher)->first();
-                    $dispositions = Disposition::where('id_incoming', $value->id_incoming)->get();
                     $value->teachers = "";
+                    $value->staffs = "";
                     foreach ($dispositions as $values) {
-                        $name = Teacher::where('id', $values->id_teacher)->first();
-                        $value->teachers = $value->teachers . $name->name . ', ';
+                        if ($values->id_teacher != null) {
+                            $name = Teacher::where('id', $values->id_teacher)->first();
+                            $value->teachers = $value->teachers . $name->name . ', ';
+                        }
+                        if ($values->id_staff != null) {
+                            if ($values->id_staff != null) {
+                                $name_staff = Staff::where('id', $values->id_staff)->first();
+                                $value->staffs = $value->staffs . $name_staff->name . ', ';
+                            }
+                        }
+                    }
+                    $value->staffs = substr($value->staffs, 0, -2);
+                    if ($value->staffs == "") {
+                        $value->staffs = "Belum Diteruskan";
                     }
                     $value->teachers = substr($value->teachers, 0, -2);
+                } else {
+                    if ($value->id_staff != null) {
+                        $value->staffs = "";
+                        foreach ($dispositions as $values) {
+                            $name = Staff::where('id', $values->id_staff)->first();
+                            $value->staffs = $value->staffs . $name->name . ', ';
+                        }
+                        $value->staffs = substr($value->staffs, 0, -2);
+                    }
                 }
                 $value->incoming;
                 $value->responsive_id = "";

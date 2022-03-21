@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             SuperadminSeeder::class,
             HeadmasterSeeder::class,
+            StaffSeeder::class,
             AdminSeeder::class,
             StudentSeeder::class,
             IncomingTypeSeeder::class,

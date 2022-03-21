@@ -18,6 +18,7 @@ $(document).ready(function () {
                 { data: 'id' },
                 { data: 'incoming.title' },
                 { data: 'teachers' },
+                { data: 'staffs' },
                 { data: 'id' },
                 { data: 'letter' },
                 { data: 'status' },
@@ -61,6 +62,10 @@ $(document).ready(function () {
                 },
                 {
                     targets: 5,
+                    defaultContent: "Belum Diteruskan",
+                },
+                {
+                    targets: 6,
                     render: function (data) {
                         return (
                             '<a href="' +
@@ -74,7 +79,7 @@ $(document).ready(function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 7,
                     visible: false
                 },
                 {

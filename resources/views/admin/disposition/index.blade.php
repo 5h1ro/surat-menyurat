@@ -48,7 +48,8 @@
                                 <th></th>
                                 <th>ID</th>
                                 <th>Judul Surat</th>
-                                <th>Diteruskan</th>
+                                <th>Diteruskan ke Guru</th>
+                                <th>Diteruskan ke Staff</th>
                                 <th>Surat</th>
                                 <th>Link Surat</th>
                                 <th>Status</th>

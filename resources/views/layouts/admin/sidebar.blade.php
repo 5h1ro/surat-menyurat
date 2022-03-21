@@ -228,4 +228,40 @@
             </ul>
         </div>
     @endif
+    @if ($user->id_role == 6)
+        <div class="main-menu-content mt-3">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class="{{ request()->is('staff/dashboard') ? 'active' : '' }} nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('staff') }}">
+                        <i data-feather="home"></i>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                    </a>
+                </li>
+                <li class=" navigation-header">
+                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @if ($user->role->incoming == 1)
+                    <li
+                        class="{{ request()->is('staff/surat-masuk') || request()->is('staff/surat-masuk/*') ? 'active' : '' }} nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('staff.suratmasuk.index') }}">
+                            <i data-feather="file-text"></i>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Masuk</span>
+                        </a>
+                    </li>
+                @else
+                @endif
+                @if ($user->role->outgoing == 1)
+                    <li
+                        class="{{ request()->is('staff/surat-keluar') || request()->is('staff/surat-keluar/*') ? 'active' : '' }} nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('staff.suratkeluar.index') }}">
+                            <i data-feather="file-text"></i>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Keluar</span>
+                        </a>
+                    </li>
+                @else
+                @endif
+            </ul>
+        </div>
+    @endif
 </div>
