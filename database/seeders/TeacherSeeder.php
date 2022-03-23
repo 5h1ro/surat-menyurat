@@ -15,8 +15,8 @@ class TeacherSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Muhammad Inam Eka Pramuka',
-            'Eka Novita Sari',
+            'Muhammad Inam Eka Pramuka, S.Pd',
+            'Eka Novita Sari, S.Pd',
         ];
 
         $id_user = [
@@ -25,8 +25,17 @@ class TeacherSeeder extends Seeder
         ];
 
         $nip = [
-            '193307001',
-            '193307002',
+            '19601129 198703 1 005',
+            '19601129 198703 1 006',
+        ];
+
+        $rank = [
+            'Penata Muda Tk.I',
+            'Penata Muda Tk.I',
+        ];
+        $class = [
+            'III/b',
+            'III/b',
         ];
 
 
@@ -35,6 +44,8 @@ class TeacherSeeder extends Seeder
                 'name'             => $name[$i],
                 'id_user'          => $id_user[$i],
                 'nip'              => $nip[$i],
+                'rank'              => $rank[$i],
+                'class'              => $class[$i],
             ]);
             $user->save();
         };

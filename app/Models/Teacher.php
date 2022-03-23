@@ -13,6 +13,8 @@ class Teacher extends Model
         'name',
         'nip',
         'id_user',
+        'rank',
+        'class'
     ];
 
     protected $dates = [

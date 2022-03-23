@@ -119,7 +119,229 @@
                                 <textarea class="form-control" id="necessary" name="necessary" rows="2" placeholder="Textarea"></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
+                        <div id="pensiun" class="d-none">
+                            <hr>
+                            <div class="mb-1">Keperluan Surat
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="date">Tanggal</label>
+                                <input type="text" id="date" name="date"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                        </div>
+                        <div id="keterangan" class="d-none">
+                            <hr>
+                            <div class="mb-1">Keperluan Surat
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="tipe_keterangan">Jenis Surat Keterangan</label>
+                                <select class="select2" id="tipe_keterangan" name="tipe_keterangan">
+                                    <option value=1>Surat Keterangan Bersedia Menerima</option>
+                                    <option value=2>Surat Keterangan Kesalahan Ijazah</option>
+                                </select>
+                            </div>
+                            <div id="skbm" class="">
+                                <div class="mb-1">
+                                    <label class="form-label" for="nama">Nama</label>
+                                    <input type="text" class="form-control dt-full-name" id="nama" name="nama"
+                                        placeholder="Nama Siswa" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="tempat_lahir">Tempat Lahir</label>
+                                    <input type="text" class="form-control dt-full-name" id="tempat_lahir"
+                                        name="tempat_lahir" placeholder="Ponorogo" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="tanggal_lahir">Tanggal Lahir</label>
+                                    <input type="text" id="tanggal_lahir" name="tanggal_lahir"
+                                        class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="asal_sekolah">Asal Sekolah</label>
+                                    <input type="text" class="form-control dt-full-name" id="asal_sekolah"
+                                        name="asal_sekolah" placeholder="Asal Sekolah" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="kelas">Kelas</label>
+                                    <select class="select2" id="kelas" name="kelas">
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="skki" class="d-none">
+                                <div class="mb-1">
+                                    <label class="form-label" for="id_student">Nama Siswa</label>
+                                    <select class="select2" id="id_student" name="id_student">
+                                        @foreach ($student as $item)
+                                            <option value={{ $item->id }}>{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="nomor_ijazah">Ijazah nomor seri</label>
+                                    <input type="text" class="form-control dt-full-name" id="nomor_ijazah"
+                                        name="nomor_ijazah" placeholder="xx – xx xx xxxxxxx" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="nomor_peserta">Nomor Peserta</label>
+                                    <input type="text" class="form-control dt-full-name" id="nomor_peserta"
+                                        name="nomor_peserta" placeholder="x – xx – xx – xx – xxx - xxx – x" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="tahun_pelajaran">Tahun Pelajaran</label>
+                                    <input type="text" class="form-control dt-full-name" id="tahun_pelajaran"
+                                        name="tahun_pelajaran" placeholder="xxxx/xxxx" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="tipe_kesalahan">Jenis Kesalahan</label>
+                                    <select class="select2" id="tipe_kesalahan" name="tipe_kesalahan">
+                                        <option value=1>Nama Siswa</option>
+                                        <option value=2>Tempat Lahir</option>
+                                        <option value=3>Tanggal Lahir</option>
+                                        <option value=4>Nama Wali</option>
+                                    </select>
+                                </div>
+                                <div id="nama_siswas" class="">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nama_benarns">Nama yang Benar</label>
+                                        <input type="text" class="form-control dt-full-name" id="nama_benarns"
+                                            name="nama_benarns" placeholder="xxxx xxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nama_salahns">Nama yang Salah</label>
+                                        <input type="text" class="form-control dt-full-name" id="nama_salahns"
+                                            name="nama_salahns" placeholder="xxxx xxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="dispendukcapilns">Kantor Dispendukcapil</label>
+                                        <input type="text" class="form-control dt-full-name" id="dispendukcapilns"
+                                            name="dispendukcapilns" placeholder="Kabupaten Ponorogo" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nomor_aktans">Nomor Akta Kelahiran</label>
+                                        <input type="text" class="form-control dt-full-name" id="nomor_aktans"
+                                            name="nomor_aktans" placeholder="AL 7xxxxxxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_aktans">Tanggal Akta</label>
+                                        <input type="text" id="tanggal_aktans" name="tanggal_aktans"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nama_sdns">Nama SD</label>
+                                        <input type="text" class="form-control dt-full-name" id="nama_sdns"
+                                            name="nama_sdns" placeholder="SDN xxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="sk_sdns">Nomor SK SD</label>
+                                        <input type="text" class="form-control dt-full-name" id="sk_sdns" name="sk_sdns"
+                                            placeholder="xxx/xx/xxx.xx.x.xxx/xxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_sk_sdns">Tanggal SK</label>
+                                        <input type="text" id="tanggal_sk_sdns" name="tanggal_sk_sdns"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                </div>
+                                <div id="tempat_lahirs" class="d-none">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tempat_lahir_benartl">Tempat Lahir yang
+                                            Benar</label>
+                                        <input type="text" class="form-control dt-full-name" id="tempat_lahir_benartl"
+                                            name="tempat_lahir_benartl" placeholder="Ponorogo" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tempat_lahir_salahtl">Tempat Lahir yang
+                                            Salah</label>
+                                        <input type="text" class="form-control dt-full-name" id="tempat_lahir_salahtl"
+                                            name="tempat_lahir_salahtl" placeholder="Madiun" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="dispendukcapiltl">Kantor Dispendukcapil</label>
+                                        <input type="text" class="form-control dt-full-name" id="dispendukcapiltl"
+                                            name="dispendukcapiltl" placeholder="Kabupaten Ponorogo" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nomor_aktatl">Nomor Akta Kelahiran</label>
+                                        <input type="text" class="form-control dt-full-name" id="nomor_aktatl"
+                                            name="nomor_aktatl" placeholder="AL 7xxxxxxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_aktatl">Tanggal Akta</label>
+                                        <input type="text" id="tanggal_aktatl" name="tanggal_aktatl"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                </div>
+                                <div id="tanggal_lahirs" class="d-none">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_lahir_benartgl">Tanggal Lahir yang
+                                            benar</label>
+                                        <input type="text" id="tanggal_lahir_benartgl" name="tanggal_lahir_benartgl"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_lahir_salahtgl">Tanggal Lahir yang
+                                            salah</label>
+                                        <input type="text" id="tanggal_lahir_salahtgl" name="tanggal_lahir_salahtgl"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="dispendukcapiltgl">Kantor Dispendukcapil</label>
+                                        <input type="text" class="form-control dt-full-name" id="dispendukcapiltgl"
+                                            name="dispendukcapiltgl" placeholder="Kabupaten Ponorogo" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nomor_aktatgl">Nomor Akta Kelahiran</label>
+                                        <input type="text" class="form-control dt-full-name" id="nomor_aktatgl"
+                                            name="nomor_aktatgl" placeholder="AL 7xxxxxxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_aktatgl">Tanggal Akta</label>
+                                        <input type="text" id="tanggal_aktatgl" name="tanggal_aktatgl"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                </div>
+                                <div id="nama_walis" class="d-none">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nama_wali_benarnw">Nama Orang Tua/Wali yang
+                                            benar</label>
+                                        <input type="text" class="form-control dt-full-name" id="nama_wali_benarnw"
+                                            name="nama_wali_benarnw" placeholder="Yusnaidi" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nama_wali_salahnw">Nama Orang Tua/Wali yang
+                                            salah</label>
+                                        <input type="text" class="form-control dt-full-name" id="nama_wali_salahnw"
+                                            name="nama_wali_salahnw" placeholder="Jusnaidi" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="dispendukcapilnw">Kantor Dispendukcapil</label>
+                                        <input type="text" class="form-control dt-full-name" id="dispendukcapilnw"
+                                            name="dispendukcapilnw" placeholder="Kabupaten Ponorogo" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="nomor_aktanw">Nomor Akta Kelahiran</label>
+                                        <input type="text" class="form-control dt-full-name" id="nomor_aktanw"
+                                            name="nomor_aktanw" placeholder="AL 7xxxxxxxxx" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="tanggal_aktanw">Tanggal Akta</label>
+                                        <input type="text" id="tanggal_aktanw" name="tanggal_aktanw"
+                                            class="form-control flatpickr-basic flatpickr-input "
+                                            placeholder="YYYY-MM-DD" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type=" submit" class="btn btn-primary data-submit me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -189,4 +411,71 @@
     <script src="{{ asset('assets') }}/js/scripts/forms/pickers/form-pickers.js"></script>
 
     <script src="{{ asset('assets/js/scripts/tables/staff/table-staff-outgoing-datatables.js') }}"></script>
+    <script>
+        var type = $('#id_type');
+        var undangan = $('#undangan');
+        var pensiun = $('#pensiun');
+        var keterangan = $('#keterangan');
+        var tipe_keterangan = $('#tipe_keterangan');
+        var skbm = $('#skbm');
+        var skki = $('#skki');
+        var tipe_kesalahan = $('#tipe_kesalahan');
+        var nama_siswa = $('#nama_siswas');
+        var tempat_lahir = $('#tempat_lahirs');
+        var tanggal_lahir = $('#tanggal_lahirs');
+        var nama_wali = $('#nama_walis');
+        type.change(
+            function() {
+                if (type.val() == 1) {
+                    undangan.removeClass('d-none');
+                    pensiun.addClass('d-none');
+                    keterangan.addClass('d-none');
+                } else if (type.val() == 2) {
+                    undangan.addClass('d-none');
+                    pensiun.removeClass('d-none');
+                    keterangan.addClass('d-none');
+                } else if (type.val() == 3) {
+                    undangan.addClass('d-none');
+                    pensiun.addClass('d-none');
+                    keterangan.removeClass('d-none');
+                    tipe_keterangan.change(
+                        function() {
+                            if (tipe_keterangan.val() == 1) {
+                                skbm.removeClass('d-none');
+                                skki.addClass('d-none');
+                            } else if (tipe_keterangan.val() == 2) {
+                                skbm.addClass('d-none');
+                                skki.removeClass('d-none');
+                                tipe_kesalahan.change(
+                                    function() {
+                                        if (tipe_kesalahan.val() == 1) {
+                                            nama_siswa.removeClass('d-none');
+                                            tempat_lahir.addClass('d-none');
+                                            tanggal_lahir.addClass('d-none');
+                                            nama_wali.addClass('d-none');
+                                        } else if (tipe_kesalahan.val() == 2) {
+                                            nama_siswa.addClass('d-none');
+                                            tempat_lahir.removeClass('d-none');
+                                            tanggal_lahir.addClass('d-none');
+                                            nama_wali.addClass('d-none');
+                                        } else if (tipe_kesalahan.val() == 3) {
+                                            nama_siswa.addClass('d-none');
+                                            tempat_lahir.addClass('d-none');
+                                            tanggal_lahir.removeClass('d-none');
+                                            nama_wali.addClass('d-none');
+                                        } else if (tipe_kesalahan.val() == 4) {
+                                            nama_siswa.addClass('d-none');
+                                            tempat_lahir.addClass('d-none');
+                                            tanggal_lahir.addClass('d-none');
+                                            nama_wali.removeClass('d-none');
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    </script>
 @endsection

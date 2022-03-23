@@ -17,7 +17,6 @@ class OutgoingTypeSeeder extends Seeder
         $name = [
             'Surat Undangan',
             'Surat Pengusulan Pensiun',
-            'Surat Edaran',
             'Surat Keterangan',
             'Surat Mutasi',
             'Surat Ijazah Belum Jadi',
@@ -26,8 +25,7 @@ class OutgoingTypeSeeder extends Seeder
         ];
         $number = [
             '005',
-            '006',
-            '007',
+            '045.2',
             '422',
             '009',
             '010',

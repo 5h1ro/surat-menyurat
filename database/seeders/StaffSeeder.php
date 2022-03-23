@@ -29,12 +29,23 @@ class StaffSeeder extends Seeder
             '193307006',
         ];
 
+        $rank = [
+            'Penata Muda Tk.I',
+            'Penata Muda Tk.I',
+        ];
+        $class = [
+            'III/b',
+            'III/b',
+        ];
+
 
         for ($i = 0; $i < count($name); $i++) {
             $user = Staff::create([
                 'name'              => $name[$i],
                 'id_user'           => $id_user[$i],
                 'nip'               => $nip[$i],
+                'rank'              => $rank[$i],
+                'class'              => $class[$i],
             ]);
             $user->save();
         };
