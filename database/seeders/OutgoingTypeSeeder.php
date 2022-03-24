@@ -21,16 +21,14 @@ class OutgoingTypeSeeder extends Seeder
             'Surat Mutasi',
             'Surat Ijazah Belum Jadi',
             'Surat Ijazah Hilang/Rusak',
-            'Surat Pindah Sekolah',
         ];
         $number = [
             '005',
             '045.2',
             '422',
-            '009',
+            '422',
             '010',
-            '011',
-            '012',
+            '420',
         ];
 
         for ($i = 0; $i < count($name); $i++) {

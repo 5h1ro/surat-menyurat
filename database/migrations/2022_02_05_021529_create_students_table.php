@@ -19,6 +19,11 @@ class CreateStudentsTable extends Migration
             $table->string('birthplace');
             $table->date('birthday');
             $table->string('class');
+            $table->string('gender');
+            $table->string('religion');
+            $table->string('parent');
+            $table->string('parent_job');
+            $table->text('address');
             $table->string('ni')->unique();
             $table->string('nisn')->unique();
             $table->integer('id_user')->unsigned();

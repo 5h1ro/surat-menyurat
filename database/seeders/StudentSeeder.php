@@ -41,6 +41,21 @@ class StudentSeeder extends Seeder
         $nisn = [
             '0058947401',
         ];
+        $gender = [
+            'Perempuan',
+        ];
+        $religion = [
+            'Hindu',
+        ];
+        $parent = [
+            'Takanome Akani',
+        ];
+        $parent_job = [
+            'Fisikawan',
+        ];
+        $address = [
+            'Jl.Sumbawa RT.007/RW.002 Ds.Slahung,Kec.Slahung',
+        ];
 
 
         for ($i = 0; $i < count($name); $i++) {
@@ -51,7 +66,12 @@ class StudentSeeder extends Seeder
                 'birthday'             => $birthday[$i],
                 'ni'             => $ni[$i],
                 'class'             => $class[$i],
+                'gender'             => $gender[$i],
                 'nisn'             => $nisn[$i],
+                'religion'             => $religion[$i],
+                'parent'             => $parent[$i],
+                'parent_job'             => $parent_job[$i],
+                'address'             => $address[$i],
             ]);
             $user->save();
         };

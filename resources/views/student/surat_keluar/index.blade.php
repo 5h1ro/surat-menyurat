@@ -85,8 +85,7 @@
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="detail">Isi Pokok Surat</label>
-                            <textarea class="form-control" id="detail" name="detail" rows="3"
-                                placeholder="Textarea"></textarea>
+                            <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="id_type">Jenis Surat</label>
@@ -96,31 +95,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        {{-- <div id="undangan" class="">
-                            <hr>
-                            <div class="mb-1">Keperluan Surat
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="date">Tanggal</label>
-                                <input type="text" id="date" name="date" class="form-control flatpickr-range"
-                                    placeholder="YYYY-MM-DD to YYYY-MM-DD" />
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="time">Waktu</label>
-                                <input type="text" id="time" name="time" class="form-control flatpickr-time text-start"
-                                    placeholder="HH:MM" />
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="place">Tempat</label>
-                                <input type="text" class="form-control dt-full-name" id="place" name="place"
-                                    placeholder="SMP N 1 Slahung" aria-label="SMP N 1 Slahung" />
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="necessary">Keperluan</label>
-                                <textarea class="form-control" id="necessary" name="necessary" rows="2"
-                                    placeholder="Textarea"></textarea>
-                            </div>
-                        </div> --}}
                         <div id="keterangan" class="">
                             <hr>
                             <div class="mb-1">Keperluan Surat
@@ -129,12 +103,73 @@
                                 Data yang Diperlukan Sudah Cukup
                             </div>
                         </div>
+                        <div id="mutasi" class="d-none">
+                            <hr>
+                            <div class="mb-1">Keperluan Surat
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="masuk_mutasi">Tanggal Masuk</label>
+                                <input type="text" id="masuk_mutasi" name="masuk_mutasi"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="keluar_mutasi">Tanggal Keluar</label>
+                                <input type="text" id="keluar_mutasi" name="keluar_mutasi"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="alasan_mutasi">Mutasi / Pindah Karena</label>
+                                <textarea class="form-control" id="alasan_mutasi" name="alasan_mutasi" rows="3"
+                                    placeholder="Pindah ke SMPN 1 xxxx"></textarea>
+                            </div>
+                        </div>
+                        <div id="sih" class="d-none">
+                            <hr>
+                            <div class="mb-1">Keperluan Surat
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="ayahsih">Nama Ayah</label>
+                                <input type="text" class="form-control dt-full-name" id="ayahsih" name="ayahsih"
+                                    placeholder="Nama Ayah" aria-label="SMP N 1 Slahung" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="ibusih">Nama Ibu</label>
+                                <input type="text" class="form-control dt-full-name" id="ibusih" name="ibusih"
+                                    placeholder="Nama Ibu" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="no_ijazahsih">Nomor Ijazah</label>
+                                <input type="text" class="form-control dt-full-name" id="no_ijazahsih" name="no_ijazahsih"
+                                    placeholder="DN – xx xx xxxxxxx" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="tahun_ajaransih">Tahun Ajaran</label>
+                                <input type="text" class="form-control dt-full-name" id="tahun_ajaransih"
+                                    name="tahun_ajaransih" placeholder="xxxx/xxxx" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="polseksih">Kantor Polsek
+                                    Polsek</label>
+                                <input type="text" class="form-control dt-full-name" id="polseksih" name="polseksih"
+                                    placeholder="Polsek xxxxxx" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="tanggal_surat_laporsih">Tanggal Surat Lapor dari
+                                    Polsek</label>
+                                <input type="text" id="tanggal_surat_laporsih" name="tanggal_surat_laporsih"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="no_suratsih">Nomor Surat</label>
+                                <input type="text" class="form-control dt-full-name" id="no_suratsih" name="no_suratsih"
+                                    placeholder="STLKB/xxx/xx/xxxx/POLSEK" />
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
+                </form>
             </div>
-            </form>
-        </div>
         </div>
         @foreach ($outgoing as $item)
             <div class="modal fade" id="detail{{ $item->id }}" tabindex="-1" aria-labelledby="detailTitle"
@@ -204,12 +239,22 @@
         var type = $('#id_type');
         var undangan = $('#undangan');
         var keterangan = $('#keterangan');
+        var sih = $('#sih');
+        var mutasi = $('#mutasi');
         type.change(
             function() {
-                if (type.val() == 4) {
+                if (type.val() == 3) {
                     keterangan.removeClass('d-none');
-                } else {
+                    mutasi.addClass('d-none');
+                    sih.addClass('d-none');
+                } else if (type.val() == 4) {
                     keterangan.addClass('d-none');
+                    mutasi.removeClass('d-none');
+                    sih.addClass('d-none');
+                } else if (type.val() == 6) {
+                    keterangan.addClass('d-none');
+                    mutasi.addClass('d-none');
+                    sih.removeClass('d-none');
                 }
             }
         )

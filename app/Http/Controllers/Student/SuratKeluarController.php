@@ -23,7 +23,7 @@ class SuratKeluarController extends Controller
         $data = url('api/student/surat-keluar/index/get', $user->student->id);
         $read = url('student/surat-keluar/read');
         $delete = url('student/surat-keluar/delete');
-        $type = OutgoingType::where('id', '>=', 4)->get();
+        $type = OutgoingType::where('id', '>=', 3)->get();
         $outgoing = Outgoing::where('id_student', $user->student->id)->get();
         foreach ($outgoing as $value) {
             $date = substr($value->created_at, 0, 10);
@@ -83,8 +83,18 @@ class SuratKeluarController extends Controller
         $now = Carbon::now()->isoFormat('DD MMMM Y');
         $headmaster = Headmaster::first();
         $setup = Setup::first();
-        $pdf = Pdf::loadview('report.keterangan', compact('request', 'number', 'now', 'headmaster', 'user', 'setup'))->setPaper('a4', 'portrait');
-        $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+        if ($request->id_type == 3) {
+            $pdf = Pdf::loadview('report.keterangan', compact('request', 'number', 'now', 'headmaster', 'user', 'setup'))->setPaper('a4', 'portrait');
+            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+        } elseif ($request->id_type == 4) {
+            $masuk = Carbon::createFromFormat('Y-m-d', $request->masuk_mutasi)->isoFormat('DD MMMM Y');
+            $keluar = Carbon::createFromFormat('Y-m-d', $request->keluar_mutasi)->isoFormat('DD MMMM Y');
+            $pdf = Pdf::loadview('report.keterangan_mutasi', compact('request', 'number', 'now', 'headmaster', 'user', 'setup', 'masuk', 'keluar'))->setPaper('a4', 'portrait');
+            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+        } elseif ($request->id_type == 6) {
+            $pdf = Pdf::loadview('report.keterangan_ijazah_hilang', compact('request', 'number', 'now', 'headmaster', 'user', 'setup'))->setPaper('a4', 'portrait');
+            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+        }
 
         $outgoing =  new Outgoing;
         $outgoing->number = $number;

@@ -17,6 +17,11 @@ class Student extends Model
         'ni',
         'nisn',
         'id_user',
+        'gender',
+        'religion',
+        'parent',
+        'parent_job',
+        'address',
     ];
 
     protected $dates = [
