@@ -162,6 +162,12 @@ class DispositionController extends Controller
 
     public function upload($id, Request $request)
     {
+        $this->validate($request, [
+            'letter' => "required|mimes:pdf",
+        ], [
+            'letter.required' => 'Scan surat tidak boleh kosong',
+            'letter.mimes' => 'Scan surat harus berformat pdf',
+        ]);
         $now = Carbon::now()->format('dmYHis');
         $filename = $now . '.pdf';
         $file = $request->file('letter');

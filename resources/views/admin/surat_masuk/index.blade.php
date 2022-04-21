@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/forms/pickers/form-pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
     @csrf
 @endsection
 
@@ -96,8 +97,7 @@
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="detail">Isi Pokok Surat</label>
-                            <textarea class="form-control" id="detail" name="detail" rows="3"
-                                placeholder="Textarea"></textarea>
+                            <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="id_type">Tipe</label>
@@ -206,4 +206,17 @@
     <script src="{{ asset('assets') }}/js/scripts/forms/pickers/form-pickers.js"></script>
 
     <script src="{{ asset('assets/js/scripts/tables/admin/table-admin-incoming-datatables.js') }}"></script>
+
+    <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr['error']("{{ $error }}", 'Error!', {
+                closeButton: true,
+                tapToDismiss: false,
+                timeOut: 5000,
+                });
+            @endforeach
+        </script>
+    @endif
 @endsection

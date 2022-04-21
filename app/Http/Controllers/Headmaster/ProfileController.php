@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -26,8 +27,26 @@ class ProfileController extends Controller
     public function edit($id, Request $request)
     {
         $user = User::find($id);
+        $this->validate($request, [
+            'name' => "required",
+            'nip' => ['required', 'numeric', Rule::unique('headmasters')->ignore($user->headmaster)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
+        ], [
+            'name.required' => 'Nama tidak boleh kosong',
+            'nip.required' => 'NIP tidak boleh kosong',
+            'nip.numeric' => 'NIP hanya boleh diisi angka tanpa spasi',
+            'nip.unique' => 'NIP sudah ada dengan akun lain',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.numeric' => 'Email hanya boleh diisi dengan format email',
+            'email.unique' => 'Email sudah ada dengan akun lain',
+        ]);
         $headmaster = Headmaster::where('id_user', $user->id)->first();
         if (isset($request->password)) {
+            $this->validate($request, [
+                'password' => "min:8",
+            ], [
+                'password.min' => 'Password minimal 8 karakter',
+            ]);
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $headmaster->name = $request->name;

@@ -35,7 +35,7 @@ class SuratKeluarController extends Controller
         $data = url('api/teacher/surat-keluar/index/get', $user->teacher->id);
         $read = url('teacher/surat-keluar/read');
         $delete = url('teacher/surat-keluar/delete');
-        $type = OutgoingType::where('id', '<=', 3)->get();
+        $type = OutgoingType::where('id', '<=', 4)->get();
         $outgoing = Outgoing::where('id_teacher', $user->teacher->id)->get();
         $student = Student::all();
         foreach ($outgoing as $value) {
@@ -93,7 +93,26 @@ class SuratKeluarController extends Controller
         $user = Auth::user();
         $now = Carbon::now()->isoFormat('DD MMMM Y');
         $headmaster = Headmaster::first();
+        $setup = Setup::first();
+        $this->validate($request, [
+            'to' => "required",
+            'detail' => "required",
+        ], [
+            'to.required' => 'Tujuan surat harus diisi',
+            'detail.required' => 'Isi pokok surat harus diisi',
+        ]);
         if ($request->id_type == 1) {
+            $this->validate($request, [
+                'date' => "required",
+                'time' => "required",
+                'place' => "required",
+                'necessary' => "required",
+            ], [
+                'date.required' => 'Tanggal harus diisi',
+                'time.required' => 'Waktu harus diisi',
+                'place.required' => 'Tempat harus diisi',
+                'necessary.required' => 'Keperluan harus diisi',
+            ]);
             $start = substr($request->date, 0, 10);
             $end = substr($request->date, -10);
             $start_day = Carbon::createFromFormat('Y-m-d', $start)->dayName;
@@ -103,39 +122,146 @@ class SuratKeluarController extends Controller
             $pdf = Pdf::loadview('report.undangan', compact('request', 'number', 'now', 'start', 'start_day', 'end', 'end_day', 'headmaster'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         } elseif ($request->id_type == 2) {
+            $this->validate($request, [
+                'date' => "required",
+            ], [
+                'date.required' => 'Tanggal harus diisi',
+            ]);
             $date = Carbon::createFromFormat('Y-m-d', $request->date)->isoFormat('DD MMMM Y');
             $user->type = 'Guru';
             $pdf = Pdf::loadview('report.pensiun', compact('request', 'number', 'now', 'headmaster', 'date', 'user'))->setPaper('a4', 'portrait');
-            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+            return $pdf->stream();
+            // $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         } elseif ($request->id_type == 3) {
             if ($request->tipe_keterangan == 1) {
+                $this->validate($request, [
+                    'nama' => "required",
+                    'tempat_lahir' => "required",
+                    'tanggal_lahir' => "required",
+                    'asal_sekolah' => "required",
+                    'kelas' => "required",
+                ], [
+                    'nama.required' => 'Nama harus diisi',
+                    'tempat_lahir.required' => 'Tempat lahir harus diisi',
+                    'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
+                    'asal_sekolah.required' => 'Asal sekolah harus diisi',
+                    'kelas.required' => 'Kelas harus diisi',
+                ]);
                 $date = Carbon::createFromFormat('Y-m-d', $request->tanggal_lahir)->isoFormat('DD MMMM Y');
                 $pdf = Pdf::loadview('report.skbm', compact('request', 'number', 'now', 'headmaster', 'date'))->setPaper('a4', 'portrait');
                 $pdf->save(public_path('assets/report/outgoing/')  . $filename);
             } else {
                 $student = Student::find($request->id_student);
                 $student_date = Carbon::createFromFormat('Y-m-d', $student->birthday)->isoFormat('DD MMMM Y');
+                $this->validate($request, [
+                    'nomor_ijazah' => "required",
+                    'nomor_peserta' => "required",
+                    'tahun_pelajaran' => "required",
+                ], [
+                    'nomor_ijazah.required' => 'Nomor ijazah harus diisi',
+                    'nomor_peserta.required' => 'Nomor peserta harus diisi',
+                    'tahun_pelajaran.required' => 'Tahun pelajaran harus diisi',
+                ]);
                 if ($request->tipe_kesalahan == 1) {
+                    $this->validate($request, [
+                        'nama_benarns' => "required",
+                        'nama_salahns' => "required",
+                        'dispendukcapilns' => "required",
+                        'nomor_aktans' => "required",
+                        'tanggal_aktans' => "required|before:today",
+                        'nama_sdns' => "required",
+                        'sk_sdns' => "required",
+                        'tanggal_sk_sdns' => "required|before:today",
+                    ], [
+                        'nama_benarns.required' => 'Nama yang benar harus diisi',
+                        'nama_salahns.required' => 'Nama yang salah harus diisi',
+                        'dispendukcapilns.required' => 'Kantor Dispendukcapil harus diisi',
+                        'nomor_aktans.required' => 'Nomor akta kelahiran harus diisi',
+                        'tanggal_aktans.required' => 'Tanggal akta kelahiran harus diisi',
+                        'tanggal_aktans.before' => 'Tanggal akta kelahiran harus sebelum hari ini',
+                        'nama_sdns.required' => 'Nama SD harus diisi',
+                        'sk_sdns.required' => 'No SK SD harus diisi',
+                        'tanggal_sk_sdns.required' => 'Tanggal SK SD harus diisi',
+                        'tanggal_sk_sdns.before' => 'Tanggal SK SD harus sebelum hari ini',
+                    ]);
                     $tanggal_aktans = Carbon::createFromFormat('Y-m-d', $request->tanggal_aktans)->isoFormat('DD MMMM Y');
                     $tanggal_sk_sdns = Carbon::createFromFormat('Y-m-d', $request->tanggal_sk_sdns)->isoFormat('DD MMMM Y');
                     $pdf = Pdf::loadview('report.skki_nama', compact('request', 'number', 'now', 'headmaster', 'tanggal_aktans', 'tanggal_sk_sdns', 'student', 'student_date'))->setPaper('a4', 'portrait');
                     $pdf->save(public_path('assets/report/outgoing/')  . $filename);
                 } elseif ($request->tipe_kesalahan == 2) {
+                    $this->validate($request, [
+                        'tempat_lahir_benartl' => "required",
+                        'tempat_lahir_salahtl' => "required",
+                        'dispendukcapiltl' => "required",
+                        'nomor_aktatl' => "required",
+                        'tanggal_aktatl' => "required|before:today",
+                    ], [
+                        'tempat_lahir_benartl.required' => 'Tempat lahir yang benar harus diisi',
+                        'tempat_lahir_salahtl.required' => 'Tempat lahir yang salah harus diisi',
+                        'dispendukcapiltl.required' => 'Kantor Dispendukcapil harus diisi',
+                        'nomor_aktatl.required' => 'Nomor akta kelahiran harus diisi',
+                        'tanggal_aktatl.required' => 'Tanggal akta kelahiran harus diisi',
+                        'tanggal_aktatl.before' => 'Tanggal akta kelahiran harus sebelum hari ini',
+                    ]);
                     $tanggal_aktatl = Carbon::createFromFormat('Y-m-d', $request->tanggal_aktatl)->isoFormat('DD MMMM Y');
                     $pdf = Pdf::loadview('report.skki_tempat', compact('request', 'number', 'now', 'headmaster', 'tanggal_aktatl', 'student', 'student_date'))->setPaper('a4', 'portrait');
                     $pdf->save(public_path('assets/report/outgoing/')  . $filename);
                 } elseif ($request->tipe_kesalahan == 3) {
+                    $this->validate($request, [
+                        'tanggal_lahir_benartgl' => "required",
+                        'tanggal_lahir_salahtgl' => "required",
+                        'dispendukcapiltgl' => "required",
+                        'nomor_aktatgl' => "required",
+                        'tanggal_aktatgl' => "required|before:today",
+                    ], [
+                        'tanggal_lahir_benartgl.required' => 'Tanggal lahir yang benar harus diisi',
+                        'tanggal_lahir_salahtgl.required' => 'Tanggal lahir yang salah harus diisi',
+                        'dispendukcapiltgl.required' => 'Kantor Dispendukcapil harus diisi',
+                        'nomor_aktatgl.required' => 'Nomor akta kelahiran harus diisi',
+                        'tanggal_aktatgl.required' => 'Tanggal akta kelahiran harus diisi',
+                        'tanggal_aktatgl.before' => 'Tanggal akta kelahiran harus sebelum hari ini',
+                    ]);
                     $tanggal_lahir_benartgl = Carbon::createFromFormat('Y-m-d', $request->tanggal_lahir_benartgl)->isoFormat('DD MMMM Y');
                     $tanggal_lahir_salahtgl = Carbon::createFromFormat('Y-m-d', $request->tanggal_lahir_salahtgl)->isoFormat('DD MMMM Y');
                     $tanggal_aktatgl = Carbon::createFromFormat('Y-m-d', $request->tanggal_aktatgl)->isoFormat('DD MMMM Y');
                     $pdf = Pdf::loadview('report.skki_tanggal', compact('request', 'number', 'now', 'headmaster', 'tanggal_aktatgl', 'student', 'student_date', 'tanggal_lahir_salahtgl', 'tanggal_lahir_benartgl'))->setPaper('a4', 'portrait');
                     return $pdf->stream();
                 } else {
+                    $this->validate($request, [
+                        'nama_wali_benarnw' => "required",
+                        'nama_wali_salahnw' => "required",
+                        'dispendukcapilnw' => "required",
+                        'nomor_aktanw' => "required",
+                        'tanggal_aktanw' => "required|before:today",
+                    ], [
+                        'nama_wali_benarnw.required' => 'Nama wali yang benar harus diisi',
+                        'nama_wali_salahnw.required' => 'Nama wali yang salah harus diisi',
+                        'dispendukcapilnw.required' => 'Kantor Dispendukcapil harus diisi',
+                        'nomor_aktanw.required' => 'Nomor akta kelahiran harus diisi',
+                        'tanggal_aktanw.required' => 'Tanggal akta kelahiran harus diisi',
+                        'tanggal_aktanw.before' => 'Tanggal akta kelahiran harus sebelum hari ini',
+                    ]);
                     $tanggal_aktanw = Carbon::createFromFormat('Y-m-d', $request->tanggal_aktanw)->isoFormat('DD MMMM Y');
                     $pdf = Pdf::loadview('report.skki_wali', compact('request', 'number', 'now', 'headmaster', 'tanggal_aktanw', 'student', 'student_date'))->setPaper('a4', 'portrait');
                     return $pdf->stream();
                 }
             }
+        } elseif ($request->id_type == 4) {
+            $this->validate($request, [
+                'masuk_mutasi' => "required|before:today",
+                'keluar_mutasi' => "required",
+                'alasan_mutasi' => "required",
+            ], [
+                'masuk_mutasi.required' => 'Tanggal masuk harus diisi',
+                'masuk_mutasi.before' => 'Tanggal masuk harus sebelum hari ini',
+                'keluar_mutasi.required' => 'Tanggal keluar harus diisi',
+                'alasan_mutasi.required' => 'Alasan keluar harus diisi',
+            ]);
+            $masuk = Carbon::createFromFormat('Y-m-d', $request->masuk_mutasi)->isoFormat('DD MMMM Y');
+            $keluar = Carbon::createFromFormat('Y-m-d', $request->keluar_mutasi)->isoFormat('DD MMMM Y');
+            $user = Student::find($request->id_student_mutasi);
+            $pdf = Pdf::loadview('report.keterangan_mutasi', compact('request', 'number', 'now', 'headmaster', 'user', 'setup', 'masuk', 'keluar'))->setPaper('a4', 'portrait');
+            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         }
 
         $outgoing =  new Outgoing;

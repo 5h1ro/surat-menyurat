@@ -3,6 +3,7 @@
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css') }}/style.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
 @endsection
 
 @section('title')
@@ -27,7 +28,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input type="number" id="incoming_start" class="form-control"
-                                            name="incoming_start" value="{{ $setup->incoming_start }}">
+                                            name="incoming_start" value="{{ $setup->incoming_start }}" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +39,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input type="number" id="outgoing_start" class="form-control"
-                                            name="outgoing_start" value="{{ $setup->outgoing_start }}">
+                                            name="outgoing_start" value="{{ $setup->outgoing_start }}" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -67,4 +68,16 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr['error']("{{ $error }}", 'Error!', {
+                closeButton: true,
+                tapToDismiss: false,
+                timeOut: 5000,
+                });
+            @endforeach
+        </script>
+    @endif
 @endsection

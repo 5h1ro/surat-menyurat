@@ -52,6 +52,10 @@
             line-height: 25px;
         }
 
+        .page_break {
+            page-break-before: always;
+        }
+
     </style>
 </head>
 
@@ -201,6 +205,42 @@
                 </p>
             </div>
         </div>
+        {{-- <div class="page_break"></div>
+        <center>
+            <table style="margin-left: 1.2cm">
+                <tr>
+                    <td>
+                        <img src="{{ public_path('assets/images/logo.png') }}" style="width:3cm; margin-left: -1cm">
+                    </td>
+                    <td>
+                        <center style="margin-top: -10px">
+                            <p style="font-size: 12pt">
+                                PEMERINTAH KABUPATEN PONOROGO<br>
+                                <span style="font-size: 16pt">
+                                    <b>DINAS PENDIDIKAN
+                                    </b>
+                                </span>
+                                <br>
+                                Jalan Basuki Rahmad Telp. (0352) 481479 Faxs (0352) 483542
+                            </p>
+                            <p style="font-size: 16pt; margin-top: -15px">
+                                <b>
+                                    <u>PONOROGO</u>
+                                </b>
+                            </p>
+                            <p style="margin-left: 11cm; margin-top: -15px">
+                                Kode Pos 63418
+                            </p>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-top: -15px">
+
+                <hr>
+            </div>
+        </center>
+        <p style="margin-left: 13cm">Ponorogo,</p> --}}
     </div>
 </body>
 

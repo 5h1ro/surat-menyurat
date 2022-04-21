@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/forms/pickers/form-pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
     @csrf
 @endsection
 
@@ -341,6 +342,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="mutasi" class="d-none">
+                            <hr>
+                            <div class="mb-1">Keperluan Surat
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="id_student_mutasi">Nama Siswa</label>
+                                <select class="select2" id="id_student_mutasi" name="id_student_mutasi">
+                                    @foreach ($student as $item)
+                                        <option value={{ $item->id }}>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="masuk_mutasi">Tanggal Masuk</label>
+                                <input type="text" id="masuk_mutasi" name="masuk_mutasi"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="keluar_mutasi">Tanggal Keluar</label>
+                                <input type="text" id="keluar_mutasi" name="keluar_mutasi"
+                                    class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="alasan_mutasi">Mutasi / Pindah Karena</label>
+                                <textarea class="form-control" id="alasan_mutasi" name="alasan_mutasi" rows="3"
+                                    placeholder="Pindah ke SMPN 1 xxxx"></textarea>
+                            </div>
+                        </div>
                         <button type=" submit" class="btn btn-primary data-submit me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
@@ -424,20 +453,24 @@
         var tempat_lahir = $('#tempat_lahirs');
         var tanggal_lahir = $('#tanggal_lahirs');
         var nama_wali = $('#nama_walis');
+        var mutasi = $('#mutasi');
         type.change(
             function() {
                 if (type.val() == 1) {
                     undangan.removeClass('d-none');
                     pensiun.addClass('d-none');
                     keterangan.addClass('d-none');
+                    mutasi.addClass('d-none');
                 } else if (type.val() == 2) {
                     undangan.addClass('d-none');
                     pensiun.removeClass('d-none');
                     keterangan.addClass('d-none');
+                    mutasi.addClass('d-none');
                 } else if (type.val() == 3) {
                     undangan.addClass('d-none');
                     pensiun.addClass('d-none');
                     keterangan.removeClass('d-none');
+                    mutasi.addClass('d-none');
                     tipe_keterangan.change(
                         function() {
                             if (tipe_keterangan.val() == 1) {
@@ -474,8 +507,25 @@
                             }
                         }
                     )
+                } else if (type.val() == 4) {
+                    undangan.addClass('d-none');
+                    pensiun.addClass('d-none');
+                    keterangan.addClass('d-none');
+                    mutasi.removeClass('d-none');
                 }
             }
         )
     </script>
+    <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr['error']("{{ $error }}", 'Error!', {
+                closeButton: true,
+                tapToDismiss: false,
+                timeOut: 5000,
+                });
+            @endforeach
+        </script>
+    @endif
 @endsection

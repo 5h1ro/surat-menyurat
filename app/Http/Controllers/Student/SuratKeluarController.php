@@ -23,7 +23,9 @@ class SuratKeluarController extends Controller
         $data = url('api/student/surat-keluar/index/get', $user->student->id);
         $read = url('student/surat-keluar/read');
         $delete = url('student/surat-keluar/delete');
-        $type = OutgoingType::where('id', '>=', 3)->get();
+        $type = OutgoingType::where('id', '=', 3)->get();
+        $type_add = OutgoingType::find(6);
+        $type->push($type_add);
         $outgoing = Outgoing::where('id_student', $user->student->id)->get();
         foreach ($outgoing as $value) {
             $date = substr($value->created_at, 0, 10);
@@ -73,6 +75,23 @@ class SuratKeluarController extends Controller
 
     public function create(Request $request)
     {
+        $this->validate($request, [
+            'masuk_mutasi' => "required|before:today",
+            'keluar_mutasi' => "required",
+            'alasan_mutasi' => "required",
+        ], [
+            'masuk_mutasi.required' => 'Tanggal masuk harus diisi',
+            'masuk_mutasi.before' => 'Tanggal masuk harus sebelum hari ini',
+            'keluar_mutasi.required' => 'Tanggal keluar harus diisi',
+            'alasan_mutasi.required' => 'Alasan keluar harus diisi',
+        ]);
+        $this->validate($request, [
+            'to' => "required",
+            'detail' => "required",
+        ], [
+            'to.required' => 'Tujuan surat harus diisi',
+            'detail.required' => 'Isi pokok surat harus diisi',
+        ]);
         $user = Auth::user()->student;
         $birthday = substr($user->birthday, 0, 10);
         $user->birthday = Carbon::createFromFormat('Y-m-d', $birthday)->isoFormat('DD MMMM Y');
@@ -92,6 +111,23 @@ class SuratKeluarController extends Controller
             $pdf = Pdf::loadview('report.keterangan_mutasi', compact('request', 'number', 'now', 'headmaster', 'user', 'setup', 'masuk', 'keluar'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         } elseif ($request->id_type == 6) {
+            $this->validate($request, [
+                'ayahsih' => "required",
+                'ibusih' => "required",
+                'no_ijazahsih' => "required",
+                'tahun_ajaransih' => "required",
+                'polseksih' => "required",
+                'tanggal_surat_laporsih' => "required",
+                'no_suratsih' => "required",
+            ], [
+                'ayahsih.required' => 'Nama ayah harus diisi',
+                'ibusih.required' => 'Nama ibu harus diisi',
+                'no_ijazahsih.required' => 'No ijazah harus diisi',
+                'tahun_ajaransih.required' => 'Tahun ajaran harus diisi',
+                'polseksih.required' => 'Kantor polsek harus diisi',
+                'tanggal_surat_laporsih.required' => 'Tanggal Surat Lapor dari polsek harus diisi',
+                'no_suratsih.required' => 'No surat harus diisi',
+            ]);
             $pdf = Pdf::loadview('report.keterangan_ijazah_hilang', compact('request', 'number', 'now', 'headmaster', 'user', 'setup'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         }

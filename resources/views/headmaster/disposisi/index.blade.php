@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
     @csrf
 @endsection
 
@@ -129,4 +130,16 @@
         $("#id_staff").select2();
     </script>
     <script src="{{ asset('assets/js/scripts/tables/headmaster/table-headmaster-disposition-datatables.js') }}"></script>
+    <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr['error']("{{ $error }}", 'Error!', {
+                closeButton: true,
+                tapToDismiss: false,
+                timeOut: 5000,
+                });
+            @endforeach
+        </script>
+    @endif
 @endsection

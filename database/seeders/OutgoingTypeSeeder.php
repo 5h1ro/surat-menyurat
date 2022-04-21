@@ -16,7 +16,7 @@ class OutgoingTypeSeeder extends Seeder
     {
         $name = [
             'Surat Undangan',
-            'Surat Pengusulan Pensiun',
+            'Surat Pengantar Pensiun',
             'Surat Keterangan',
             'Surat Mutasi',
             'Surat Ijazah Belum Jadi',

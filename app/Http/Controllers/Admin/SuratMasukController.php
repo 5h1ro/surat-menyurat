@@ -99,6 +99,29 @@ class SuratMasukController extends Controller
 
     public function create(Request $request)
     {
+        $this->validate($request, [
+            'letter_number' => "required",
+            'letter_date' => "required|before_or_equal:today",
+            'from' => "required",
+            'title' => "required",
+            'detail' => "required",
+            'id_type' => "required",
+            'id_headmaster' => "required",
+            'information' => "required",
+            'letter' => "required",
+        ], [
+            'letter_number.required' => 'Nomor surat tidak boleh kosong',
+            'letter_date.required' => 'Tanggal surat tidak boleh kosong',
+            'letter_date.before_or_equal' => 'Tanggal surat tidak boleh lebih dari hari ini',
+            'from.required' => 'Asal surat tidak boleh kosong',
+            'title.required' => 'Nama dan Alamat tidak boleh kosong',
+            'detail.required' => 'Isi pokok surat tidak boleh kosong',
+            'id_type.required' => 'Tipe tidak boleh kosong',
+            'id_headmaster.required' => 'Kepala sekolah tidak boleh kosong',
+            'information.required' => 'Jenis surat tidak boleh kosong',
+            'letter.required' => 'Scan surat tidak boleh kosong',
+        ]);
+
         $last_incoming = Incoming::latest()->first();
         $letter_date = Carbon::createFromFormat('Y-m-d', $request->letter_date)->isoFormat('DD MMMM Y');
         $date = Carbon::now()->isoformat('DD MMMM Y');

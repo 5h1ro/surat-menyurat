@@ -144,6 +144,15 @@ class DispositionController extends Controller
     {
         $now = Carbon::now()->format('dmYHis');
         $filename = $now . '.pdf';
+        if ($request->id_teacher == null && $request->id_staff == null) {
+            $this->validate($request, [
+                'id_teacher' => "required",
+                'id_staff' => "required",
+            ], [
+                'id_teacher.required' => 'Guru tidak boleh kosong',
+                'id_staff.required' => 'Staff tidak boleh kosong',
+            ]);
+        }
         if (isset($request->id_teacher)) {
             if (count($request->id_teacher) == 1) {
                 foreach ($request->id_teacher as $value) {

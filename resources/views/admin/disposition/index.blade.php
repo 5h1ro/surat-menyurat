@@ -12,6 +12,7 @@
         href="{{ asset('assets') }}/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
     @csrf
 @endsection
 
@@ -102,4 +103,17 @@
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
     <script src="{{ asset('assets/js/scripts/tables/admin/table-admin-disposition-datatables.js') }}"></script>
+
+    <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr['error']("{{ $error }}", 'Error!', {
+                closeButton: true,
+                tapToDismiss: false,
+                timeOut: 5000,
+                });
+            @endforeach
+        </script>
+    @endif
 @endsection
