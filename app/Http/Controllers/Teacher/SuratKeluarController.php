@@ -130,8 +130,7 @@ class SuratKeluarController extends Controller
             $date = Carbon::createFromFormat('Y-m-d', $request->date)->isoFormat('DD MMMM Y');
             $user->type = 'Guru';
             $pdf = Pdf::loadview('report.pensiun', compact('request', 'number', 'now', 'headmaster', 'date', 'user'))->setPaper('a4', 'portrait');
-            return $pdf->stream();
-            // $pdf->save(public_path('assets/report/outgoing/')  . $filename);
+            $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         } elseif ($request->id_type == 3) {
             if ($request->tipe_keterangan == 1) {
                 $this->validate($request, [
