@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\OutgoingType;
+use App\Models\FixingType;
 use Illuminate\Database\Seeder;
 
-class OutgoingTypeSeeder extends Seeder
+class FixingTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,23 +14,18 @@ class OutgoingTypeSeeder extends Seeder
      */
     public function run()
     {
+
         $name = [
-            'Surat Undangan',
-            'Surat Pengantar Pensiun',
-            'Surat Keterangan',
-            'Surat Mutasi',
-            'Surat Ijazah Belum Jadi',
+            'Surat Kerusakah Ijazah',
+            'Surat Ijazah Hilang',
         ];
         $number = [
-            '005',
-            '045.2',
             '422',
-            '422',
-            '010',
+            '420',
         ];
 
         for ($i = 0; $i < count($name); $i++) {
-            $user = OutgoingType::create([
+            $user = FixingType::create([
                 'name'             => $name[$i],
                 'number'           => $number[$i],
             ]);

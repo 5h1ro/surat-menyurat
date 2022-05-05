@@ -33,9 +33,15 @@ class StaffSeeder extends Seeder
             'Penata Muda Tk.I',
             'Penata Muda Tk.I',
         ];
+
         $class = [
             'III/b',
             'III/b',
+        ];
+
+        $type = [
+            '1',
+            '2',
         ];
 
 
@@ -45,7 +51,8 @@ class StaffSeeder extends Seeder
                 'id_user'           => $id_user[$i],
                 'nip'               => $nip[$i],
                 'rank'              => $rank[$i],
-                'class'              => $class[$i],
+                'class'             => $class[$i],
+                'type'              => $type[$i],
             ]);
             $user->save();
         };

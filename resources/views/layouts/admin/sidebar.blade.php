@@ -129,6 +129,16 @@
                     </li>
                 @else
                 @endif
+                @if ($user->role->outgoing == 1)
+                    <li
+                        class="{{ request()->is('headmaster/perbaikan-surat') || request()->is('headmaster/perbaikan-surat/*') ? 'active' : '' }} nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('headmaster.perbaikansurat.index') }}">
+                            <i data-feather="file-text"></i>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Keluar</span>
+                        </a>
+                    </li>
+                @else
+                @endif
             </ul>
         </div>
     @endif
@@ -175,6 +185,16 @@
                     </li>
                 @else
                 @endif
+                @if ($user->role->outgoing == 1)
+                    <li
+                        class="{{ request()->is('admin/perbaikan-surat') || request()->is('admin/perbaikan-surat/*') ? 'active' : '' }} nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('admin.perbaikansurat.index') }}">
+                            <i data-feather="file-text"></i>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan surat</span>
+                        </a>
+                    </li>
+                @else
+                @endif
             </ul>
         </div>
     @endif
@@ -194,9 +214,9 @@
                 @if ($user->role->outgoing == 1)
                     <li
                         class="{{ request()->is('student/surat-keluar') || request()->is('student/surat-keluar/*') ? 'active' : '' }} nav-item">
-                        <a class="d-flex align-items-center" href="{{ route('student.suratkeluar.index') }}">
+                        <a class="d-flex align-items-center" href="{{ route('student.perbaikansurat.index') }}">
                             <i data-feather="file-text"></i>
-                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Keluar</span>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan</span>
                         </a>
                     </li>
                 @else

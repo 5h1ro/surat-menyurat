@@ -138,10 +138,10 @@
                                 <label class="form-label" for="tipe_keterangan">Jenis Surat Keterangan</label>
                                 <select class="select2" id="tipe_keterangan" name="tipe_keterangan">
                                     <option value=1>Surat Keterangan Bersedia Menerima</option>
-                                    <option value=2>Surat Keterangan Kesalahan Ijazah</option>
+                                    {{-- <option value=2>Surat Keterangan Kesalahan Ijazah</option> --}}
                                 </select>
                             </div>
-                            <div id="skbm" class="d-none">
+                            <div id="skbm">
                                 <div class="mb-1">
                                     <label class="form-label" for="nama">Nama</label>
                                     <input type="text" class="form-control dt-full-name" id="nama" name="nama"
@@ -171,7 +171,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div id="skki" class="d-none">
+                            {{-- <div id="skki" class="d-none">
                                 <div class="mb-1">
                                     <label class="form-label" for="id_student">Nama Siswa</label>
                                     <select class="select2" id="id_student" name="id_student">
@@ -340,7 +340,7 @@
                                             placeholder="YYYY-MM-DD" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div id="mutasi" class="d-none">
                             <hr>
@@ -476,35 +476,36 @@
                             if (tipe_keterangan.val() == 1) {
                                 skbm.removeClass('d-none');
                                 skki.addClass('d-none');
-                            } else if (tipe_keterangan.val() == 2) {
-                                skbm.addClass('d-none');
-                                skki.removeClass('d-none');
-                                tipe_kesalahan.change(
-                                    function() {
-                                        if (tipe_kesalahan.val() == 1) {
-                                            nama_siswa.removeClass('d-none');
-                                            tempat_lahir.addClass('d-none');
-                                            tanggal_lahir.addClass('d-none');
-                                            nama_wali.addClass('d-none');
-                                        } else if (tipe_kesalahan.val() == 2) {
-                                            nama_siswa.addClass('d-none');
-                                            tempat_lahir.removeClass('d-none');
-                                            tanggal_lahir.addClass('d-none');
-                                            nama_wali.addClass('d-none');
-                                        } else if (tipe_kesalahan.val() == 3) {
-                                            nama_siswa.addClass('d-none');
-                                            tempat_lahir.addClass('d-none');
-                                            tanggal_lahir.removeClass('d-none');
-                                            nama_wali.addClass('d-none');
-                                        } else if (tipe_kesalahan.val() == 4) {
-                                            nama_siswa.addClass('d-none');
-                                            tempat_lahir.addClass('d-none');
-                                            tanggal_lahir.addClass('d-none');
-                                            nama_wali.removeClass('d-none');
-                                        }
-                                    }
-                                )
                             }
+                            // else if (tipe_keterangan.val() == 2) {
+                            //     skbm.addClass('d-none');
+                            //     skki.removeClass('d-none');
+                            //     tipe_kesalahan.change(
+                            //         function() {
+                            //             if (tipe_kesalahan.val() == 1) {
+                            //                 nama_siswa.removeClass('d-none');
+                            //                 tempat_lahir.addClass('d-none');
+                            //                 tanggal_lahir.addClass('d-none');
+                            //                 nama_wali.addClass('d-none');
+                            //             } else if (tipe_kesalahan.val() == 2) {
+                            //                 nama_siswa.addClass('d-none');
+                            //                 tempat_lahir.removeClass('d-none');
+                            //                 tanggal_lahir.addClass('d-none');
+                            //                 nama_wali.addClass('d-none');
+                            //             } else if (tipe_kesalahan.val() == 3) {
+                            //                 nama_siswa.addClass('d-none');
+                            //                 tempat_lahir.addClass('d-none');
+                            //                 tanggal_lahir.removeClass('d-none');
+                            //                 nama_wali.addClass('d-none');
+                            //             } else if (tipe_kesalahan.val() == 4) {
+                            //                 nama_siswa.addClass('d-none');
+                            //                 tempat_lahir.addClass('d-none');
+                            //                 tanggal_lahir.addClass('d-none');
+                            //                 nama_wali.removeClass('d-none');
+                            //             }
+                            //         }
+                            //     )
+                            // }
                         }
                     )
                 } else if (type.val() == 4) {

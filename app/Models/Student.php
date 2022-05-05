@@ -35,8 +35,8 @@ class Student extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function outgoing()
+    public function fixing()
     {
-        return $this->hasMany(Outgoing::class, 'id_student');
+        return $this->hasMany(Fixing::class, 'id_student');
     }
 }

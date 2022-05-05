@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Outgoing extends Model
+class Fixing extends Model
 {
     use HasFactory;
 
@@ -16,8 +16,7 @@ class Outgoing extends Model
         'to',
         'letter',
         'id_type',
-        'id_teacher',
-        'id_staff',
+        'id_student',
         'status',
     ];
 
@@ -27,28 +26,13 @@ class Outgoing extends Model
         'deleted_at',
     ];
 
-    public function type()
+    public function fixing()
     {
-        return $this->belongsTo(OutgoingType::class, 'id_type');
-    }
-
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class, 'id_teacher');
-    }
-
-    public function staff()
-    {
-        return $this->belongsTo(Staff::class, 'id_staff');
+        return $this->belongsTo(Fixing::class, 'id_type');
     }
 
     public function student()
     {
         return $this->belongsTo(Student::class, 'id_student');
-    }
-
-    public function scopeSearch($query, $keywords)
-    {
-        return $query->where('number', 'LIKE', '%' . $keywords . '%');
     }
 }

@@ -20,6 +20,7 @@ class CreateStaffTable extends Migration
             $table->string('rank');
             $table->string('class');
             $table->integer('id_user')->unsigned();
+            $table->integer('type')->default('1');
             $table->timestamps();
         });
         Schema::table('staff', function (Blueprint $table) {

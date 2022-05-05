@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Admin\DashboardController as ADashboardController;
 use App\Http\Controllers\Admin\DispositionController as ADispositionController;
+use App\Http\Controllers\Admin\PerbaikanSuratController as APerbaikanSuratController;
 use App\Http\Controllers\Admin\ProfileController as AProfileController;
 use App\Http\Controllers\Admin\SettingController as ASettingController;
 use App\Http\Controllers\Admin\SuratKeluarController as ASuratKeluarController;
 use App\Http\Controllers\Admin\SuratMasukController as ASuratMasukController;
 use App\Http\Controllers\Headmaster\DashboardController as HDashboardController;
 use App\Http\Controllers\Headmaster\DispositionController as HDispositionController;
+use App\Http\Controllers\Headmaster\PerbaikanSuratController as HPerbaikanSuratController;
 use App\Http\Controllers\Headmaster\ProfileController as HProfileController;
 use App\Http\Controllers\Headmaster\SuratKeluarController as HSuratKeluarController;
 use App\Http\Controllers\Headmaster\SuratMasukController as HSuratMasukController;
@@ -18,7 +20,7 @@ use App\Http\Controllers\Staff\SuratKeluarController as STSuratKeluarController;
 use App\Http\Controllers\Staff\SuratMasukController as STSuratMasukController;
 use App\Http\Controllers\Student\DashboardController as SDashboardController;
 use App\Http\Controllers\Student\ProfileController as SProfileController;
-use App\Http\Controllers\Student\SuratKeluarController as SSuratKeluarController;
+use App\Http\Controllers\Student\PerbaikanSuratController as SPerbaikanSuratController;
 use App\Http\Controllers\Superadmin\DashboardController as SUDashboardController;
 use App\Http\Controllers\Superadmin\ProfileController as SUProfileController;
 use App\Http\Controllers\Superadmin\RoleController as SURoleController;
@@ -120,6 +122,12 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/not_acc/{id}', [ASuratKeluarController::class, 'not_acc'])->name('admin.suratkeluar.not_acc');
                 Route::post('/upload/{id}', [ASuratKeluarController::class, 'upload'])->name('admin.suratkeluar.upload');
             });
+            Route::prefix('perbaikan-surat')->group(function () {
+                Route::get('/index', [APerbaikanSuratController::class, 'index'])->name('admin.perbaikansurat.index');
+                Route::get('/acc/{id}', [APerbaikanSuratController::class, 'acc'])->name('admin.perbaikansurat.acc');
+                Route::get('/not_acc/{id}', [APerbaikanSuratController::class, 'not_acc'])->name('admin.perbaikansurat.not_acc');
+                Route::post('/upload/{id}', [APerbaikanSuratController::class, 'upload'])->name('admin.perbaikansurat.upload');
+            });
             Route::prefix('pengaturan')->group(function () {
                 Route::get('/index', [ASettingController::class, 'index'])->name('admin.pengaturan.index');
                 Route::post('/edit', [ASettingController::class, 'edit'])->name('admin.pengaturan.edit');
@@ -153,6 +161,12 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/not_acc/{id}', [HSuratKeluarController::class, 'not_acc'])->name('headmaster.suratkeluar.not_acc');
             });
 
+            Route::prefix('perbaikan-surat')->group(function () {
+                Route::get('/index', [HPerbaikanSuratController::class, 'index'])->name('headmaster.perbaikansurat.index');
+                Route::get('/acc/{id}', [HPerbaikanSuratController::class, 'acc'])->name('headmaster.perbaikansurat.acc');
+                Route::get('/not_acc/{id}', [HPerbaikanSuratController::class, 'not_acc'])->name('headmaster.perbaikansurat.not_acc');
+            });
+
             Route::prefix('profil')->group(function () {
                 Route::get('/index', [HProfileController::class, 'index'])->name('headmaster.profil.index');
                 Route::post('/edit/{id}', [HProfileController::class, 'edit'])->name('headmaster.profil.edit');
@@ -163,11 +177,11 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('student')->group(function () {
             Route::get('/dashboard', [SDashboardController::class, 'index'])->name('student');
 
-            Route::prefix('surat-keluar')->group(function () {
-                Route::get('/index', [SSuratKeluarController::class, 'index'])->name('student.suratkeluar.index');
-                Route::get('/read/{id}', [SSuratKeluarController::class, 'read'])->name('student.suratkeluar.read');
-                Route::get('/delete/{id}', [SSuratKeluarController::class, 'delete'])->name('student.suratkeluar.delete');
-                Route::post('/create', [SSuratKeluarController::class, 'create'])->name('student.suratkeluar.create');
+            Route::prefix('perbaikan-surat')->group(function () {
+                Route::get('/index', [SPerbaikanSuratController::class, 'index'])->name('student.perbaikansurat.index');
+                Route::get('/read/{id}', [SPerbaikanSuratController::class, 'read'])->name('student.perbaikansurat.read');
+                Route::get('/delete/{id}', [SPerbaikanSuratController::class, 'delete'])->name('student.perbaikansurat.delete');
+                Route::post('/create', [SPerbaikanSuratController::class, 'create'])->name('student.perbaikansurat.create');
             });
 
             Route::prefix('profil')->group(function () {

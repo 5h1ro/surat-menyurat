@@ -21,7 +21,6 @@ class CreateOutgoingsTable extends Migration
             $table->text('letter');
             $table->integer('id_type')->unsigned();
             $table->integer('id_teacher')->unsigned()->nullable();
-            $table->integer('id_student')->unsigned()->nullable();
             $table->integer('id_staff')->unsigned()->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
@@ -29,7 +28,6 @@ class CreateOutgoingsTable extends Migration
         Schema::table('outgoings', function (Blueprint $table) {
             $table->foreign('id_type', 'id_type_outgoings_fk_01')->references('id')->on('outgoing_types')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_teacher', 'id_teacher_outgoings_fk_02')->references('id')->on('teachers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_student', 'id_student_outgoings_fk_03')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_staff', 'id_staff_outgoings_fk_04')->references('id')->on('staff')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -14,7 +14,8 @@ class Staff extends Model
         'nip',
         'id_user',
         'rank',
-        'class'
+        'class',
+        'type'
     ];
 
     protected $dates = [

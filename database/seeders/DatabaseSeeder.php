@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Fixing;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,8 @@ class DatabaseSeeder extends Seeder
             OutgoingTypeSeeder::class,
             OutgoingSeeder::class,
             DispositionSeeder::class,
+            FixingTypeSeeder::class,
+            FixingSeeder::class,
             SetupSeeder::class
         ]);
     }
