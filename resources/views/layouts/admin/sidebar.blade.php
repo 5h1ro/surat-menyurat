@@ -134,7 +134,7 @@
                         class="{{ request()->is('headmaster/perbaikan-surat') || request()->is('headmaster/perbaikan-surat/*') ? 'active' : '' }} nav-item">
                         <a class="d-flex align-items-center" href="{{ route('headmaster.perbaikansurat.index') }}">
                             <i data-feather="file-text"></i>
-                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Keluar</span>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan Surat</span>
                         </a>
                     </li>
                 @else

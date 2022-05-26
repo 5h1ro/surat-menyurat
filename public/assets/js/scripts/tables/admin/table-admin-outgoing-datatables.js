@@ -251,7 +251,7 @@ $(document).ready(function () {
                 }
             }
         });
-        $('div.head-label').html('<h6 class="mb-0">Data Surat Masuk</h6>');
+        $('div.head-label').html('<h6 class="mb-0">Data Surat Keluar</h6>');
     }
 
 });
