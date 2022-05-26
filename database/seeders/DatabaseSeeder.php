@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Fixing;
+use App\Models\StaffType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             SuperadminSeeder::class,
             HeadmasterSeeder::class,
+            StaffTypeSeeder::class,
             StaffSeeder::class,
             AdminSeeder::class,
             StudentSeeder::class,

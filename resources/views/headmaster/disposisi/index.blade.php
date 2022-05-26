@@ -66,7 +66,7 @@
             </div>
         </div>
         <!-- Modal to add new record -->
-        @foreach ($disposition as $data)
+        @foreach ($disposition as $key => $data)
             <div class="modal modal-slide-in fade" id="edit{{ $data->id }}">
                 <div class="modal-dialog sidebar-sm">
                     <form class="add-new-record modal-content pt-0" method="POST"
@@ -79,16 +79,18 @@
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
                                 <label class="form-label" for="id_teacher">Nama Guru</label>
-                                <select class=" form-select" id="id_teacher" name="id_teacher[]" multiple>
+                                <select class=" form-select id_teacher" id="id_teacher{{ $key }}"
+                                    name="id_teacher[]" multiple>
                                     @foreach ($teacher as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="id_staff">Nama Staff</label>
-                                <select class=" form-select" id="id_staff" name="id_staff[]" multiple>
-                                    @foreach ($staff as $item)
+                                <label class="form-label" for="id_stafftype">Nama Staff</label>
+                                <select class=" form-select" id="id_stafftype{{ $key }}" name="id_stafftype[]"
+                                    multiple>
+                                    @foreach ($stafftype as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
@@ -126,8 +128,11 @@
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
     <script>
-        $("#id_teacher").select2();
-        $("#id_staff").select2();
+        console.log($(".id_teacher").length);
+        for (let i = 0; i < $(".id_teacher").length; i++) {
+            $("#id_teacher" + i).select2();
+            $("#id_stafftype" + i).select2();
+        }
     </script>
     <script src="{{ asset('assets/js/scripts/tables/headmaster/table-headmaster-disposition-datatables.js') }}"></script>
     <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
@@ -135,9 +140,9 @@
         <script>
             @foreach ($errors->all() as $error)
                 toastr['error']("{{ $error }}", 'Error!', {
-                closeButton: true,
-                tapToDismiss: false,
-                timeOut: 5000,
+                    closeButton: true,
+                    tapToDismiss: false,
+                    timeOut: 5000,
                 });
             @endforeach
         </script>

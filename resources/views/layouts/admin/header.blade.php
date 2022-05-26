@@ -455,7 +455,7 @@
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->staff->name }}</span>
                             <span class="user-status">Staff
-                                {{ ($user->staff->type == '1' ? 'Kesiswaan' : $user->staff->type == '2') ? 'Administrasi' : '' }}</span>
+                                {{ $user->staff->type->name }}</span>
                         </div>
                         <span class="avatar bg-light-primary">
                             <span class="avatar-content">{{ substr($user->staff->name, 0, 1) }}</span>

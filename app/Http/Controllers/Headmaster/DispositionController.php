@@ -7,6 +7,7 @@ use App\Models\Disposition;
 use App\Models\Incoming;
 use App\Models\Outgoing;
 use App\Models\Staff;
+use App\Models\StaffType;
 use App\Models\Teacher;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -28,9 +29,10 @@ class DispositionController extends Controller
         $disposition = Disposition::all();
         $teacher = Teacher::all();
         $staff = Staff::all();
+        $stafftype = StaffType::all();
         $outgoing = Outgoing::where('status', '>=', 2)->get();
         $outgoing->count = count($outgoing->where('status', 2));
-        return view('headmaster.disposisi.index', compact('user', 'data', 'read', 'incoming', 'acc', 'not_acc', 'disposition', 'teacher', 'outgoing', 'staff'));
+        return view('headmaster.disposisi.index', compact('user', 'data', 'read', 'incoming', 'acc', 'not_acc', 'disposition', 'teacher', 'outgoing', 'staff', 'stafftype'));
     }
 
     public function getData($id, Request $request)
@@ -144,13 +146,13 @@ class DispositionController extends Controller
     {
         $now = Carbon::now()->format('dmYHis');
         $filename = $now . '.pdf';
-        if ($request->id_teacher == null && $request->id_staff == null) {
+        if ($request->id_teacher == null && $request->id_stafftype == null) {
             $this->validate($request, [
                 'id_teacher' => "required",
-                'id_staff' => "required",
+                'id_stafftype' => "required",
             ], [
                 'id_teacher.required' => 'Guru tidak boleh kosong',
-                'id_staff.required' => 'Staff tidak boleh kosong',
+                'id_stafftype.required' => 'Bidang tidak boleh kosong',
             ]);
         }
         if (isset($request->id_teacher)) {
@@ -159,10 +161,10 @@ class DispositionController extends Controller
                     $surat = Disposition::where('id', $id)->first();
                     $teacher = Teacher::where('id', $value)->first();
                     $name = $teacher->name;
-                    if (isset($request->id_staff)) {
+                    if (isset($request->id_stafftype)) {
                         $name = $name . ', ';
-                        foreach ($request->id_staff as $datas) {
-                            $staffs = Staff::where('id', $datas)->first();
+                        foreach ($request->id_stafftype as $datas) {
+                            $staffs = Staff::where('id_stafftype', $datas)->first();
                             $name = $name . $staffs->name . ', ';
                         }
                     }
@@ -177,12 +179,13 @@ class DispositionController extends Controller
                     $surat->save();
                     $this->readable($surat->id_incoming);
                 }
-                if (isset($request->id_staff)) {
-                    for ($i = 0; $i < count($request->id_staff); $i++) {
+                if (isset($request->id_stafftype)) {
+                    for ($i = 0; $i < count($request->id_stafftype); $i++) {
+                        $staff_disposition = Staff::where('id_stafftype', $request->id_stafftype[$i])->first();
                         $surat_first = Disposition::where('id', $id)->first();
                         $surat = new Disposition;
                         $surat->id_incoming = $surat_first->id_incoming;
-                        $surat->id_staff = $request->id_staff[$i];
+                        $surat->id_staff = $staff_disposition->id;
                         $surat->letter = $surat_first->letter;
                         $surat->instruction = $surat_first->instruction;
                         $surat->status = $surat_first->status;
@@ -202,9 +205,9 @@ class DispositionController extends Controller
                             $teachers = Teacher::where('id', $datas)->first();
                             $name = $name . $teachers->name . ', ';
                         }
-                        if (isset($request->id_staff)) {
-                            foreach ($request->id_staff as $datas) {
-                                $staffs = Staff::where('id', $datas)->first();
+                        if (isset($request->id_stafftype)) {
+                            foreach ($request->id_stafftype as $datas) {
+                                $staffs = Staff::where('id_type', $datas)->first();
                                 $name = $name . $staffs->name . ', ';
                             }
                         }
@@ -232,12 +235,13 @@ class DispositionController extends Controller
                         $this->readable($surat->id_incoming);
                     }
                 }
-                if (isset($request->id_staff)) {
-                    for ($i = 0; $i < count($request->id_staff); $i++) {
+                if (isset($request->id_stafftype)) {
+                    for ($i = 0; $i < count($request->id_stafftype); $i++) {
+                        $staff_disposition = Staff::where('id_type', $request->id_stafftype[$i])->first();
                         $surat_first = Disposition::where('id', $id)->first();
                         $surat = new Disposition;
                         $surat->id_incoming = $surat_first->id_incoming;
-                        $surat->id_staff = $request->id_staff[$i];
+                        $surat->id_staff = $staff_disposition->id;
                         $surat->letter = $surat_first->letter;
                         $surat->instruction = $surat_first->instruction;
                         $surat->status = $surat_first->status;
@@ -250,8 +254,8 @@ class DispositionController extends Controller
                 }
             }
         } else {
-            if (count($request->id_staff) == 1) {
-                foreach ($request->id_staff as $value) {
+            if (count($request->id_stafftype) == 1) {
+                foreach ($request->id_stafftype as $value) {
                     $surat = Disposition::where('id', $id)->first();
                     $staff = Staff::where('id', $value)->first();
                     $name = $staff->name;
@@ -259,7 +263,8 @@ class DispositionController extends Controller
                     $date = Carbon::createFromFormat('Y-m-d', substr($surat->incoming->created_at, 0, 10))->isoFormat('DD MMMM Y');
                     $pdf = Pdf::loadview('report.disposisi_edit', compact('surat', 'date', 'name', 'request'))->setPaper('a4', 'portrait');
                     $pdf->save(public_path('assets/report/disposition/')  . $filename);
-                    $surat->id_staff = $value;
+                    $staff_disposition = Staff::where('id_type', $value)->first();
+                    $surat->id_staff = $staff_disposition->id;
                     $surat->letter = asset('assets/report/disposition/' . $filename);
                     $surat->instruction = $request->instruction;
                     $surat->status = 1;
@@ -267,20 +272,21 @@ class DispositionController extends Controller
                     $this->readable($surat->id_incoming);
                 }
             } else {
-                for ($i = 0; $i < count($request->id_staff); $i++) {
+                for ($i = 0; $i < count($request->id_stafftype); $i++) {
                     if ($i == 0) {
                         $surat = Disposition::where('id', $id)->first();
                         $name = "";
-                        foreach ($request->id_staff as $datas) {
-                            $staffs = Staff::where('id', $datas)->first();
+                        foreach ($request->id_stafftype as $datas) {
+                            $staffs = Staff::where('id_type', $datas)->first();
                             $name = $name . $staffs->name . ', ';
                         }
                         $name = substr($name, 0, -2);
+                        $staff_disposition = Staff::where('id_type', $request->id_stafftype)->first();
                         $surat->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $surat->incoming->letter_date)->isoFormat('DD MMMM Y');
                         $date = Carbon::createFromFormat('Y-m-d', substr($surat->incoming->created_at, 0, 10))->isoFormat('DD MMMM Y');
                         $pdf = Pdf::loadview('report.disposisi_edit', compact('surat', 'date', 'name', 'request'))->setPaper('a4', 'portrait');
                         $pdf->save(public_path('assets/report/disposition/')  . $filename);
-                        $surat->id_staff = $request->id_staff[$i];
+                        $surat->id_staff = $staff_disposition->id;
                         $surat->letter = asset('assets/report/disposition/' . $filename);
                         $surat->instruction = $request->instruction;
                         $surat->status = 1;
@@ -289,8 +295,9 @@ class DispositionController extends Controller
                     } else {
                         $surat_first = Disposition::where('id', $id)->first();
                         $surat = new Disposition;
+                        $staff_disposition = Staff::where('id_type', $request->id_stafftype)->first();
                         $surat->id_incoming = $surat_first->id_incoming;
-                        $surat->id_staff = $request->id_staff[$i];
+                        $surat->id_staff = $staff_disposition->id;
                         $surat->letter = $surat_first->letter;
                         $surat->instruction = $surat_first->instruction;
                         $surat->status = $surat_first->status;

@@ -125,7 +125,7 @@
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="letter">Scan Surat</label>
-                            <input class="form-control" type="file" id="letter" name="letter">
+                            <input class="form-control" type="file" id="letter" name="letter" accept="application/pdf">
                         </div>
                         <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -212,9 +212,9 @@
         <script>
             @foreach ($errors->all() as $error)
                 toastr['error']("{{ $error }}", 'Error!', {
-                closeButton: true,
-                tapToDismiss: false,
-                timeOut: 5000,
+                    closeButton: true,
+                    tapToDismiss: false,
+                    timeOut: 5000,
                 });
             @endforeach
         </script>

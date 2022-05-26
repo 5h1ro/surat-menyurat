@@ -25,6 +25,9 @@ class UserSeeder extends Seeder
             'superadmin@superadmin.com',
             'staff@staff.com',
             'staff2@staff2.com',
+            'staff3@staff3.com',
+            'staff4@staff4.com',
+            'staff5@staff5.com',
         ];
 
         $role = [
@@ -35,6 +38,9 @@ class UserSeeder extends Seeder
             '3',
             '4',
             '5',
+            '6',
+            '6',
+            '6',
             '6',
             '6',
         ];

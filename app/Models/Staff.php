@@ -15,7 +15,7 @@ class Staff extends Model
         'id_user',
         'rank',
         'class',
-        'type'
+        'id_type'
     ];
 
     protected $dates = [
@@ -37,5 +37,10 @@ class Staff extends Model
     public function outgoing()
     {
         return $this->hasMany(Outgoing::class, 'id_staff');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(StaffType::class, 'id_type');
     }
 }

@@ -20,11 +20,12 @@ class CreateStaffTable extends Migration
             $table->string('rank');
             $table->string('class');
             $table->integer('id_user')->unsigned();
-            $table->integer('type')->default('1');
+            $table->integer('id_type')->unsigned()->default('1');
             $table->timestamps();
         });
         Schema::table('staff', function (Blueprint $table) {
             $table->foreign('id_user', 'id_user_staff_fk_01')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_type', 'id_type_staff_fk_01')->references('id')->on('staff_types')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

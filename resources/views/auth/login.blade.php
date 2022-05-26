@@ -98,7 +98,7 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <h2 class="brand-text text-primary ms-1">Surat</h2>
+                                    <h2 class="brand-text text-primary ms-1">Surat - Menyurat</h2>
                                 </a>
 
                                 <h4 class="card-title mb-1">Selamat Datang 👋</h4>
