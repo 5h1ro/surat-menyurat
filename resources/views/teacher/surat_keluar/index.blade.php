@@ -125,8 +125,8 @@
                             <div class="mb-1">Keperluan Surat
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date">Tanggal</label>
-                                <input type="text" id="date" name="date"
+                                <label class="form-label" for="date_pensiun">Tanggal</label>
+                                <input type="text" id="date_pensiun" name="date_pensiun"
                                     class="form-control flatpickr-basic flatpickr-input " placeholder="YYYY-MM-DD" />
                             </div>
                         </div>
@@ -522,9 +522,9 @@
         <script>
             @foreach ($errors->all() as $error)
                 toastr['error']("{{ $error }}", 'Error!', {
-                closeButton: true,
-                tapToDismiss: false,
-                timeOut: 5000,
+                    closeButton: true,
+                    tapToDismiss: false,
+                    timeOut: 5000,
                 });
             @endforeach
         </script>

@@ -123,11 +123,11 @@ class SuratKeluarController extends Controller
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         } elseif ($request->id_type == 2) {
             $this->validate($request, [
-                'date' => "required",
+                'date_pensiun' => "required",
             ], [
-                'date.required' => 'Tanggal harus diisi',
+                'date_pensiun.required' => 'Tanggal harus diisi',
             ]);
-            $date = Carbon::createFromFormat('Y-m-d', $request->date)->isoFormat('DD MMMM Y');
+            $date = Carbon::createFromFormat('Y-m-d', $request->date_pensiun)->isoFormat('DD MMMM Y');
             $user->type = 'Guru';
             $pdf = Pdf::loadview('report.pensiun', compact('request', 'number', 'now', 'headmaster', 'date', 'user'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);

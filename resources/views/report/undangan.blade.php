@@ -144,7 +144,12 @@
                         :
                     </td>
                     <td>
-                        {{ $start_day }} - {{ $end_day }}, {{ $start }} - {{ $end }}
+                        @if ($start == $end)
+                            {{ $start_day }} - {{ $end_day }}, {{ $start }} - {{ $end }}
+                        @else
+                            {{ $start_day }}, {{ $end }}
+                        @endif
+
                     </td>
                 </tr>
                 <tr>
