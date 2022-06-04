@@ -67,41 +67,45 @@
             </div>
         </div>
         <!-- Modal to add new record -->
-        <div class="modal modal-slide-in fade" id="modals-slide-in">
+        <div class="modal fade text-start" id="modals-slide-in" tabindex="-1" aria-labelledby="myModalLabel33"
+            aria-hidden="true">
             <div class="modal-dialog sidebar-sm">
                 <form class="add-new-record modal-content pt-0" method="POST"
                     action="{{ route('admin.suratmasuk.create') }}" enctype="multipart/form-data">
                     @csrf
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+
                     <div class="modal-header mb-1">
                         <h5 class="modal-title" id="exampleModalLabel">Data Baru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body flex-grow-1">
                         <div class="mb-1">
                             <label class="form-label" for="letter_number">Nomor Surat</label>
-                            <input type="text" id="letter_number" name="letter_number" class="form-control"
+                            <input required type="text" id="letter_number" name="letter_number" class="form-control"
                                 placeholder="xxx/xxx/xx.xxx/xxxx" />
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="letter_date">Tanggal Surat</label>
-                            <input type="text" id="letter_date" name="letter_date" class="form-control flatpickr-basic"
-                                placeholder="YYYY-MM-DD" />
+                            <input required type="text" id="letter_date" name="letter_date"
+                                class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="from">Asal Surat</label>
-                            <input type="text" id="from" name="from" class="form-control" placeholder="Dinas ..." />
+                            <input required type="text" id="from" name="from" class="form-control"
+                                placeholder="Dinas ..." />
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="title">Nama & Alamat</label>
-                            <input type="text" id="title" name="title" class="form-control" placeholder="Surat ..." />
+                            <input required type="text" id="title" name="title" class="form-control"
+                                placeholder="Surat ..." />
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="detail">Isi Pokok Surat</label>
-                            <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
+                            <textarea required class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="id_type">Tipe</label>
-                            <select class="form-select" id="id_type" name="id_type">
+                            <select required class="form-select" id="id_type" name="id_type">
                                 @foreach ($type as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -125,7 +129,8 @@
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="letter">Scan Surat</label>
-                            <input class="form-control" type="file" id="letter" name="letter" accept="application/pdf">
+                            <input required class="form-control" type="file" id="letter" name="letter"
+                                accept="application/pdf">
                         </div>
                         <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>

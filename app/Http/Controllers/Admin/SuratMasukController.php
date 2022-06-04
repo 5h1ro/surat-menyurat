@@ -108,7 +108,7 @@ class SuratMasukController extends Controller
             'id_type' => "required",
             'id_headmaster' => "required",
             'information' => "required",
-            'letter' => "required",
+            'letter' => "required|mimes:pdf",
         ], [
             'letter_number.required' => 'Nomor surat tidak boleh kosong',
             'letter_date.required' => 'Tanggal surat tidak boleh kosong',
@@ -120,6 +120,7 @@ class SuratMasukController extends Controller
             'id_headmaster.required' => 'Kepala sekolah tidak boleh kosong',
             'information.required' => 'Jenis surat tidak boleh kosong',
             'letter.required' => 'Scan surat tidak boleh kosong',
+            'letter.mimes' => 'File harus berformat pdf',
         ]);
 
         $last_incoming = Incoming::latest()->first();

@@ -23,7 +23,7 @@ class HeadmasterSeeder extends Seeder
         ];
 
         $nip = [
-            '19661015 199001 1 002',
+            '196610151990011021',
         ];
 
         $rank = [

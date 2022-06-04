@@ -24,8 +24,8 @@ class CreateStudentsTable extends Migration
             $table->string('parent');
             $table->string('parent_job');
             $table->text('address');
-            $table->string('ni')->unique();
-            $table->string('nisn')->unique();
+            $table->integer('ni')->unique();
+            $table->integer('nisn')->unique();
             $table->integer('id_user')->unsigned();
             $table->timestamps();
         });

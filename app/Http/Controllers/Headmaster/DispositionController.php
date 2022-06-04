@@ -159,13 +159,16 @@ class DispositionController extends Controller
             if (count($request->id_teacher) == 1) {
                 foreach ($request->id_teacher as $value) {
                     $surat = Disposition::where('id', $id)->first();
+                    $surat_all = Disposition::where('id', $id)->get();
                     $teacher = Teacher::where('id', $value)->first();
                     $name = $teacher->name;
                     if (isset($request->id_stafftype)) {
                         $name = $name . ', ';
-                        foreach ($request->id_stafftype as $datas) {
-                            $staffs = Staff::where('id_stafftype', $datas)->first();
-                            $name = $name . $staffs->name . ', ';
+                        foreach ($surat_all as $datas) {
+                            if ($datas->id_staff != null) {
+                                $staffs = Staff::where('id', $datas->id_staff)->first();
+                                $name = $name . $staffs->name . ', ';
+                            }
                         }
                     }
                     $surat->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $surat->incoming->letter_date)->isoFormat('DD MMMM Y');
@@ -181,16 +184,18 @@ class DispositionController extends Controller
                 }
                 if (isset($request->id_stafftype)) {
                     for ($i = 0; $i < count($request->id_stafftype); $i++) {
-                        $staff_disposition = Staff::where('id_stafftype', $request->id_stafftype[$i])->first();
+                        $staff_disposition = Staff::where('id_type', $request->id_stafftype[$i])->first();
                         $surat_first = Disposition::where('id', $id)->first();
-                        $surat = new Disposition;
-                        $surat->id_incoming = $surat_first->id_incoming;
-                        $surat->id_staff = $staff_disposition->id;
-                        $surat->letter = $surat_first->letter;
-                        $surat->instruction = $surat_first->instruction;
-                        $surat->status = $surat_first->status;
-                        $surat->information = $surat_first->information;
-                        $surat->save();
+                        if (Disposition::where('id_staff', $request->id_stafftype[$i])->first() == null) {
+                            $surat = new Disposition;
+                            $surat->id_incoming = $surat_first->id_incoming;
+                            $surat->id_staff = $staff_disposition->id;
+                            $surat->letter = $surat_first->letter;
+                            $surat->instruction = $surat_first->instruction;
+                            $surat->status = $surat_first->status;
+                            $surat->information = $surat_first->information;
+                            $surat->save();
+                        }
                     }
                 } else {
                     $surat->save();
@@ -307,7 +312,29 @@ class DispositionController extends Controller
                 }
             }
         }
-
+        $disposition_surat = Disposition::where('id', $id)->get();
+        $surat_first = Disposition::where('id', $id)->first();
+        $surat_all = Disposition::where('id_incoming', $surat_first->id_incoming)->get();
+        foreach ($disposition_surat as $key => $value) {
+            $name = '';
+            foreach ($surat_all as $datas) {
+                if ($datas->id_staff != null) {
+                    $staffs = Staff::where('id', $datas->id_staff)->first();
+                    $name = $name . $staffs->name . ', ';
+                } else {
+                    $teacher = Teacher::where('id', $datas->id_teacher)->first();
+                    $name = $name . $teacher->name . ', ';
+                }
+            }
+        }
+        foreach ($surat_all as $key => $surat) {
+            $surat->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $surat->incoming->letter_date)->isoFormat('DD MMMM Y');
+            $date = Carbon::createFromFormat('Y-m-d', substr($surat->incoming->created_at, 0, 10))->isoFormat('DD MMMM Y');
+            $pdf = Pdf::loadview('report.disposisi_edit', compact('surat', 'date', 'name', 'request'))->setPaper('a4', 'portrait');
+            $pdf->save(public_path('assets/report/disposition/')  . $filename);
+            $surat->letter = asset('assets/report/disposition/' . $filename);
+            $surat->save();
+        }
         return redirect()->back();
     }
 

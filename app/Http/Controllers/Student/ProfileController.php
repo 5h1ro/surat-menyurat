@@ -23,7 +23,6 @@ class ProfileController extends Controller
         $user = User::find($id);
         $this->validate($request, [
             'name' => "required",
-            'nip' => ['required', 'numeric', Rule::unique('students')->ignore($user->staff)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
             'birthplace' => "required",
             'birthday' => "required|before:today",
@@ -32,9 +31,6 @@ class ProfileController extends Controller
             'nisn' => "required|numeric",
         ], [
             'name.required' => 'Nama tidak boleh kosong',
-            'nip.required' => 'NIP tidak boleh kosong',
-            'nip.numeric' => 'NIP hanya boleh diisi angka tanpa spasi',
-            'nip.unique' => 'NIP sudah ada dengan akun lain',
             'email.required' => 'Email tidak boleh kosong',
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',

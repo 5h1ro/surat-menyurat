@@ -68,7 +68,7 @@
                         class="{{ request()->is('teacher/surat-masuk') || request()->is('teacher/surat-masuk/*') ? 'active' : '' }} nav-item">
                         <a class="d-flex align-items-center" href="{{ route('teacher.suratmasuk.index') }}">
                             <i data-feather="file-text"></i>
-                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Masuk</span>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Disposisi</span>
                         </a>
                     </li>
                 @else
@@ -216,7 +216,7 @@
                         class="{{ request()->is('student/surat-keluar') || request()->is('student/surat-keluar/*') ? 'active' : '' }} nav-item">
                         <a class="d-flex align-items-center" href="{{ route('student.perbaikansurat.index') }}">
                             <i data-feather="file-text"></i>
-                            <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan</span>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan Surat</span>
                         </a>
                     </li>
                 @else
@@ -266,7 +266,7 @@
                         class="{{ request()->is('staff/surat-masuk') || request()->is('staff/surat-masuk/*') ? 'active' : '' }} nav-item">
                         <a class="d-flex align-items-center" href="{{ route('staff.suratmasuk.index') }}">
                             <i data-feather="file-text"></i>
-                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Masuk</span>
+                            <span class="menu-title text-truncate" data-i18n="Surat">Surat Disposisi</span>
                         </a>
                     </li>
                 @else
