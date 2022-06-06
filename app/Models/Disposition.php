@@ -9,10 +9,15 @@ class Disposition extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
-        'id_incoming',
-        'id_teacher',
-        'id_staff',
+        'id',
+        'fk_incoming',
+        'fk_teacher',
+        'fk_staff',
         'letter',
         'status',
         'information',
@@ -27,16 +32,16 @@ class Disposition extends Model
 
     public function incoming()
     {
-        return $this->belongsTo(Incoming::class, 'id_incoming');
+        return $this->belongsTo(Incoming::class, 'fk_incoming');
     }
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'id_teacher');
+        return $this->belongsTo(Teacher::class, 'fk_teacher');
     }
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'id_staff');
+        return $this->belongsTo(Staff::class, 'fk_staff');
     }
 }

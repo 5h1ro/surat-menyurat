@@ -18,8 +18,8 @@ class HeadmasterSeeder extends Seeder
             'Riduwan, S.Pd, M.Pd',
         ];
 
-        $id_user = [
-            '3',
+        $fk_user = [
+            'headmaster@headmaster.com',
         ];
 
         $nip = [
@@ -37,7 +37,7 @@ class HeadmasterSeeder extends Seeder
         for ($i = 0; $i < count($name); $i++) {
             $user = Headmaster::create([
                 'name'             => $name[$i],
-                'id_user'          => $id_user[$i],
+                'fk_user'          => $fk_user[$i],
                 'nip'              => $nip[$i],
                 'rank'              => $rank[$i],
                 'class'              => $class[$i],

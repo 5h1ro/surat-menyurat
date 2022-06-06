@@ -14,14 +14,20 @@ class IncomingTypeSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'IT-01',
+            'IT-02',
+            'IT-03',
+        ];
         $name = [
             'Surat Perjanjian Kerja Sama',
             'Surat Dinas',
             'Surat Undangan',
         ];
 
-        foreach ($name as $data) {
+        foreach ($name as $key => $data) {
             $user = IncomingType::create([
+                'id'              => $id[$key],
                 'name'             => $data,
             ]);
             $user->save();

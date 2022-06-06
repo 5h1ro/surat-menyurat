@@ -14,7 +14,7 @@ class CreateFixingTypesTable extends Migration
     public function up()
     {
         Schema::create('fixing_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('name');
             $table->string('number');
             $table->timestamps();

@@ -90,8 +90,8 @@
                             <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="id_type">Jenis Surat</label>
-                            <select class="select2" id="id_type" name="id_type">
+                            <label class="form-label" for="fk_type">Jenis Surat</label>
+                            <select class="select2" id="fk_type" name="fk_type">
                                 @foreach ($type as $data_type)
                                     <option value={{ $data_type->id }}>{{ $data_type->name }}</option>
                                 @endforeach
@@ -368,7 +368,7 @@
 
     <script src="{{ asset('assets/js/scripts/tables/student/table-student-fixing-datatables.js') }}"></script>
     <script>
-        var type = $('#id_type');
+        var type = $('#fk_type');
         var skki = $('#skki');
         var sih = $('#sih');
         var tipe_kesalahan = $('#tipe_kesalahan');
@@ -378,10 +378,10 @@
         var nama_wali = $('#nama_walis');
         type.change(
             function() {
-                if (type.val() == 1) {
+                if (type.val() == 'FT-01') {
                     skki.removeClass('d-none');
                     sih.addClass('d-none');
-                } else if (type.val() == 2) {
+                } else if (type.val() == 'FT-02') {
                     skki.addClass('d-none');
                     sih.removeClass('d-none');
                 }

@@ -10,11 +10,15 @@ class Admin extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'nip',
-        'id_user',
+        'name',
+        'fk_user',
         'status'
     ];
+
+    protected $primaryKey = 'nip';
+
+    public $incrementing = false;
 
     protected $dates = [
         'created_at',
@@ -24,11 +28,11 @@ class Admin extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 
     public function incoming()
     {
-        return $this->hasMany(Incoming::class, 'id_admin');
+        return $this->hasMany(Incoming::class, 'fk_admin');
     }
 }

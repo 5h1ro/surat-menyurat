@@ -19,9 +19,9 @@ class TeacherSeeder extends Seeder
             'Eka Novita Sari, S.Pd',
         ];
 
-        $id_user = [
-            '1',
-            '2',
+        $fk_user = [
+            'teacher@teacher.com',
+            'teacher2@teacher2.com',
         ];
 
         $nip = [
@@ -42,7 +42,7 @@ class TeacherSeeder extends Seeder
         for ($i = 0; $i < count($name); $i++) {
             $user = Teacher::create([
                 'name'             => $name[$i],
-                'id_user'          => $id_user[$i],
+                'fk_user'          => $fk_user[$i],
                 'nip'              => $nip[$i],
                 'rank'              => $rank[$i],
                 'class'              => $class[$i],

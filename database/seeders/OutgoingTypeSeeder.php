@@ -14,6 +14,14 @@ class OutgoingTypeSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'OT-01',
+            'OT-02',
+            'OT-03',
+            'OT-04',
+            'OT-05',
+        ];
+
         $name = [
             'Surat Undangan',
             'Surat Pengantar Pensiun',
@@ -31,6 +39,7 @@ class OutgoingTypeSeeder extends Seeder
 
         for ($i = 0; $i < count($name); $i++) {
             $user = OutgoingType::create([
+                'id'             => $id[$i],
                 'name'             => $name[$i],
                 'number'           => $number[$i],
             ]);

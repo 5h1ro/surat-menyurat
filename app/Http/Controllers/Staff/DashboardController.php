@@ -15,8 +15,8 @@ class DashboardController extends Controller
         $disposition = Disposition::all();
         $incoming = collect();
         foreach ($disposition as $value) {
-            if ($value->id_staff != null) {
-                if ($value->id_staff == $user->staff->id && $value->incoming->status_teacher == 0) {
+            if ($value->fk_staff != null) {
+                if ($value->fk_staff == $user->staff->nip && $value->incoming->status_teacher == 0) {
                     $incoming->push($value->incoming);
                 }
             }

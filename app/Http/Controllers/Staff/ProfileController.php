@@ -19,8 +19,8 @@ class ProfileController extends Controller
         $disposition = Disposition::all();
         $incoming = collect();
         foreach ($disposition as $value) {
-            if ($value->id_staff != null) {
-                if ($value->id_staff == $user->staff->id && $value->incoming->status_teacher == 0) {
+            if ($value->fk_staff != null) {
+                if ($value->fk_staff == $user->staff->nip && $value->incoming->status_teacher == 0) {
                     $incoming->push($value->incoming);
                 }
             }
@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $user = User::find($id);
         $this->validate($request, [
             'name' => "required",
-            'nip' => ['required', 'numeric', Rule::unique('staffs')->ignore($user->staff)],
+            'nip' => ['required', 'numeric', Rule::unique('staff')->ignore($user->staff)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
         ], [
             'name.required' => 'Nama tidak boleh kosong',
@@ -45,7 +45,7 @@ class ProfileController extends Controller
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',
         ]);
-        $staff = Staff::where('id_user', $user->id)->first();
+        $staff = $user->staff;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

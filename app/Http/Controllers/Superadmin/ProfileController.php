@@ -34,7 +34,7 @@ class ProfileController extends Controller
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',
         ]);
-        $superadmin = Superadmin::where('id_user', $user->id)->first();
+        $superadmin = $user->superadmin;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

@@ -15,6 +15,11 @@ class FixingTypeSeeder extends Seeder
     public function run()
     {
 
+        $id = [
+            'FT-01',
+            'FT-02',
+        ];
+
         $name = [
             'Surat Kerusakah Ijazah',
             'Surat Ijazah Hilang',
@@ -26,6 +31,7 @@ class FixingTypeSeeder extends Seeder
 
         for ($i = 0; $i < count($name); $i++) {
             $user = FixingType::create([
+                'id'               => $id[$i],
                 'name'             => $name[$i],
                 'number'           => $number[$i],
             ]);

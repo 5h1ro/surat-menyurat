@@ -14,7 +14,7 @@ class CreateIncomingTypesTable extends Migration
     public function up()
     {
         Schema::create('incoming_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('name');
             $table->timestamps();
         });

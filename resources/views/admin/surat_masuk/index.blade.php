@@ -104,18 +104,18 @@
                             <textarea required class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="id_type">Tipe</label>
-                            <select required class="form-select" id="id_type" name="id_type">
+                            <label class="form-label" for="fk_type">Tipe</label>
+                            <select required class="form-select" id="fk_type" name="fk_type">
                                 @foreach ($type as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-1" id="headmaster">
-                            <label class="form-label" for="id_headmaster">Nama Kepala Sekolah</label>
-                            <select class="form-select" id="id_headmaster" name="id_headmaster">
+                            <label class="form-label" for="fk_headmaster">Nama Kepala Sekolah</label>
+                            <select class="form-select" id="fk_headmaster" name="fk_headmaster">
                                 @foreach ($headmaster as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->nip }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -139,7 +139,7 @@
             </div>
         </div>
         @foreach ($incoming as $item)
-            <div class="modal fade" id="detail{{ $item->id }}" tabindex="-1" aria-labelledby="detailTitle"
+            <div class="modal fade" id="detail{{ md5($item->number) }}" tabindex="-1" aria-labelledby="detailTitle"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">

@@ -18,8 +18,8 @@ class SuperadminSeeder extends Seeder
             'Indri Riani',
         ];
 
-        $id_user = [
-            '7',
+        $fk_user = [
+            'superadmin@superadmin.com',
         ];
 
         $nip = [
@@ -30,7 +30,7 @@ class SuperadminSeeder extends Seeder
         for ($i = 0; $i < count($name); $i++) {
             $user = Superadmin::create([
                 'name'             => $name[$i],
-                'id_user'          => $id_user[$i],
+                'fk_user'          => $fk_user[$i],
                 'nip'              => $nip[$i],
             ]);
             $user->save();

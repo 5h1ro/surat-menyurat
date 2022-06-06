@@ -9,10 +9,14 @@ class Teacher extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nip';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'nip',
-        'id_user',
+        'fk_user',
         'rank',
         'class'
     ];
@@ -25,16 +29,16 @@ class Teacher extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 
     public function disposition()
     {
-        return $this->hasMany(Disposition::class, 'id_teacher');
+        return $this->hasMany(Disposition::class, 'fk_teacher');
     }
 
     public function outgoing()
     {
-        return $this->hasMany(Outgoing::class, 'id_teacher');
+        return $this->hasMany(Outgoing::class, 'fk_teacher');
     }
 }

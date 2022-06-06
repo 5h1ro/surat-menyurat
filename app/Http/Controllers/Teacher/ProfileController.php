@@ -19,8 +19,8 @@ class ProfileController extends Controller
         $disposition = Disposition::all();
         $incoming = collect();
         foreach ($disposition as $value) {
-            if ($value->id_teacher != null) {
-                if ($value->id_teacher == $user->teacher->id && $value->incoming->status_teacher == 0) {
+            if ($value->fk_teacher != null) {
+                if ($value->fk_teacher == $user->teacher->nip && $value->incoming->status_teacher == 0) {
                     $incoming->push($value->incoming);
                 }
             }
@@ -45,7 +45,7 @@ class ProfileController extends Controller
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',
         ]);
-        $teacher = Teacher::where('id_user', $user->id)->first();
+        $teacher = $user->teacher;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

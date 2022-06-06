@@ -8,7 +8,7 @@
                     <i class="ficon" data-feather="moon"></i>
                 </a>
             </li>
-            @if ($user->id_role == 1)
+            @if ($user->id_role == 'R-01')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -75,7 +75,7 @@
                     </ul>
                 </li>
             @endif
-            @if ($user->id_role == 2)
+            @if ($user->id_role == 'R-02')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -190,7 +190,7 @@
                     </ul>
                 </li>
             @endif
-            @if ($user->id_role == 3)
+            @if ($user->id_role == 'R-03')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -257,7 +257,7 @@
                     </ul>
                 </li>
             @endif
-            @if ($user->id_role == 4)
+            @if ($user->id_role == 'R-04')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -291,7 +291,7 @@
                     </ul>
                 </li>
             @endif
-            @if ($user->id_role == 5)
+            @if ($user->id_role == 'R-05')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -325,7 +325,7 @@
                     </ul>
                 </li>
             @endif
-            @if ($user->id_role == 6)
+            @if ($user->id_role == 'R-06')
                 <li class="nav-item dropdown dropdown-notification me-25">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
@@ -395,7 +395,7 @@
             <li class="nav-item dropdown dropdown-user">
                 <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if ($user->id_role == 1)
+                    @if ($user->id_role == 'R-01')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->teacher->name }}</span>
                             <span class="user-status">Guru</span>
@@ -406,7 +406,7 @@
                             </span>
                         </span>
                     @endif
-                    @if ($user->id_role == 2)
+                    @if ($user->id_role == 'R-02')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->headmaster->name }}</span>
                             <span class="user-status">Kepala Sekolah</span>
@@ -417,7 +417,7 @@
                             </span>
                         </span>
                     @endif
-                    @if ($user->id_role == 3)
+                    @if ($user->id_role == 'R-03')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->admin->name }}</span>
                             <span
@@ -429,7 +429,7 @@
                             </span>
                         </span>
                     @endif
-                    @if ($user->id_role == 4)
+                    @if ($user->id_role == 'R-04')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->student->name }}</span>
                             <span class="user-status">Siswa</span>
@@ -440,7 +440,7 @@
                             </span>
                         </span>
                     @endif
-                    @if ($user->id_role == 5)
+                    @if ($user->id_role == 'R-05')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->superadmin->name }}</span>
                             <span class="user-status">Superadmin</span>
@@ -451,7 +451,7 @@
                             </span>
                         </span>
                     @endif
-                    @if ($user->id_role == 6)
+                    @if ($user->id_role == 'R-06')
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">{{ $user->staff->name }}</span>
                             <span class="user-status">Staff
@@ -465,44 +465,44 @@
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    @if ($user->id_role == 1)
+                    @if ($user->id_role == 'R-01')
                         <a class="dropdown-item" href="{{ route('teacher.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
-                    @if ($user->id_role == 2)
+                    @if ($user->id_role == 'R-02')
                         <a class="dropdown-item" href="{{ route('headmaster.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
-                    @if ($user->id_role == 3)
+                    @if ($user->id_role == 'R-03')
                         <a class="dropdown-item" href="{{ route('admin.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
-                    @if ($user->id_role == 4)
+                    @if ($user->id_role == 'R-04')
                         <a class="dropdown-item" href="{{ route('student.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
-                    @if ($user->id_role == 5)
+                    @if ($user->id_role == 'R-05')
                         <a class="dropdown-item" href="{{ route('superadmin.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
-                    @if ($user->id_role == 6)
+                    @if ($user->id_role == 'R-06')
                         <a class="dropdown-item" href="{{ route('staff.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
                             Profile
                         </a>
                     @endif
                     <div class="dropdown-divider"></div>
-                    @if ($user->id_role == 3)
+                    @if ($user->id_role == 'R-03')
                         <a class="dropdown-item" href="{{ route('admin.pengaturan.index') }}">
                             <i class="me-50" data-feather="settings"></i>
                             Settings</a>

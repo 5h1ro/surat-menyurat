@@ -81,17 +81,17 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="id_teacher">Nama Guru</label>
-                                <select class=" form-select id_teacher" id="id_teacher{{ $key }}"
-                                    name="id_teacher[]" multiple>
+                                <label class="form-label" for="fk_teacher">Nama Guru</label>
+                                <select class=" form-select fk_teacher" id="fk_teacher{{ $key }}"
+                                    name="fk_teacher[]" multiple>
                                     @foreach ($teacher as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->nip }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="id_stafftype">Nama Staff</label>
-                                <select class=" form-select" id="id_stafftype{{ $key }}" name="id_stafftype[]"
+                                <label class="form-label" for="fk_stafftype">Nama Staff</label>
+                                <select class=" form-select" id="fk_stafftype{{ $key }}" name="fk_stafftype[]"
                                     multiple>
                                     @foreach ($stafftype as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -131,10 +131,10 @@
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
     <script>
-        console.log($(".id_teacher").length);
-        for (let i = 0; i < $(".id_teacher").length; i++) {
-            $("#id_teacher" + i).select2();
-            $("#id_stafftype" + i).select2();
+        console.log($(".fk_teacher").length);
+        for (let i = 0; i < $(".fk_teacher").length; i++) {
+            $("#fk_teacher" + i).select2();
+            $("#fk_stafftype" + i).select2();
         }
     </script>
     <script src="{{ asset('assets/js/scripts/tables/headmaster/table-headmaster-disposition-datatables.js') }}"></script>

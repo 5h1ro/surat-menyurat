@@ -61,7 +61,7 @@
         </div>
         <!-- Modal to add new record -->
         @foreach ($incomings as $data)
-            <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1" aria-labelledby="detailTitle"
+            <div class="modal fade" id="detail{{ md5($data->number) }}" tabindex="-1" aria-labelledby="detailTitle"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">

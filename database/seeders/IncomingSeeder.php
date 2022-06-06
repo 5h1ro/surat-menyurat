@@ -22,16 +22,16 @@ class IncomingSeeder extends Seeder
             asset('assets/test.pdf'),
         ];
 
-        $id_type = [
-            2,
+        $fk_type = [
+            'IT-02'
         ];
 
-        $id_admin = [
-            1,
+        $fk_admin = [
+            193307001234565451,
         ];
 
-        $id_headmaster = [
-            1,
+        $fk_headmaster = [
+            196610151990011021,
         ];
 
         $number = [
@@ -59,9 +59,9 @@ class IncomingSeeder extends Seeder
                 'from'             => $from[$i],
                 'detail'             => $detail[$i],
                 'letter'            => $letter[0],
-                'id_type'           => $id_type[0],
-                'id_admin'          => $id_admin[0],
-                'id_headmaster'        => $id_headmaster[0]
+                'fk_type'           => $fk_type[0],
+                'fk_admin'          => $fk_admin[0],
+                'fk_headmaster'        => $fk_headmaster[0]
             ]);
             $user->save();
         };

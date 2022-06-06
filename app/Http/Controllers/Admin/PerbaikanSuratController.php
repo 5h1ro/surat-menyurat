@@ -17,13 +17,13 @@ class PerbaikanSuratController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = url('api/admin/perbaikan-surat/index/get', $user->admin->id);
+        $data = url('api/admin/perbaikan-surat/index/get', $user->admin->nip);
         $acc = url('admin/perbaikan-surat/acc');
         $not_acc = url('admin/perbaikan-surat/not_acc');
         $fixing = Fixing::all();
         foreach ($fixing as $value) {
             $date = substr($value->created_at, 0, 10);
-            $student = Student::find($value->id_student);
+            $student = Student::find($value->fk_student);
             $value->sender = $student->name;
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
         }
@@ -40,7 +40,7 @@ class PerbaikanSuratController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $student = Student::find($value->id_student);
+                $student = Student::find($value->fk_student);
                 $value->sender = $student->name;
                 $value->admin = $admin->status;
                 $value->type;
@@ -54,7 +54,7 @@ class PerbaikanSuratController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $student = Student::find($value->id_student);
+                $student = Student::find($value->fk_student);
                 $value->sender = $student->name;
                 $value->admin = $admin->status;
                 $value->type;

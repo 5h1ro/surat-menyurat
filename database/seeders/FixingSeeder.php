@@ -14,6 +14,9 @@ class FixingSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'FX-00001',
+        ];
 
         $detail = [
             'Surat Keterangan Rekomendasi',
@@ -31,12 +34,12 @@ class FixingSeeder extends Seeder
             asset('assets/surat_keterangan.pdf'),
         ];
 
-        $id_type = [
-            1
+        $fk_type = [
+            'FT-01'
         ];
 
-        $id_student = [
-            1
+        $fk_student = [
+            58947401
         ];
 
         $status = [
@@ -45,12 +48,13 @@ class FixingSeeder extends Seeder
 
         for ($i = 0; $i < count($detail); $i++) {
             $user = Fixing::create([
+                'id'            => $id[$i],
                 'detail'            => $detail[$i],
                 'number'            => $number[$i],
                 'to'                => $to[$i],
                 'letter'            => $letter[$i],
-                'id_student'        => $id_student[$i],
-                'id_type'           => $id_type[$i],
+                'fk_student'        => $fk_student[$i],
+                'fk_type'           => $fk_type[$i],
                 'status'            => $status[0],
             ]);
             $user->save();

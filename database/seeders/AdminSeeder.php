@@ -19,9 +19,9 @@ class AdminSeeder extends Seeder
             'Mai Nur Arbain',
         ];
 
-        $id_user = [
-            '4',
-            '5',
+        $fk_user = [
+            'admin@admin.com',
+            'admin2@admin2.com',
         ];
 
         $nip = [
@@ -38,7 +38,7 @@ class AdminSeeder extends Seeder
         for ($i = 0; $i < count($name); $i++) {
             $user = Admin::create([
                 'name'              => $name[$i],
-                'id_user'           => $id_user[$i],
+                'fk_user'           => $fk_user[$i],
                 'nip'               => $nip[$i],
                 'status'            => $status[$i],
             ]);

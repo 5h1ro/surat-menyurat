@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\DataTables;
 
 class SuratMasukController extends Controller
@@ -17,12 +18,12 @@ class SuratMasukController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $incoming = Incoming::where([['id_headmaster', '=', $user->headmaster->id], ['status', '=', 0]])->get();
+        $incoming = Incoming::where([['fk_headmaster', '=', $user->headmaster->nip], ['status', '=', 0]])->get();
         $incoming->count = count($incoming);
-        $data = url('api/headmaster/surat-masuk/index/get', $user->headmaster->id);
+        $data = url('api/headmaster/surat-masuk/index/get', $user->headmaster->nip);
         $read = url('headmaster/surat-masuk/read');
         $teacher = Teacher::all();
-        $incomings = Incoming::where('id_headmaster', $user->headmaster->id)->get();
+        $incomings = $user->headmaster->incoming;
         foreach ($incomings as $value) {
             $date = substr($value->created_at, 0, 10);
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -36,8 +37,10 @@ class SuratMasukController extends Controller
     public function getData($id, Request $request)
     {
         if ($request->ajax()) {
-            $data = Incoming::where('id_headmaster', $id)->get();
+            $data = Incoming::where('fk_headmaster', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->headmaster;
@@ -48,8 +51,10 @@ class SuratMasukController extends Controller
             return DataTables::of($data)
                 ->make(true);
         } else {
-            $data = Incoming::where('id_headmaster', $id)->get();
+            $data = Incoming::where('fk_headmaster', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->headmaster;
@@ -64,7 +69,7 @@ class SuratMasukController extends Controller
 
     public function read($id)
     {
-        $surat = Incoming::where('id', $id)->first();
+        $surat = Incoming::find(Crypt::decrypt($id));
         if ($surat->status == 0) {
             $surat->status = 1;
             $surat->save();

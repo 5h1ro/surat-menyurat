@@ -11,6 +11,7 @@ use App\Models\OutgoingType;
 use App\Models\Setup;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -22,13 +23,13 @@ class PerbaikanSuratController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = url('api/student/perbaikan-surat/index/get', $user->student->id);
+        $data = url('api/student/perbaikan-surat/index/get', $user->student->nisn);
         $read = url('student/perbaikan-surat/read');
         $delete = url('student/perbaikan-surat/delete');
         $type = FixingType::all();
         // $type_add = OutgoingType::find(6);
         // $type->push($type_add);
-        $fixing = Fixing::where('id_student', $user->student->id)->get();
+        $fixing = $user->student->fixing;
         foreach ($fixing as $value) {
             $date = substr($value->created_at, 0, 10);
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -39,7 +40,7 @@ class PerbaikanSuratController extends Controller
     public function getData($id, Request $request)
     {
         if ($request->ajax()) {
-            $data = Fixing::where('id_student', $id)->get();
+            $data = Fixing::where('fk_student', $id)->get();
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -50,7 +51,7 @@ class PerbaikanSuratController extends Controller
             }
             return DataTables::of($data)->make(true);
         } else {
-            $data = Fixing::where('id_student', $id)->get();
+            $data = Fixing::where('fk_student', $id)->get();
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -65,13 +66,13 @@ class PerbaikanSuratController extends Controller
 
     public function read($id)
     {
-        $surat = Fixing::where('id', $id)->first();
+        $surat = Fixing::find($id)->first();
         return redirect()->to($surat->letter);
     }
 
     public function delete($id)
     {
-        $surat = Fixing::where('id', $id)->delete();
+        $surat = Fixing::find($id)->delete();
         return redirect()->back();
     }
 
@@ -89,15 +90,15 @@ class PerbaikanSuratController extends Controller
         $user->birthday = Carbon::createFromFormat('Y-m-d', $birthday)->isoFormat('DD MMMM Y');
         $filename = Carbon::now()->format('dmyHis') . '.pdf';
         // $outgoing_last = Outgoing::latest('id')->first();
-        $fixing_type = FixingType::find($request->id_type);
+        $fixing_type = FixingType::find($request->fk_type);
         $number = $this->number_generator($fixing_type->number);
         $now = Carbon::now()->isoFormat('DD MMMM Y');
         $headmaster = Headmaster::first();
         $setup = Setup::first();
-        // if ($request->id_type == 3) {
+        // if ($request->fk_type == 3) {
         //     $pdf = Pdf::loadview('report.keterangan', compact('request', 'number', 'now', 'headmaster', 'user', 'setup'))->setPaper('a4', 'portrait');
         //     $pdf->save(public_path('assets/report/outgoing/')  . $filename);
-        // } elseif ($request->id_type == 4) {
+        // } elseif ($request->fk_type == 4) {
         //     $masuk = Carbon::createFromFormat('Y-m-d', $request->masuk_mutasi)->isoFormat('DD MMMM Y');
         //     $keluar = Carbon::createFromFormat('Y-m-d', $request->keluar_mutasi)->isoFormat('DD MMMM Y');
         //     $pdf = Pdf::loadview('report.keterangan_mutasi', compact('request', 'number', 'now', 'headmaster', 'user', 'setup', 'masuk', 'keluar'))->setPaper('a4', 'portrait');
@@ -105,7 +106,7 @@ class PerbaikanSuratController extends Controller
         // }
 
 
-        if ($request->id_type == 1) {
+        if ($request->fk_type == 'FT-01') {
             $student = $user;
             $student_date = $student->birthday;
             $this->validate($request, [
@@ -200,7 +201,7 @@ class PerbaikanSuratController extends Controller
                 $pdf = Pdf::loadview('report.skki_wali', compact('request', 'number', 'now', 'headmaster', 'tanggal_aktanw', 'student', 'student_date'))->setPaper('a4', 'portrait');
                 return $pdf->stream();
             }
-        } elseif ($request->id_type == 2) {
+        } elseif ($request->fk_type == 'FT-02') {
             $this->validate($request, [
                 'ayahsih' => "required",
                 'ibusih' => "required",
@@ -222,13 +223,15 @@ class PerbaikanSuratController extends Controller
             $pdf->save(public_path('assets/report/fixing/')  . $filename);
         }
 
+        $id = IdGenerator::generate(['table' => 'fixings', 'length' => 8, 'prefix' => 'FX-']);
         $fixing =  new Fixing;
+        $fixing->id = $id;
         $fixing->number = $number;
         $fixing->to = $request->to;
         $fixing->detail = $request->detail;
         $fixing->letter = asset('assets/report/fixing/' . $filename);
-        $fixing->id_type = $request->id_type;
-        $fixing->id_student = $user->id;
+        $fixing->fk_type = $request->fk_type;
+        $fixing->fk_student = $user->nisn;
         $fixing->save();
         return redirect()->back();
     }

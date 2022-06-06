@@ -14,6 +14,15 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'R-01',
+            'R-02',
+            'R-03',
+            'R-04',
+            'R-05',
+            'R-06'
+        ];
+
         $name = [
             'Teacher',
             'Headmaster',
@@ -51,10 +60,11 @@ class RoleSeeder extends Seeder
         ];
         for ($i = 0; $i < count($name); $i++) {
             $user = Role::create([
+                'id'            => $id[$i],
                 'name'          => $name[$i],
                 'incoming'      => $incoming[$i],
                 'outgoing'      => $outgoing[$i],
-                'disposition'      => $disposition[$i]
+                'disposition'   => $disposition[$i]
             ]);
             $user->save();
         };

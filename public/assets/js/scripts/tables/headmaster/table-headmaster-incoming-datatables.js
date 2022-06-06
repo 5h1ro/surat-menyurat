@@ -14,14 +14,14 @@ $(document).ready(function () {
             ajax: assetPath,
             columns: [
                 { data: 'responsive_id', name: 'responsive_id' },
-                { data: 'id' },
-                { data: 'id' },
+                { data: 'number' },
+                { data: 'number' },
                 { data: 'date' },
                 { data: 'title' },
-                { data: 'id' },
+                { data: 'number_encrypt' },
                 { data: 'letter' },
                 { data: 'status' },
-                { data: 'id' },
+                { data: 'number_md5' },
             ],
             columnDefs: [
                 {

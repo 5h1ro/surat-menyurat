@@ -13,8 +13,10 @@ use App\Models\Role;
 use App\Models\Teacher;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\DataTables;
 
 use function PHPUnit\Framework\isNull;
@@ -55,6 +57,8 @@ class SuratMasukController extends Controller
         if ($request->ajax()) {
             $data = Incoming::all();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
                 $tanggal = substr($value->created_at, 8, 2);
                 $bulan = $this->month(substr($value->created_at, 5, 2));
                 $tahun = substr($value->created_at, 0, 4);
@@ -71,6 +75,8 @@ class SuratMasukController extends Controller
         } else {
             $data = Incoming::all();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
                 $tanggal = substr($value->created_at, 8, 2);
                 $bulan = $this->month(substr($value->created_at, 5, 2));
                 $tahun = substr($value->created_at, 0, 4);
@@ -86,13 +92,13 @@ class SuratMasukController extends Controller
 
     public function read($id)
     {
-        $surat = Incoming::where('id', $id)->first();
+        $surat = Incoming::find(Crypt::decrypt($id));
         return redirect()->to($surat->letter);
     }
 
     public function delete($id)
     {
-        $surat = Incoming::where('id', $id)->delete();
+        $surat = Incoming::find(Crypt::decrypt($id))->delete();
         return redirect()->back();
     }
 
@@ -105,8 +111,8 @@ class SuratMasukController extends Controller
             'from' => "required",
             'title' => "required",
             'detail' => "required",
-            'id_type' => "required",
-            'id_headmaster' => "required",
+            'fk_type' => "required",
+            'fk_headmaster' => "required",
             'information' => "required",
             'letter' => "required|mimes:pdf",
         ], [
@@ -116,8 +122,8 @@ class SuratMasukController extends Controller
             'from.required' => 'Asal surat tidak boleh kosong',
             'title.required' => 'Nama dan Alamat tidak boleh kosong',
             'detail.required' => 'Isi pokok surat tidak boleh kosong',
-            'id_type.required' => 'Tipe tidak boleh kosong',
-            'id_headmaster.required' => 'Kepala sekolah tidak boleh kosong',
+            'fk_type.required' => 'Tipe tidak boleh kosong',
+            'fk_headmaster.required' => 'Kepala sekolah tidak boleh kosong',
             'information.required' => 'Jenis surat tidak boleh kosong',
             'letter.required' => 'Scan surat tidak boleh kosong',
             'letter.mimes' => 'File harus berformat pdf',
@@ -152,15 +158,17 @@ class SuratMasukController extends Controller
         $incoming->from = $request->from;
         $incoming->detail = $request->detail;
         $incoming->letter = asset('assets/report/incoming/' . $filename);
-        $incoming->id_type = $request->id_type;
-        $incoming->id_admin = $user->admin->id;
-        $incoming->id_headmaster = $request->id_headmaster;
+        $incoming->fk_type = $request->fk_type;
+        $incoming->fk_admin = $user->admin->nip;
+        $incoming->fk_headmaster = $request->fk_headmaster;
         $incoming->save();
         $pdf = Pdf::loadview('report.disposisi', compact('incoming', 'request', 'date', 'letter_date'))->setPaper('a4', 'portrait');
         $pdf->save(public_path('assets/report/disposition/')  . $filename);
+        $id = IdGenerator::generate(['table' => 'dispositions', 'length' => 8, 'prefix' => 'DP-']);
         $disposition = new Disposition;
+        $disposition->id = $id;
         $disposition->information = $request->information;
-        $disposition->id_incoming = $incoming->id;
+        $disposition->fk_incoming = $incoming->number;
         $disposition->letter = asset('assets/report/disposition/' . $filename);
         $disposition->save();
         return redirect()->back();

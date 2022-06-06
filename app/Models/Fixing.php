@@ -9,14 +9,18 @@ class Fixing extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'id',
         'detail',
         'number',
         'to',
         'letter',
-        'id_type',
-        'id_student',
+        'fk_type',
+        'fk_student',
         'status',
     ];
 
@@ -28,11 +32,11 @@ class Fixing extends Model
 
     public function fixing()
     {
-        return $this->belongsTo(Fixing::class, 'id_type');
+        return $this->belongsTo(Fixing::class, 'fk_type');
     }
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'id_student');
+        return $this->belongsTo(Student::class, 'fk_student');
     }
 }

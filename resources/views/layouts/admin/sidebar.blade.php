@@ -50,7 +50,7 @@
         </ul>
     </div>
     <div class="shadow-bottom"></div>
-    @if ($user->id_role == 1)
+    @if ($user->id_role == 'R-01')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('teacher/dashboard') ? 'active' : '' }} nav-item">
@@ -86,7 +86,7 @@
             </ul>
         </div>
     @endif
-    @if ($user->id_role == 2)
+    @if ($user->id_role == 'R-02')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('headmaster/dashboard') ? 'active' : '' }} nav-item">
@@ -142,7 +142,7 @@
             </ul>
         </div>
     @endif
-    @if ($user->id_role == 3)
+    @if ($user->id_role == 'R-03')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }} nav-item">
@@ -198,7 +198,7 @@
             </ul>
         </div>
     @endif
-    @if ($user->id_role == 4)
+    @if ($user->id_role == 'R-04')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('student/dashboard') ? 'active' : '' }} nav-item">
@@ -213,7 +213,7 @@
                 </li>
                 @if ($user->role->outgoing == 1)
                     <li
-                        class="{{ request()->is('student/surat-keluar') || request()->is('student/surat-keluar/*') ? 'active' : '' }} nav-item">
+                        class="{{ request()->is('student/perbaikan-surat') || request()->is('student/perbaikan-surat/*') ? 'active' : '' }} nav-item">
                         <a class="d-flex align-items-center" href="{{ route('student.perbaikansurat.index') }}">
                             <i data-feather="file-text"></i>
                             <span class="menu-title text-truncate" data-i18n="Surat">Perbaikan Surat</span>
@@ -225,7 +225,7 @@
             </ul>
         </div>
     @endif
-    @if ($user->id_role == 5)
+    @if ($user->id_role == 'R-05')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('superadmin/dashboard') ? 'active' : '' }} nav-item">
@@ -248,7 +248,7 @@
             </ul>
         </div>
     @endif
-    @if ($user->id_role == 6)
+    @if ($user->id_role == 'R-06')
         <div class="main-menu-content mt-3">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="{{ request()->is('staff/dashboard') ? 'active' : '' }} nav-item">

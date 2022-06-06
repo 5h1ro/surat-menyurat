@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\DataTables;
 
 class SuratMasukController extends Controller
@@ -19,21 +20,21 @@ class SuratMasukController extends Controller
         $disposition = Disposition::all();
         $incoming = collect();
         foreach ($disposition as $value) {
-            if ($value->id_teacher != null) {
-                if ($value->id_teacher == $user->teacher->id && $value->incoming->status_teacher == 0) {
+            if ($value->fk_teacher != null) {
+                if ($value->fk_teacher == $user->teacher->nip && $value->incoming->status_teacher == 0) {
                     $incoming->push($value->incoming);
                 }
             }
         }
         $incoming->count = count($incoming);
 
-        $incomings = Disposition::where('id_teacher', $user->teacher->id)->get();
+        $incomings = $user->teacher->disposition;
         foreach ($incomings as $value) {
             $date = substr($value->incoming->created_at, 0, 10);
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
             $value->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $value->incoming->letter_date)->isoFormat('DD MMMM Y');
         }
-        $data = url('api/teacher/surat-masuk/index/get', $user->teacher->id);
+        $data = url('api/teacher/surat-masuk/index/get', $user->teacher->nip);
         $read = url('teacher/surat-masuk/read');
         return view('teacher.surat_masuk.index', compact('user', 'data', 'read', 'incoming', 'incomings'));
     }
@@ -41,8 +42,10 @@ class SuratMasukController extends Controller
     public function getData($id, Request $request)
     {
         if ($request->ajax()) {
-            $data = Disposition::where('id_teacher', $id)->get();
+            $data = Disposition::where('fk_teacher', $id)->get();
             foreach ($data as $value) {
+                $value->incoming->number_encrypt = Crypt::encrypt($value->incoming->number);
+                $value->incoming->number_md5 = md5($value->incoming->number);
                 $value->incoming->admin;
                 $date = substr($value->incoming->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -52,8 +55,10 @@ class SuratMasukController extends Controller
             return DataTables::of($data)
                 ->make(true);
         } else {
-            $data = Disposition::where('id_teacher', $id)->get();
+            $data = Disposition::where('fk_teacher', $id)->get();
             foreach ($data as $value) {
+                $value->incoming->number_encrypt = Crypt::encrypt($value->incoming->number);
+                $value->incoming->number_md5 = md5($value->incoming->number);
                 $value->incoming->admin;
                 $value->incoming->type;
                 $value->responsive_id = "";
@@ -65,7 +70,7 @@ class SuratMasukController extends Controller
 
     public function read($id)
     {
-        $surat = Incoming::where('id', $id)->first();
+        $surat = Incoming::find(Crypt::decrypt($id));
         $surat->status_teacher = 1;
         $surat->save();
         return redirect()->to($surat->letter);

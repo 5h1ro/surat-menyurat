@@ -14,25 +14,24 @@ class CreateIncomingsTable extends Migration
     public function up()
     {
         Schema::create('incomings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('number');
+            $table->string('number')->primary();
             $table->string('title');
             $table->string('letter_number');
             $table->date('letter_date');
             $table->string('from');
             $table->text('detail');
             $table->text('letter');
-            $table->integer('id_type')->unsigned();
-            $table->integer('id_admin')->unsigned();
-            $table->integer('id_headmaster')->unsigned()->nullable();
+            $table->string('fk_type');
+            $table->bigInteger('fk_admin');
+            $table->bigInteger('fk_headmaster')->nullable();
             $table->integer('status')->default(0);
             $table->integer('status_teacher')->default(0);
             $table->timestamps();
         });
         Schema::table('incomings', function (Blueprint $table) {
-            $table->foreign('id_type', 'id_type_incomings_fk_01')->references('id')->on('incoming_types')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_admin', 'id_admin_incomings_fk_02')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_headmaster', 'id_headmaster_incomings_fk_04')->references('id')->on('headmasters')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_type', 'fk_type_incomings_fk_01')->references('id')->on('incoming_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_admin', 'fk_admin_incomings_fk_02')->references('nip')->on('admins')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_headmaster', 'fk_headmaster_incomings_fk_04')->references('nip')->on('headmasters')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

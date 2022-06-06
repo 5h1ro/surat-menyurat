@@ -109,7 +109,7 @@
     <div class="modal fade text-start" id="update" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog sidebar-sm">
             <form class="add-new-record modal-content pt-0" method="POST"
-                action="{{ route('superadmin.profil.edit', $user->id) }}" enctype="multipart/form-data">
+                action="{{ route('superadmin.profil.edit', $user->email) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header mb-1">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Profil</h5>

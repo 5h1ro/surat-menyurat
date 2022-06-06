@@ -9,6 +9,10 @@ class FixingType extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
     ];
@@ -21,6 +25,6 @@ class FixingType extends Model
 
     public function fixing()
     {
-        return $this->hasMany(Fixing::class, 'id_type');
+        return $this->hasMany(Fixing::class, 'fk_type');
     }
 }

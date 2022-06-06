@@ -14,18 +14,17 @@ class CreateStaffTable extends Migration
     public function up()
     {
         Schema::create('staff', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigInteger('nip')->primary();
             $table->string('name');
-            $table->bigInteger('nip')->unique();
             $table->string('rank');
             $table->string('class');
-            $table->integer('id_user')->unsigned();
-            $table->integer('id_type')->unsigned()->default('1');
+            $table->string('fk_user');
+            $table->string('fk_type')->default('ST-01');
             $table->timestamps();
         });
         Schema::table('staff', function (Blueprint $table) {
-            $table->foreign('id_user', 'id_user_staff_fk_01')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_type', 'id_type_staff_fk_01')->references('id')->on('staff_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_user', 'fk_user_staff_fk_01')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_type', 'fk_type_staff_fk_01')->references('id')->on('staff_types')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

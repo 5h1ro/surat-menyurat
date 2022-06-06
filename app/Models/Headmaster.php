@@ -9,10 +9,14 @@ class Headmaster extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nip';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'nip',
-        'id_user',
+        'fk_user',
         'rank',
         'class'
     ];
@@ -25,11 +29,11 @@ class Headmaster extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 
     public function incoming()
     {
-        return $this->hasMany(Incoming::class, 'id_headmaster');
+        return $this->hasMany(Incoming::class, 'fk_headmaster');
     }
 }

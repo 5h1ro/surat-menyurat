@@ -14,6 +14,14 @@ class StaffTypeSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'ST-01',
+            'ST-02',
+            'ST-03',
+            'ST-04',
+            'ST-05',
+        ];
+
         $name = [
             'Kepegawaian',
             'Bendahara 1',
@@ -22,8 +30,9 @@ class StaffTypeSeeder extends Seeder
             'Kesiswaan',
         ];
 
-        foreach ($name as $data) {
+        foreach ($name as $key => $data) {
             $user = StaffType::create([
+                'id'               => $id[$key],
                 'name'             => $data,
             ]);
             $user->save();

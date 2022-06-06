@@ -9,13 +9,17 @@ class Staff extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nip';
+
+    public $incrementing = false;
+
     protected $fillable = [
-        'name',
         'nip',
-        'id_user',
+        'name',
+        'fk_user',
         'rank',
         'class',
-        'id_type'
+        'fk_type'
     ];
 
     protected $dates = [
@@ -26,21 +30,21 @@ class Staff extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 
     public function disposition()
     {
-        return $this->hasMany(Disposition::class, 'id_staff');
+        return $this->hasMany(Disposition::class, 'fk_staff');
     }
 
     public function outgoing()
     {
-        return $this->hasMany(Outgoing::class, 'id_staff');
+        return $this->hasMany(Outgoing::class, 'fk_staff');
     }
 
     public function type()
     {
-        return $this->belongsTo(StaffType::class, 'id_type');
+        return $this->belongsTo(StaffType::class, 'fk_type');
     }
 }

@@ -17,7 +17,7 @@ class PerbaikanSuratController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $incoming = Incoming::where([['id_headmaster', '=', $user->headmaster->id], ['status', '=', 0]])->get();
+        $incoming = Incoming::where([['fk_headmaster', '=', $user->headmaster->nip], ['status', '=', 0]])->get();
         $incoming->count = count($incoming);
         $data = url('api/headmaster/perbaikan-surat/index/get');
         $acc = url('headmaster/perbaikan-surat/acc');
@@ -25,7 +25,7 @@ class PerbaikanSuratController extends Controller
         $fixing = Fixing::where('status', '>=', 2)->get();
         foreach ($fixing as $value) {
             $date = substr($value->created_at, 0, 10);
-            $student = Student::find($value->id_student);
+            $student = Student::find($value->fk_student);
             $value->sender = $student->name;
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
         }
@@ -41,7 +41,7 @@ class PerbaikanSuratController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $student = Student::find($value->id_student);
+                $student = Student::find($value->fk_student);
                 $value->sender = $student->name;
                 $value->type;
                 $value->responsive_id = "";
@@ -53,7 +53,7 @@ class PerbaikanSuratController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $student = Student::find($value->id_student);
+                $student = Student::find($value->fk_student);
                 $value->sender = $student->name;
                 $value->type;
                 $value->responsive_id = "";

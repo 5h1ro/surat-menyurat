@@ -14,16 +14,15 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigInteger('nip')->primary();
             $table->string('name');
-            $table->bigInteger('nip')->unique();
-            $table->integer('id_user')->unsigned();
+            $table->string('fk_user');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
 
         Schema::table('admins', function (Blueprint $table) {
-            $table->foreign('id_user', 'id_user_admins_fk_01')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_user', 'fk_user_admins_fk_01')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

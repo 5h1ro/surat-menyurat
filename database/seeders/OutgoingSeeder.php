@@ -14,6 +14,10 @@ class OutgoingSeeder extends Seeder
      */
     public function run()
     {
+        $id = [
+            'OT-00001',
+            'OT-00002',
+        ];
         $detail = [
             'Surat Undangan Komite',
             'Surat Undangan Pengambilan Rapot',
@@ -34,14 +38,14 @@ class OutgoingSeeder extends Seeder
             asset('assets/test.pdf'),
         ];
 
-        $id_type = [
-            1,
-            1,
+        $fk_type = [
+            'OT-01',
+            'OT-01',
         ];
 
-        $id_teacher = [
-            1,
-            2,
+        $fk_teacher = [
+            19601129198703105,
+            19601129198703106,
         ];
 
         $status = [
@@ -50,12 +54,13 @@ class OutgoingSeeder extends Seeder
 
         for ($i = 0; $i < count($detail); $i++) {
             $user = Outgoing::create([
+                'id'            => $id[$i],
                 'detail'            => $detail[$i],
                 'number'            => $number[$i],
                 'to'                => $to[$i],
                 'letter'            => $letter[$i],
-                'id_type'           => $id_type[$i],
-                'id_teacher'        => $id_teacher[$i],
+                'fk_type'           => $fk_type[$i],
+                'fk_teacher'        => $fk_teacher[$i],
                 'status'            => $status[0],
             ]);
             $user->save();

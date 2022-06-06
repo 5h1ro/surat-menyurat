@@ -14,15 +14,15 @@ $(document).ready(function () {
             ajax: assetPath,
             columns: [
                 { data: 'responsive_id', name: 'responsive_id' },
-                { data: 'incoming.id' },
-                { data: 'incoming.id' },
+                { data: 'incoming.number' },
+                { data: 'incoming.number' },
                 { data: 'date' },
                 { data: 'incoming.title' },
                 { data: 'letter' },
-                { data: 'incoming.id' },
+                { data: 'incoming.number_encrypt' },
                 { data: 'incoming.letter' },
                 { data: 'incoming.status_teacher' },
-                { data: 'incoming.id' },
+                { data: 'incoming.number_md5' },
             ],
             columnDefs: [
                 {

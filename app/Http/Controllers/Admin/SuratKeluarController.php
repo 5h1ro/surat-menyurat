@@ -18,20 +18,20 @@ class SuratKeluarController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = url('api/admin/surat-keluar/index/get', $user->admin->id);
+        $data = url('api/admin/surat-keluar/index/get', $user->admin->nip);
         $acc = url('admin/surat-keluar/acc');
         $not_acc = url('admin/surat-keluar/not_acc');
         $outgoing = Outgoing::all();
         foreach ($outgoing as $value) {
             $date = substr($value->created_at, 0, 10);
-            if ($value->id_teacher != null) {
-                $teacher = Teacher::find($value->id_teacher);
+            if ($value->fk_teacher != null) {
+                $teacher = Teacher::find($value->fk_teacher);
                 $value->sender = $teacher->name;
-            } elseif ($value->id_student != null) {
-                $student = Student::find($value->id_student);
+            } elseif ($value->fk_student != null) {
+                $student = Student::find($value->fk_student);
                 $value->sender = $student->name;
             } else {
-                $staff = Staff::find($value->id_staff);
+                $staff = Staff::find($value->fk_staff);
                 $value->sender = $staff->name;
             }
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -48,14 +48,14 @@ class SuratKeluarController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                if ($value->id_teacher != null) {
-                    $teacher = Teacher::find($value->id_teacher);
+                if ($value->fk_teacher != null) {
+                    $teacher = Teacher::find($value->fk_teacher);
                     $value->sender = $teacher->name;
-                } elseif ($value->id_student != null) {
-                    $student = Student::find($value->id_student);
+                } elseif ($value->fk_student != null) {
+                    $student = Student::find($value->fk_student);
                     $value->sender = $student->name;
                 } else {
-                    $staff = Staff::find($value->id_staff);
+                    $staff = Staff::find($value->fk_staff);
                     $value->sender = $staff->name;
                 }
                 $value->admin = $admin->status;
@@ -70,14 +70,14 @@ class SuratKeluarController extends Controller
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                if ($value->id_teacher != null) {
-                    $teacher = Teacher::find($value->id_teacher);
+                if ($value->fk_teacher != null) {
+                    $teacher = Teacher::find($value->fk_teacher);
                     $value->sender = $teacher->name;
-                } elseif ($value->id_student != null) {
-                    $student = Student::find($value->id_student);
+                } elseif ($value->fk_student != null) {
+                    $student = Student::find($value->fk_student);
                     $value->sender = $student->name;
                 } else {
-                    $staff = Staff::find($value->id_staff);
+                    $staff = Staff::find($value->fk_staff);
                     $value->sender = $staff->name;
                 }
                 $value->admin = $admin->status;

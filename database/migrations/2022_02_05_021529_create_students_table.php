@@ -14,7 +14,7 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('nisn')->primary();
             $table->string('name');
             $table->string('birthplace');
             $table->date('birthday');
@@ -25,13 +25,12 @@ class CreateStudentsTable extends Migration
             $table->string('parent_job');
             $table->text('address');
             $table->integer('ni')->unique();
-            $table->integer('nisn')->unique();
-            $table->integer('id_user')->unsigned();
+            $table->string('fk_user');
             $table->timestamps();
         });
 
         Schema::table('students', function (Blueprint $table) {
-            $table->foreign('id_user', 'id_user_students_fk_01')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_user', 'fk_user_students_fk_01')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

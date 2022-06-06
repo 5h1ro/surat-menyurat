@@ -14,7 +14,7 @@ class CreateOutgoingTypesTable extends Migration
     public function up()
     {
         Schema::create('outgoing_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('name');
             $table->string('number');
             $table->timestamps();

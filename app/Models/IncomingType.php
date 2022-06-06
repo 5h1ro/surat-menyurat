@@ -9,6 +9,10 @@ class IncomingType extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'number',
@@ -22,6 +26,6 @@ class IncomingType extends Model
 
     public function incoming()
     {
-        return $this->hasMany(Incoming::class, 'id_type');
+        return $this->hasMany(Incoming::class, 'fk_type');
     }
 }

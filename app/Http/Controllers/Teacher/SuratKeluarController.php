@@ -13,6 +13,7 @@ use App\Models\Setup;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -25,18 +26,18 @@ class SuratKeluarController extends Controller
         $disposition = Disposition::all();
         $incoming = collect();
         foreach ($disposition as $value) {
-            if ($value->id_teacher != null) {
-                if ($value->id_teacher == $user->teacher->id && $value->incoming->status_teacher == 0) {
+            if ($value->fk_teacher != null) {
+                if ($value->fk_teacher == $user->teacher->nip && $value->incoming->status_teacher == 0) {
                     $incoming->push($value->incoming);
                 }
             }
         }
         $incoming->count = count($incoming);
-        $data = url('api/teacher/surat-keluar/index/get', $user->teacher->id);
+        $data = url('api/teacher/surat-keluar/index/get', $user->teacher->nip);
         $read = url('teacher/surat-keluar/read');
         $delete = url('teacher/surat-keluar/delete');
-        $type = OutgoingType::where('id', '<=', 4)->get();
-        $outgoing = Outgoing::where('id_teacher', $user->teacher->id)->get();
+        $type = OutgoingType::where([['id', '<=', 'OT-04']])->get();
+        $outgoing = $user->teacher->outgoing;
         $student = Student::all();
         foreach ($outgoing as $value) {
             $date = substr($value->created_at, 0, 10);
@@ -48,7 +49,7 @@ class SuratKeluarController extends Controller
     public function getData($id, Request $request)
     {
         if ($request->ajax()) {
-            $data = Outgoing::where('id_teacher', $id)->get();
+            $data = Outgoing::where('fk_teacher', $id)->get();
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -59,7 +60,7 @@ class SuratKeluarController extends Controller
             }
             return DataTables::of($data)->make(true);
         } else {
-            $data = Outgoing::where('id_teacher', $id)->get();
+            $data = Outgoing::where('fk_teacher', $id)->get();
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
@@ -88,7 +89,7 @@ class SuratKeluarController extends Controller
     {
         $filename = Carbon::now()->format('dmyHis') . '.pdf';
         $outgoing_last = Outgoing::latest('id')->first();
-        $outgoing_type = OutgoingType::find($request->id_type);
+        $outgoing_type = OutgoingType::find($request->fk_type);
         $number = $this->number_generator($outgoing_type->number);
         $user = Auth::user();
         $now = Carbon::now()->isoFormat('DD MMMM Y');
@@ -101,7 +102,7 @@ class SuratKeluarController extends Controller
             'to.required' => 'Tujuan surat harus diisi',
             'detail.required' => 'Isi pokok surat harus diisi',
         ]);
-        if ($request->id_type == 1) {
+        if ($request->fk_type == 'OT-01') {
             $this->validate($request, [
                 'date' => "required",
                 'time' => "required",
@@ -121,7 +122,7 @@ class SuratKeluarController extends Controller
             $end = Carbon::createFromFormat('Y-m-d', $end)->isoFormat('DD MMMM Y');
             $pdf = Pdf::loadview('report.undangan', compact('request', 'number', 'now', 'start', 'start_day', 'end', 'end_day', 'headmaster'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
-        } elseif ($request->id_type == 2) {
+        } elseif ($request->fk_type == 'OT-02') {
             $this->validate($request, [
                 'date_pensiun' => "required",
             ], [
@@ -131,7 +132,7 @@ class SuratKeluarController extends Controller
             $user->type = 'Guru';
             $pdf = Pdf::loadview('report.pensiun', compact('request', 'number', 'now', 'headmaster', 'date', 'user'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
-        } elseif ($request->id_type == 3) {
+        } elseif ($request->fk_type == 'OT-03') {
             if ($request->tipe_keterangan == 1) {
                 $this->validate($request, [
                     'nama' => "required",
@@ -150,7 +151,7 @@ class SuratKeluarController extends Controller
                 $pdf = Pdf::loadview('report.skbm', compact('request', 'number', 'now', 'headmaster', 'date'))->setPaper('a4', 'portrait');
                 $pdf->save(public_path('assets/report/outgoing/')  . $filename);
             } else {
-                $student = Student::find($request->id_student);
+                $student = Student::find($request->fk_student);
                 $student_date = Carbon::createFromFormat('Y-m-d', $student->birthday)->isoFormat('DD MMMM Y');
                 $this->validate($request, [
                     'nomor_ijazah' => "required",
@@ -245,7 +246,7 @@ class SuratKeluarController extends Controller
                     return $pdf->stream();
                 }
             }
-        } elseif ($request->id_type == 4) {
+        } elseif ($request->fk_type == 4) {
             $this->validate($request, [
                 'masuk_mutasi' => "required|before:today",
                 'keluar_mutasi' => "required",
@@ -258,18 +259,20 @@ class SuratKeluarController extends Controller
             ]);
             $masuk = Carbon::createFromFormat('Y-m-d', $request->masuk_mutasi)->isoFormat('DD MMMM Y');
             $keluar = Carbon::createFromFormat('Y-m-d', $request->keluar_mutasi)->isoFormat('DD MMMM Y');
-            $user = Student::find($request->id_student_mutasi);
+            $user = Student::find($request->fk_student_mutasi);
             $pdf = Pdf::loadview('report.keterangan_mutasi', compact('request', 'number', 'now', 'headmaster', 'user', 'setup', 'masuk', 'keluar'))->setPaper('a4', 'portrait');
             $pdf->save(public_path('assets/report/outgoing/')  . $filename);
         }
 
+        $id = IdGenerator::generate(['table' => 'outgoings', 'length' => 8, 'prefix' => 'OT-']);
         $outgoing =  new Outgoing;
+        $outgoing->id = $id;
         $outgoing->number = $number;
         $outgoing->to = $request->to;
         $outgoing->detail = $request->detail;
         $outgoing->letter = asset('assets/report/outgoing/' . $filename);
-        $outgoing->id_type = $request->id_type;
-        $outgoing->id_teacher = $user->teacher->id;
+        $outgoing->fk_type = $request->fk_type;
+        $outgoing->fk_teacher = $user->teacher->nip;
         $outgoing->save();
         return redirect()->back();
     }

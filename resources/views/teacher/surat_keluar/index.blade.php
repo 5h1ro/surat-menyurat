@@ -77,8 +77,7 @@
                     @csrf
                     <div class="modal-header mb-1">
                         <h5 class="modal-title" id="exampleModalLabel">Data Baru</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body flex-grow-1">
                         <div class="mb-1">
@@ -91,8 +90,8 @@
                             <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="id_type">Jenis Surat</label>
-                            <select class="select2" id="id_type" name="id_type">
+                            <label class="form-label" for="fk_type">Jenis Surat</label>
+                            <select class="select2" id="fk_type" name="fk_type">
                                 @foreach ($type as $data_type)
                                     <option value={{ $data_type->id }}>{{ $data_type->name }}</option>
                                 @endforeach
@@ -175,8 +174,8 @@
                             </div>
                             {{-- <div id="skki" class="d-none">
                                 <div class="mb-1">
-                                    <label class="form-label" for="id_student">Nama Siswa</label>
-                                    <select class="select2" id="id_student" name="id_student">
+                                    <label class="form-label" for="fk_student">Nama Siswa</label>
+                                    <select class="select2" id="fk_student" name="fk_student">
                                         @foreach ($student as $item)
                                             <option value={{ $item->id }}>{{ $item->name }}</option>
                                         @endforeach
@@ -349,8 +348,8 @@
                             <div class="mb-1">Keperluan Surat
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="id_student_mutasi">Nama Siswa</label>
-                                <select class="select2" id="id_student_mutasi" name="id_student_mutasi">
+                                <label class="form-label" for="fk_student_mutasi">Nama Siswa</label>
+                                <select class="select2" id="fk_student_mutasi" name="fk_student_mutasi">
                                     @foreach ($student as $item)
                                         <option value={{ $item->id }}>{{ $item->name }}</option>
                                     @endforeach
@@ -443,7 +442,7 @@
 
     <script src="{{ asset('assets/js/scripts/tables/teacher/table-teacher-outgoing-datatables.js') }}"></script>
     <script>
-        var type = $('#id_type');
+        var type = $('#fk_type');
         var undangan = $('#undangan');
         var pensiun = $('#pensiun');
         var keterangan = $('#keterangan');
@@ -458,17 +457,17 @@
         var mutasi = $('#mutasi');
         type.change(
             function() {
-                if (type.val() == 1) {
+                if (type.val() == 'OT-01') {
                     undangan.removeClass('d-none');
                     pensiun.addClass('d-none');
                     keterangan.addClass('d-none');
                     mutasi.addClass('d-none');
-                } else if (type.val() == 2) {
+                } else if (type.val() == 'OT-02') {
                     undangan.addClass('d-none');
                     pensiun.removeClass('d-none');
                     keterangan.addClass('d-none');
                     mutasi.addClass('d-none');
-                } else if (type.val() == 3) {
+                } else if (type.val() == 'OT-03') {
                     undangan.addClass('d-none');
                     pensiun.addClass('d-none');
                     keterangan.removeClass('d-none');
@@ -510,7 +509,7 @@
                             // }
                         }
                     )
-                } else if (type.val() == 4) {
+                } else if (type.val() == 'OT-04') {
                     undangan.addClass('d-none');
                     pensiun.addClass('d-none');
                     keterangan.addClass('d-none');

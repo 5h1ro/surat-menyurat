@@ -43,7 +43,7 @@ class ProfileController extends Controller
             'nisn.required' => 'NISN boleh kosong',
             'nisn.before' => 'NISN harus berformat angka',
         ]);
-        $student = Student::where('id_user', $user->id)->first();
+        $student = $user->student;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

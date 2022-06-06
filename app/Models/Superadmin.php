@@ -9,10 +9,14 @@ class Superadmin extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nip';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'nip',
-        'id_user',
+        'fk_user',
     ];
 
     protected $dates = [
@@ -23,6 +27,6 @@ class Superadmin extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 }

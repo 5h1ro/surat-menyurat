@@ -14,17 +14,16 @@ class CreateTeachersTable extends Migration
     public function up()
     {
         Schema::create('teachers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigInteger('nip')->primary();
             $table->string('name');
-            $table->bigInteger('nip')->unique();
             $table->string('rank');
             $table->string('class');
-            $table->integer('id_user')->unsigned();
+            $table->string('fk_user');
             $table->timestamps();
         });
 
         Schema::table('teachers', function (Blueprint $table) {
-            $table->foreign('id_user', 'id_user_teachers_fk_01')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_user', 'fk_user_teachers_fk_01')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -9,15 +9,19 @@ class Outgoing extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'id',
         'detail',
         'number',
         'to',
         'letter',
-        'id_type',
-        'id_teacher',
-        'id_staff',
+        'fk_type',
+        'fk_teacher',
+        'fk_staff',
         'status',
     ];
 
@@ -29,22 +33,22 @@ class Outgoing extends Model
 
     public function type()
     {
-        return $this->belongsTo(OutgoingType::class, 'id_type');
+        return $this->belongsTo(OutgoingType::class, 'fk_type');
     }
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'id_teacher');
+        return $this->belongsTo(Teacher::class, 'fk_teacher');
     }
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'id_staff');
+        return $this->belongsTo(Staff::class, 'fk_staff');
     }
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'id_student');
+        return $this->belongsTo(Student::class, 'fk_student');
     }
 
     public function scopeSearch($query, $keywords)

@@ -17,7 +17,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $incoming = Incoming::where([['id_headmaster', '=', $user->headmaster->id], ['status', '=', 0]])->get();
+        $incoming = Incoming::where([['fk_headmaster', '=', $user->headmaster->nip], ['status', '=', 0]])->get();
         $incoming->count = count($incoming);
         $outgoing = Outgoing::where('status', '>=', 2)->get();
         $outgoing->count = count($outgoing->where('status', 2));
@@ -40,7 +40,7 @@ class ProfileController extends Controller
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',
         ]);
-        $headmaster = Headmaster::where('id_user', $user->id)->first();
+        $headmaster = $user->headmaster;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

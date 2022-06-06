@@ -9,6 +9,8 @@ class StaffType extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
     ];
@@ -21,6 +23,6 @@ class StaffType extends Model
 
     public function outgoing()
     {
-        return $this->hasOne(Staff::class, 'id_type');
+        return $this->hasOne(Staff::class, 'fk_type');
     }
 }

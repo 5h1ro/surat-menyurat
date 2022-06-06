@@ -14,21 +14,21 @@ class CreateOutgoingsTable extends Migration
     public function up()
     {
         Schema::create('outgoings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('number');
             $table->string('to');
             $table->text('detail');
             $table->text('letter');
-            $table->integer('id_type')->unsigned();
-            $table->integer('id_teacher')->unsigned()->nullable();
-            $table->integer('id_staff')->unsigned()->nullable();
+            $table->string('fk_type');
+            $table->bigInteger('fk_teacher')->nullable();
+            $table->bigInteger('fk_staff')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
         Schema::table('outgoings', function (Blueprint $table) {
-            $table->foreign('id_type', 'id_type_outgoings_fk_01')->references('id')->on('outgoing_types')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_teacher', 'id_teacher_outgoings_fk_02')->references('id')->on('teachers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_staff', 'id_staff_outgoings_fk_04')->references('id')->on('staff')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_type', 'fk_type_outgoings_fk_01')->references('id')->on('outgoing_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_teacher', 'fk_teacher_outgoings_fk_02')->references('nip')->on('teachers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_staff', 'fk_staff_outgoings_fk_04')->references('nip')->on('staff')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

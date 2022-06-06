@@ -14,21 +14,21 @@ class CreateFixingsTable extends Migration
     public function up()
     {
         Schema::create('fixings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('number');
             $table->string('to');
             $table->text('detail');
             $table->text('letter');
-            $table->integer('id_type')->unsigned();
-            $table->integer('id_student')->unsigned();
+            $table->string('fk_type');
+            $table->integer('fk_student');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
 
 
         Schema::table('fixings', function (Blueprint $table) {
-            $table->foreign('id_type', 'id_student_fixings_fk_01')->references('id')->on('fixing_types')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_student', 'id_student_fixings_fk_03')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_type', 'fk_type_fixings_fk_01')->references('id')->on('fixing_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_student', 'fk_student_fixings_fk_03')->references('nisn')->on('students')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

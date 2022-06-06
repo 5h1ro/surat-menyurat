@@ -14,12 +14,11 @@ class DispositionSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 1; $i++) {
-            $user = Disposition::create([
-                'id_incoming'           => $i,
-                'letter'                => asset('assets/test.pdf'),
-            ]);
-            $user->save();
-        };
+        $user = Disposition::create([
+            'id'                    => 'DP-00001',
+            'fk_incoming'           => '005/034/405.07.3.23/2022',
+            'letter'                => asset('assets/test.pdf'),
+        ]);
+        $user->save();
     }
 }

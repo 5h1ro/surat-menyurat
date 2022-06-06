@@ -14,10 +14,10 @@ class CreateDispositionsTable extends Migration
     public function up()
     {
         Schema::create('dispositions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('id_incoming')->unsigned();
-            $table->integer('id_teacher')->unsigned()->nullable();
-            $table->integer('id_staff')->unsigned()->nullable();
+            $table->string('id')->primary();
+            $table->string('fk_incoming');
+            $table->bigInteger('fk_teacher')->nullable();
+            $table->bigInteger('fk_staff')->nullable();
             $table->text('letter')->nullable();
             $table->integer('status')->default(0);
             $table->integer('information')->default(2);
@@ -25,9 +25,9 @@ class CreateDispositionsTable extends Migration
             $table->timestamps();
         });
         Schema::table('dispositions', function (Blueprint $table) {
-            $table->foreign('id_incoming', 'id_incoming_dispositions_fk_01')->references('id')->on('incomings')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_teacher', 'id_teacher_dispositions_fk_02')->references('id')->on('teachers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_staff', 'id_staff_dispositions_fk_03')->references('id')->on('staff')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_incoming', 'fk_incoming_dispositions_fk_01')->references('number')->on('incomings')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_teacher', 'fk_teacher_dispositions_fk_02')->references('nip')->on('teachers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('fk_staff', 'fk_staff_dispositions_fk_03')->references('nip')->on('staff')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

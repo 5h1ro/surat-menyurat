@@ -24,12 +24,12 @@ class StaffSeeder extends Seeder
 
         ];
 
-        $id_user = [
-            '8',
-            '9',
-            '10',
-            '11',
-            '12',
+        $fk_user = [
+            'staff@staff.com',
+            'staff2@staff2.com',
+            'staff3@staff3.com',
+            'staff4@staff4.com',
+            'staff5@staff5.com',
         ];
 
         $nip = [
@@ -56,23 +56,23 @@ class StaffSeeder extends Seeder
             'III/b',
         ];
 
-        $id_type = [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
+        $fk_type = [
+            'ST-01',
+            'ST-02',
+            'ST-03',
+            'ST-04',
+            'ST-05',
         ];
 
 
         for ($i = 0; $i < count($name); $i++) {
             $user = Staff::create([
                 'name'              => $name[$i],
-                'id_user'           => $id_user[$i],
+                'fk_user'           => $fk_user[$i],
                 'nip'               => $nip[$i],
                 'rank'              => $rank[$i],
                 'class'             => $class[$i],
-                'id_type'           => $id_type[$i],
+                'fk_type'           => $fk_type[$i],
             ]);
             $user->save();
         };

@@ -22,7 +22,8 @@ class User extends Authenticatable
         'password',
         'id_role',
     ];
-
+    protected $primaryKey = 'email';
+    public $incrementing = false;
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -49,29 +50,29 @@ class User extends Authenticatable
 
     public function teacher()
     {
-        return $this->hasOne(Teacher::class, 'id_user');
+        return $this->hasOne(Teacher::class, 'fk_user');
     }
 
     public function staff()
     {
-        return $this->hasOne(Staff::class, 'id_user');
+        return $this->hasOne(Staff::class, 'fk_user');
     }
 
     public function admin()
     {
-        return $this->hasOne(Admin::class, 'id_user');
+        return $this->hasOne(Admin::class, 'fk_user');
     }
 
     public function headmaster()
     {
-        return $this->hasOne(Headmaster::class, 'id_user');
+        return $this->hasOne(Headmaster::class, 'fk_user');
     }
     public function student()
     {
-        return $this->hasOne(Student::class, 'id_user');
+        return $this->hasOne(Student::class, 'fk_user');
     }
     public function superadmin()
     {
-        return $this->hasOne(Superadmin::class, 'id_user');
+        return $this->hasOne(Superadmin::class, 'fk_user');
     }
 }

@@ -9,6 +9,10 @@ class OutgoingType extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
     ];
@@ -21,6 +25,6 @@ class OutgoingType extends Model
 
     public function outgoing()
     {
-        return $this->hasMany(Outgoing::class, 'id_type');
+        return $this->hasMany(Outgoing::class, 'fk_type');
     }
 }

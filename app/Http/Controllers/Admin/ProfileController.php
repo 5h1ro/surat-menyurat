@@ -37,7 +37,7 @@ class ProfileController extends Controller
             'email.numeric' => 'Email hanya boleh diisi dengan format email',
             'email.unique' => 'Email sudah ada dengan akun lain',
         ]);
-        $admin = Admin::where('id_user', $user->id)->first();
+        $admin = $user->admin;
         if (isset($request->password)) {
             $this->validate($request, [
                 'password' => "min:8",

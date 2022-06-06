@@ -9,6 +9,10 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nisn';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'birthplace',
@@ -16,7 +20,7 @@ class Student extends Model
         'class',
         'ni',
         'nisn',
-        'id_user',
+        'fk_user',
         'gender',
         'religion',
         'parent',
@@ -32,11 +36,11 @@ class Student extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'fk_user');
     }
 
     public function fixing()
     {
-        return $this->hasMany(Fixing::class, 'id_student');
+        return $this->hasMany(Fixing::class, 'fk_student');
     }
 }
