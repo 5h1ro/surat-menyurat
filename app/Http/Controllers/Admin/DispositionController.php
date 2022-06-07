@@ -82,12 +82,12 @@ class DispositionController extends Controller
                     $value->staffs = "";
                     foreach ($dispositions as $values) {
                         if ($values->fk_teacher != null) {
-                            $name = Teacher::where('id', $values->fk_teacher)->first();
+                            $name = Teacher::find($values->fk_teacher)->first();
                             $value->teachers = $value->teachers . $name->name . ', ';
                         }
                         if ($values->fk_staff != null) {
                             if ($values->fk_staff != null) {
-                                $name_staff = Staff::where('id', $values->fk_staff)->first();
+                                $name_staff = Staff::find($values->fk_staff)->first();
                                 $value->staffs = $value->staffs . $name_staff->name . ', ';
                             }
                         }
