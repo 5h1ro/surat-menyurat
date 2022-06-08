@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/extensions/sweetalert2.min.css">
     @csrf
 @endsection
 
@@ -413,6 +414,7 @@
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
     <script src="{{ asset('assets') }}/js/scripts/forms/pickers/form-pickers.js"></script>
 
+    <script src="{{ asset('assets') }}/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="{{ asset('assets/js/scripts/tables/staff/table-staff-outgoing-datatables.js') }}"></script>
     <script>
         var type = $('#fk_type');
@@ -493,4 +495,31 @@
             @endforeach
         </script>
     @endif
+    <script>
+        function remove(params) {
+            var str = params.toString();
+            Swal.fire({
+                title: 'Apa anda yakin?',
+                text: "Saat data dihapus, data tidak bisa dikembalikan lagi",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    location.href = "{{ $delete }}/" + str.slice(1, -1);
+                } else {
+                    Swal.fire({
+                        text: "Data tidak dihapus",
+                        icon: 'info'
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

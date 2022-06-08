@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\DataTables;
 
 use function PHPUnit\Framework\returnSelf;
@@ -42,6 +43,8 @@ class PerbaikanSuratController extends Controller
         if ($request->ajax()) {
             $data = Fixing::where('fk_student', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->id);
+                $value->number_md5 = md5($value->id);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->student;
@@ -53,6 +56,8 @@ class PerbaikanSuratController extends Controller
         } else {
             $data = Fixing::where('fk_student', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->id);
+                $value->number_md5 = md5($value->id);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->student;
@@ -72,7 +77,7 @@ class PerbaikanSuratController extends Controller
 
     public function delete($id)
     {
-        $surat = Fixing::find($id)->delete();
+        $surat = Fixing::find(Crypt::decrypt($id))->delete();
         return redirect()->back();
     }
 

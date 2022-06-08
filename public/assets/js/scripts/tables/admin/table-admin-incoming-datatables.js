@@ -106,11 +106,10 @@ $(document).ready(function () {
                             feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="' +
-                            hapus +
+                            '<a class="dropdown-item delete-record" onclick="remove(' +
                             '/' +
-                            data +
-                            '" class="dropdown-item delete-record">' +
+                            full['number_encrypt'] +
+                            '/)">' +
                             feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
                             'Delete</a>' +
                             '</div>' +

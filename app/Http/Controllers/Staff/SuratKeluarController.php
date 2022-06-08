@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\DataTables;
 
 class SuratKeluarController extends Controller
@@ -49,6 +50,8 @@ class SuratKeluarController extends Controller
         if ($request->ajax()) {
             $data = Outgoing::where('fk_staff', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->id);
+                $value->number_md5 = md5($value->id);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->staff;
@@ -60,6 +63,8 @@ class SuratKeluarController extends Controller
         } else {
             $data = Outgoing::where('fk_staff', $id)->get();
             foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->id);
+                $value->number_md5 = md5($value->id);
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
                 $value->staff;
@@ -79,7 +84,7 @@ class SuratKeluarController extends Controller
 
     public function delete($id)
     {
-        $surat = Outgoing::where('id', $id)->delete();
+        $surat = Outgoing::find(Crypt::decrypt($id))->delete();
         return redirect()->back();
     }
 

@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/vendors/css/extensions/sweetalert2.min.css">
     @csrf
 @endsection
 
@@ -367,8 +368,7 @@
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="alasan_mutasi">Mutasi / Pindah Karena</label>
-                                <textarea class="form-control" id="alasan_mutasi" name="alasan_mutasi" rows="3"
-                                    placeholder="Pindah ke SMPN 1 xxxx"></textarea>
+                                <textarea class="form-control" id="alasan_mutasi" name="alasan_mutasi" rows="3" placeholder="Pindah ke SMPN 1 xxxx"></textarea>
                             </div>
                         </div>
                         <button type=" submit" class="btn btn-primary data-submit me-1">Submit</button>
@@ -440,6 +440,7 @@
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
     <script src="{{ asset('assets') }}/js/scripts/forms/pickers/form-pickers.js"></script>
 
+    <script src="{{ asset('assets') }}/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="{{ asset('assets/js/scripts/tables/teacher/table-teacher-outgoing-datatables.js') }}"></script>
     <script>
         var type = $('#fk_type');
@@ -530,4 +531,31 @@
             @endforeach
         </script>
     @endif
+    <script>
+        function remove(params) {
+            var str = params.toString();
+            Swal.fire({
+                title: 'Apa anda yakin?',
+                text: "Saat data dihapus, data tidak bisa dikembalikan lagi",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    location.href = "{{ $delete }}/" + str.slice(1, -1);
+                } else {
+                    Swal.fire({
+                        text: "Data tidak dihapus",
+                        icon: 'info'
+                    });
+                }
+            });
+        }
+    </script>
 @endsection
