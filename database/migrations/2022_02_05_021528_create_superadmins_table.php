@@ -15,7 +15,7 @@ class CreateSuperadminsTable extends Migration
     {
         Schema::create('superadmins', function (Blueprint $table) {
             $table->bigInteger('nip')->primary();
-            $table->string('name');
+            $table->string('name',100);
             $table->string('fk_user');
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class CreateSetupsTable extends Migration
     public function up()
     {
         Schema::create('setups', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary();
             $table->string('incoming_start')->default('035');
             $table->string('outgoing_start')->default('035');
             $table->string('periode')->default('2021/2022');

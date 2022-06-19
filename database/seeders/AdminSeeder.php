@@ -15,8 +15,8 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Hari Subagyo',
-            'Mai Nur Arbain',
+            'Sudarwati, S.Pd, M.Pd',
+            'Mamik Purnawati',
         ];
 
         $fk_user = [
@@ -25,8 +25,9 @@ class AdminSeeder extends Seeder
         ];
 
         $nip = [
-            '193307001234565451',
-            '193307005678765462',
+            '197210292007012009',
+            '196805252007012030',
+
         ];
 
         $status = [

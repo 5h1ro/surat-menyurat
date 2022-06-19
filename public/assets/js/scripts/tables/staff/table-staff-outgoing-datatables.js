@@ -59,7 +59,7 @@ $(document).ready(function () {
                     targets: 6,
                     render: function (data, type, full, meta) {
                         var status = full['status'];
-
+                        var read = '';
                         if (status == 3) {
                             read = $('#read').attr('value');
                         } else {

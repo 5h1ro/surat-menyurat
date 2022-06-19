@@ -73,8 +73,8 @@
         <div class="modal fade text-start" id="modals-slide-in" tabindex="-1" aria-labelledby="myModalLabel33"
             aria-hidden="true">
             <div class="modal-dialog sidebar-sm">
-                <form class="add-new-record modal-content pt-0" action="{{ route('teacher.suratkeluar.create') }}"
-                    method="POST">
+                <form class="add-new-record modal-content pt-0" id="form"
+                    action="{{ route('teacher.suratkeluar.create') }}" method="POST">
                     @csrf
                     <div class="modal-header mb-1">
                         <h5 class="modal-title" id="exampleModalLabel">Data Baru</h5>
@@ -352,7 +352,7 @@
                                 <label class="form-label" for="fk_student_mutasi">Nama Siswa</label>
                                 <select class="select2" id="fk_student_mutasi" name="fk_student_mutasi">
                                     @foreach ($student as $item)
-                                        <option value={{ $item->id }}>{{ $item->name }}</option>
+                                        <option value={{ $item->nisn }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -371,7 +371,12 @@
                                 <textarea class="form-control" id="alasan_mutasi" name="alasan_mutasi" rows="3" placeholder="Pindah ke SMPN 1 xxxx"></textarea>
                             </div>
                         </div>
-                        <button type=" submit" class="btn btn-primary data-submit me-1">Submit</button>
+                        <div class="mb-1">
+                            <label class="form-label" for="alasan_mutasi" style="color: red">* Mohon cek kembali
+                                karena data tidak dapat
+                                di ubah</label>
+                        </div>
+                        <button type="button" class="btn btn-primary data-submit me-1" onclick="simpan()">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -552,6 +557,32 @@
                 } else {
                     Swal.fire({
                         text: "Data tidak dihapus",
+                        icon: 'info'
+                    });
+                }
+            });
+        }
+    </script>
+    <script>
+        function simpan() {
+            Swal.fire({
+                title: 'Apa anda yakin?',
+                text: "Apakah Anda yakin data sudah benar?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $("#form").submit();
+                } else {
+                    Swal.fire({
+                        text: "Surat tidak dibuat",
                         icon: 'info'
                     });
                 }

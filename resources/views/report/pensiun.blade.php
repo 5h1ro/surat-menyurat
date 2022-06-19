@@ -55,7 +55,6 @@
         .page_break {
             page-break-before: always;
         }
-
     </style>
 </head>
 
@@ -66,32 +65,31 @@
             <table style="margin-left: 1.2cm">
                 <tr>
                     <td>
-                        <img src="{{ public_path('assets/images/logo.png') }}" style="width:4cm; margin-left: -1cm">
+                        <img src="{{ public_path('assets/images/logo.png') }}" style="width:2.5cm;">
                     </td>
                     <td>
                         <center style="margin-top: -10px">
-                            <p style="font-size: 12pt">
+                            <p style="font-size: 14pt">
                                 PEMERINTAH KABUPATEN PONOROGO <br>
                                 DINAS PENDIDIKAN <br>
                                 <span style="font-size: 16pt">
-                                    <b>SEKOLAH MENENGAH PERTAMA NEGERI 1 <br>
-                                        (SMPN 1)
-                                    </b>
+                                    <b>SMP NEGERI 1 SLAHUNG</b>
                                 </span>
-                                <br>
-                                <b>
-                                    SEKOLAH STANDAR NASIONAL ( SSN ) <br>
-                                    KECAMATAN SLAHUNG
-                                </b>
                             </p>
                             <p style="font-size: 10pt; margin-top: -15px">Jl. Raya Pacitan 9 Menggare, Slahung,
-                                Ponorogo. Telp. (0352) 37 11 66 Kode Pos. 63463
+                                Ponorogo.
+                                Telp. (0352) 371166</p>
+                            <p style="font-size: 10pt; margin-top: -5px">Email : smpn1slahung@gmail.com
+                                <br>
+                                <span style="font-size: 16pt; letter-spacing: 3pt">
+                                    <b>SLAHUNG</b>
+                                </span>
                             </p>
                         </center>
                     </td>
                 </tr>
             </table>
-            <hr>
+            <hr style="margin-top: -10px">
         </center>
         <br />
 

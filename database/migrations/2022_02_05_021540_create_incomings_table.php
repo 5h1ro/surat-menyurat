@@ -15,11 +15,11 @@ class CreateIncomingsTable extends Migration
     {
         Schema::create('incomings', function (Blueprint $table) {
             $table->string('number')->primary();
-            $table->string('title');
-            $table->string('letter_number');
+            $table->string('title',50);
+            $table->string('letter_number',70);
             $table->date('letter_date');
-            $table->string('from');
-            $table->text('detail');
+            $table->string('from',50);
+            $table->text('detail',200);
             $table->text('letter');
             $table->string('fk_type');
             $table->bigInteger('fk_admin');

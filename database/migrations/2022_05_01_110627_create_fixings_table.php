@@ -15,9 +15,9 @@ class CreateFixingsTable extends Migration
     {
         Schema::create('fixings', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('number');
-            $table->string('to');
-            $table->text('detail');
+            $table->string('number',25);
+            $table->string('to',30);
+            $table->text('detail',150);
             $table->text('letter');
             $table->string('fk_type');
             $table->integer('fk_student');

@@ -15,7 +15,7 @@ class SuperadminSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Indri Riani',
+            'Sudarwati, S.Pd, M.Pd',
         ];
 
         $fk_user = [
@@ -23,7 +23,7 @@ class SuperadminSeeder extends Seeder
         ];
 
         $nip = [
-            '193307000',
+            '197210292007012009',
         ];
 
 

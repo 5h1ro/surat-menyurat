@@ -140,7 +140,18 @@
                             <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
+                    <div class="mb-1">
+                        <label class="form-label" for="password">Password Confirmation</label>
+                        <div class="input-group input-group-merge form-password-toggle">
+                            <input type="password" class="form-control form-control-merge" id="password_confirmation"
+                                name="password_confirmation" tabindex="2"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="password" />
+                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                        </div>
+                        <label class="form-label" for="password" id="message"></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary data-submit me-1" id="btn_submit" disabled>Submit</button>
                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -164,4 +175,15 @@
         </script>
     @endif
     <script src="{{ asset('assets') }}/js/scripts/extensions/ext-component-toastr.js"></script>
+    <script>
+        $('#password, #password_confirmation').on('keyup', function() {
+            if ($('#password').val() == $('#password_confirmation').val()) {
+                $('#message').html('Sandi sesuai').css('color', 'green');
+                $('#btn_submit').removeAttr('disabled');
+            } else {
+                $('#message').html('Sandi tidak sesuai').css('color', 'red');
+                $('#btn_submit').attr('disabled', 'disabled');
+            }
+        });
+    </script>
 @endsection

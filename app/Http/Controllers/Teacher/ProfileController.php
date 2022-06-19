@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $user = User::find($id);
         $this->validate($request, [
             'name' => "required",
-            'nip' => ['required', 'numeric', Rule::unique('teachers')->ignore($user->staff)],
+            'nip' => ['required', 'numeric', Rule::unique('teachers')->ignore($user->teacher)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
         ], [
             'name.required' => 'Nama tidak boleh kosong',
@@ -48,9 +48,10 @@ class ProfileController extends Controller
         $teacher = $user->teacher;
         if (isset($request->password)) {
             $this->validate($request, [
-                'password' => "min:8",
+                'password' => "min:8|confirmed",
             ], [
                 'password.min' => 'Password minimal 8 karakter',
+                'password.confirmed' => 'Password yang anda masukkan tidak sama',
             ]);
             $user->email = $request->email;
             $user->password = Hash::make($request->password);

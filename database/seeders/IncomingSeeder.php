@@ -27,7 +27,7 @@ class IncomingSeeder extends Seeder
         ];
 
         $fk_admin = [
-            193307001234565451,
+            197210292007012009,
         ];
 
         $fk_headmaster = [

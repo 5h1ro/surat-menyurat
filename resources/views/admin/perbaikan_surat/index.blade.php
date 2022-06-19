@@ -107,14 +107,17 @@
             </div>
         @endforeach
         @foreach ($fixing as $item)
-            <div class="modal modal-slide-in fade" id="update{{ $item->id }}">
+            <div class="modal fade text-start" id="update{{ $item->id }}" tabindex="-1"
+                aria-labelledby="myModalLabel33" aria-hidden="true">
+
                 <div class="modal-dialog sidebar-sm">
                     <form class="add-new-record modal-content pt-0" method="POST"
                         action="{{ route('admin.perbaikansurat.upload', $item->id) }}" enctype="multipart/form-data">
                         @csrf
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="exampleModalLabel">Data Baru</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">

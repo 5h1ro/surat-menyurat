@@ -251,7 +251,7 @@ class SuratKeluarController extends Controller
                     return $pdf->stream();
                 }
             }
-        } elseif ($request->fk_type == 4) {
+        } elseif ($request->fk_type == 'OT-04') {
             $this->validate($request, [
                 'masuk_mutasi' => "required|before:today",
                 'keluar_mutasi' => "required",
@@ -270,6 +270,7 @@ class SuratKeluarController extends Controller
         }
 
         $id = IdGenerator::generate(['table' => 'outgoings', 'length' => 8, 'prefix' => 'OT-']);
+        $user = Auth::user();
         $outgoing =  new Outgoing;
         $outgoing->id = $id;
         $outgoing->number = $number;

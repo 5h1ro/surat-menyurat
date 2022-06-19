@@ -15,12 +15,11 @@ class StaffSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Agus Ginanjar',
-            'Budi Setiawan',
-            'Imron Basuki',
-            'Imam ',
-            'Siti',
-
+            'Sudarwati, S.Pd, M.Pd',
+            'SULISTYANTINAWATI, S.Pd',
+            'TRI WAHYU HARTIWI, S.Pd',
+            'IMRON BASUKI, S.Pd',
+            'IMAM MA ARIF, S.Pd',
 
         ];
 
@@ -33,15 +32,17 @@ class StaffSeeder extends Seeder
         ];
 
         $nip = [
-            '193307131234320051',
-            '193307345676543006',
-            '193307456787653007',
-            '193307678987645008',
-            '193307567876545009',
+            '197210292007012009',
+            '196909211995122005',
+            '197301312008012015',
+            '196403261990011002',
+            '196905111998031006',
+
+
         ];
 
         $rank = [
-            'Penata Muda Tk.I',
+            'Penata Muda',
             'Penata Muda Tk.I',
             'Penata Muda Tk.I',
             'Penata Muda Tk.I',
@@ -49,11 +50,11 @@ class StaffSeeder extends Seeder
         ];
 
         $class = [
-            'III/b',
-            'III/b',
-            'III/b',
-            'III/b',
-            'III/b',
+            'III/a',
+            'IV/b',
+            'III/d',
+            'IV/b',
+            'IV/b',
         ];
 
         $fk_type = [

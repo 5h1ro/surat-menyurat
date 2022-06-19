@@ -22,6 +22,6 @@ class DashboardController extends Controller
             }
         }
         $incoming->count = count($incoming);
-        return view('teacher.index', compact('user', 'incoming'));
+        return view('staff.index', compact('user', 'incoming'));
     }
 }

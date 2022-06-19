@@ -15,9 +15,9 @@ class CreateOutgoingsTable extends Migration
     {
         Schema::create('outgoings', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('number');
-            $table->string('to');
-            $table->text('detail');
+            $table->string('number',24);
+            $table->string('to',100);
+            $table->text('detail',250);
             $table->text('letter');
             $table->string('fk_type');
             $table->bigInteger('fk_teacher')->nullable();

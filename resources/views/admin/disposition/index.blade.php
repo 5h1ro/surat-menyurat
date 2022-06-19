@@ -65,7 +65,7 @@
     </section>
     <!--/ Basic table -->
     @foreach ($disposition as $item)
-        <div class="modal fade text-start" id="update{{ $item->id }}" aria-labelledby="myModalLabel33"
+        <div class="modal fade text-start" id="update{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel33"
             aria-hidden="true">
             <div class="modal-dialog sidebar-sm">
                 <form class="add-new-record modal-content pt-0" method="POST"

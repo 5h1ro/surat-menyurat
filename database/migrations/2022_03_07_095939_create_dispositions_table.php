@@ -19,9 +19,9 @@ class CreateDispositionsTable extends Migration
             $table->bigInteger('fk_teacher')->nullable();
             $table->bigInteger('fk_staff')->nullable();
             $table->text('letter')->nullable();
-            $table->integer('status')->default(0);
-            $table->integer('information')->default(2);
-            $table->string('instruction')->nullable();
+            $table->integer('status,1')->default(0);
+            $table->integer('information,250')->default(2);
+            $table->string('instruction,250')->nullable();
             $table->timestamps();
         });
         Schema::table('dispositions', function (Blueprint $table) {

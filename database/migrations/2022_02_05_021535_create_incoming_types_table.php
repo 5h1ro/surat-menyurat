@@ -15,7 +15,7 @@ class CreateIncomingTypesTable extends Migration
     {
         Schema::create('incoming_types', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('name');
+            $table->string('name',30);
             $table->timestamps();
         });
     }

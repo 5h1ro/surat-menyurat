@@ -15,7 +15,7 @@ class HeadmasterSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Riduwan, S.Pd, M.Pd',
+            'SUMIRAN, S.Pd, M.Pd',
         ];
 
         $fk_user = [
@@ -27,10 +27,10 @@ class HeadmasterSeeder extends Seeder
         ];
 
         $rank = [
-            'Pembina Tk.1',
+            'Pembina Utama muda',
         ];
         $class = [
-            'IV/b',
+            'IV/c',
         ];
 
 

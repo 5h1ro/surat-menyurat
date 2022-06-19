@@ -15,9 +15,9 @@ class CreateHeadmastersTable extends Migration
     {
         Schema::create('headmasters', function (Blueprint $table) {
             $table->bigInteger('nip')->primary();
-            $table->string('name');
-            $table->string('rank');
-            $table->string('class');
+            $table->string('name',100);
+            $table->string('rank',21);
+            $table->string('class',4);
             $table->string('fk_user');
             $table->timestamps();
         });

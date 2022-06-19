@@ -75,7 +75,12 @@
                             </p>
                             <p style="font-size: 10pt; margin-top: -15px">Jl. Raya Pacitan 9 Menggare, Slahung,
                                 Ponorogo.
-                                Telp. (0352) 371166
+                                Telp. (0352) 371166</p>
+                            <p style="font-size: 10pt; margin-top: -5px">Email : smpn1slahung@gmail.com
+                                <br>
+                                <span style="font-size: 16pt; letter-spacing: 3pt">
+                                    <b>SLAHUNG</b>
+                                </span>
                             </p>
                         </center>
                     </td>

@@ -44,8 +44,8 @@ class OutgoingSeeder extends Seeder
         ];
 
         $fk_teacher = [
-            19601129198703105,
-            19601129198703106,
+            196407141988032010,
+            196506271991032006,
         ];
 
         $status = [

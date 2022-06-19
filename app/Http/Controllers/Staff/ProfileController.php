@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $staff = $user->staff;
         if (isset($request->password)) {
             $this->validate($request, [
-                'password' => "min:8",
+                'password' => "min:8|confirmed",
             ], [
                 'password.min' => 'Password minimal 8 karakter',
             ]);

@@ -15,6 +15,7 @@ class SetupSeeder extends Seeder
     public function run()
     {
         $setup = new Setup;
+        $setup->id = '1';
         $setup->incoming_start = '000';
         $setup->outgoing_start = '000';
         $setup->periode = '2021/2022';
