@@ -128,7 +128,6 @@ class SuratMasukController extends Controller
             'letter.required' => 'Scan surat tidak boleh kosong',
             'letter.mimes' => 'File harus berformat pdf',
         ]);
-
         $last_incoming = Incoming::latest()->first();
         $letter_date = Carbon::createFromFormat('Y-m-d', $request->letter_date)->isoFormat('DD MMMM Y');
         $date = Carbon::now()->isoformat('DD MMMM Y');

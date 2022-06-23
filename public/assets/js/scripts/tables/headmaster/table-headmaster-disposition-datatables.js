@@ -114,7 +114,7 @@ $(document).ready(function () {
                         var $status = {
                             1: { title: 'Rahasia', class: 'badge-light-danger' },
                             2: { title: 'Penting', class: 'badge-light-warning' },
-                            3: { title: 'Rutin', class: 'badge-light-blue' },
+                            3: { title: 'Rutin', class: 'badge-light-info' },
                         };
                         if (typeof $status[$status_number] === 'undefined') {
                             return data;

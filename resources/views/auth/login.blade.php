@@ -11,7 +11,7 @@
     <meta name="keywords"
         content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Login Page</title>
+    <title>Laman Masuk</title>
     <link rel="apple-touch-icon" href="{{ asset('assets') }}/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets') }}/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -64,8 +64,8 @@
                                     <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" height="28">
                                         <defs>
-                                            <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%"
-                                                y2="89.4879456%">
+                                            <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%"
+                                                x2="50%" y2="89.4879456%">
                                                 <stop stop-color="#000000" offset="0%"></stop>
                                                 <stop stop-color="#FFFFFF" offset="100%"></stop>
                                             </lineargradient>
@@ -75,7 +75,8 @@
                                                 <stop stop-color="#FFFFFF" offset="100%"></stop>
                                             </lineargradient>
                                         </defs>
-                                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g id="Page-1" stroke="none" stroke-width="1" fill="none"
+                                            fill-rule="evenodd">
                                             <g id="Artboard" transform="translate(-400.000000, -178.000000)">
                                                 <g id="Group" transform="translate(400.000000, 178.000000)">
                                                     <path class="text-primary" id="Path"
@@ -110,20 +111,18 @@
                                     <div class="mb-1">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="admin@smpn1slahung.com" aria-describedby="email" tabindex="1"
-                                            autofocus />
+                                            placeholder="admin@smpn1slahung.com" aria-describedby="email"
+                                            tabindex="1" autofocus />
                                     </div>
 
                                     <div class="mb-1">
                                         <div class="d-flex justify-content-between">
-                                            <label class="form-label" for="password">Password</label>
-                                            <a href="page-auth-forgot-password-v1.html">
-                                                <small>Forgot Password?</small>
-                                            </a>
+                                            <label class="form-label" for="password">Kata Sandi</label>
+
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
-                                            <input type="password" class="form-control form-control-merge" id="password"
-                                                name="password" tabindex="2"
+                                            <input type="password" class="form-control form-control-merge"
+                                                id="password" name="password" tabindex="2"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password" />
                                             <span class="input-group-text cursor-pointer"><i
@@ -144,7 +143,7 @@
                                             </div>
                                         </div>
                                     @enderror
-                                    <button class="btn btn-primary w-100" tabindex="4">Sign in</button>
+                                    <button class="btn btn-primary w-100" tabindex="4">Masuk</button>
                                 </form>
                             </div>
                         </div>

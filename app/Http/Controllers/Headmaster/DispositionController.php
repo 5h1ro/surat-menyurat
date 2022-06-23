@@ -66,7 +66,7 @@ class DispositionController extends Controller
                     if ($value->fk_staff != null) {
                         $value->staffs = "";
                         foreach ($dispositions as $values) {
-                            $name = Staff::where('id', $values->fk_staff)->first();
+                            $name = Staff::where('nip', $values->fk_staff)->first();
                             $value->staffs = $value->staffs . $name->name . ', ';
                         }
                         $value->staffs = substr($value->staffs, 0, -2);
@@ -105,7 +105,7 @@ class DispositionController extends Controller
                     if ($value->fk_staff != null) {
                         $value->staffs = "";
                         foreach ($dispositions as $values) {
-                            $name = Staff::where('id', $values->fk_staff)->first();
+                            $name = Staff::where('nip', $values->fk_staff)->first();
                             $value->staffs = $value->staffs . $name->name . ', ';
                         }
                         $value->staffs = substr($value->staffs, 0, -2);
@@ -269,7 +269,7 @@ class DispositionController extends Controller
             if (count($request->fk_stafftype) == 1) {
                 foreach ($request->fk_stafftype as $value) {
                     $surat = Disposition::where('id', $id)->first();
-                    $staff = Staff::where('nip', $value)->first();
+                    $staff = Staff::where('fk_type', $value)->first();
                     $name = $staff->name;
                     $surat->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $surat->incoming->letter_date)->isoFormat('DD MMMM Y');
                     $date = Carbon::createFromFormat('Y-m-d', substr($surat->incoming->created_at, 0, 10))->isoFormat('DD MMMM Y');
