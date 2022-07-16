@@ -38,10 +38,14 @@ Route::get('teacher/surat-masuk/index/get/{id}', [TSuratMasukController::class, 
 Route::get('teacher/surat-keluar/index/get/{id}', [TSuratKeluarController::class, 'getData'])->name('teacher.suratkeluar.index.get');
 Route::get('staff/surat-masuk/index/get/{id}', [STSuratMasukController::class, 'getData'])->name('staff.suratmasuk.index.get');
 Route::get('staff/surat-keluar/index/get/{id}', [STSuratKeluarController::class, 'getData'])->name('staff.suratkeluar.index.get');
+Route::get('admin/surat-masuk/index/search={detail}', [ASuratMasukController::class, 'getSearch'])->name('admin.suratmasuk.index.search');
 Route::get('admin/surat-masuk/index/get', [ASuratMasukController::class, 'getData'])->name('admin.suratmasuk.index.get');
+Route::get('admin/disposisi/index/search={detail}', [ADispositionController::class, 'getSearch'])->name('admin.disposisi.index.search');
 Route::get('admin/disposisi/index/get', [ADispositionController::class, 'getData'])->name('admin.disposisi.index.get');
 Route::get('admin/surat-keluar/index/get/{id}', [ASuratKeluarController::class, 'getData'])->name('admin.suratkeluar.index.get');
+Route::get('admin/surat-keluar/index/search={detail}/{id}', [ASuratKeluarController::class, 'getSearch'])->name('admin.suratkeluar.index.search');
 Route::get('admin/perbaikan-surat/index/get/{id}', [APerbaikanSuratController::class, 'getData'])->name('admin.perbaikansurat.index.get');
+Route::get('admin/perbaikan-surat/index/search={detail}/{id}', [APerbaikanSuratController::class, 'getSearch'])->name('admin.perbaikansurat.index.search');
 Route::get('headmaster/surat-masuk/index/get/{id}', [HSuratMasukController::class, 'getData'])->name('headmaster.suratmasuk.index.get');
 Route::get('headmaster/disposisi/index/get/{id}', [HDispositionController::class, 'getData'])->name('headmaster.disposisi.index.get');
 Route::get('headmaster/surat-keluar/index/get', [HSuratKeluarController::class, 'getData'])->name('headmaster.suratkeluar.index.get');

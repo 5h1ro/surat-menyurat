@@ -17,6 +17,7 @@ class PerbaikanSuratController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $id = $user->admin->nip;
         $data = url('api/admin/perbaikan-surat/index/get', $user->admin->nip);
         $acc = url('admin/perbaikan-surat/acc');
         $not_acc = url('admin/perbaikan-surat/not_acc');
@@ -29,7 +30,7 @@ class PerbaikanSuratController extends Controller
         }
         $outgoing = Outgoing::all();
         $count = count($outgoing->where('status', 0));
-        return view('admin.perbaikan_surat.index', compact('user', 'data', 'acc', 'not_acc', 'outgoing', 'count', 'fixing'));
+        return view('admin.perbaikan_surat.index', compact('user', 'data', 'acc', 'not_acc', 'outgoing', 'count', 'fixing', 'id'));
     }
 
     public function getData($id, Request $request)
@@ -51,6 +52,47 @@ class PerbaikanSuratController extends Controller
         } else {
             $admin = Admin::find($id);
             $data = Fixing::all();
+            foreach ($data as $value) {
+                $date = substr($value->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                $student = Student::find($value->fk_student);
+                $value->sender = $student->name;
+                $value->admin = $admin->status;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        }
+    }
+
+    public function getSearch($detail, $id, Request $request)
+    {
+        if ($request->ajax()) {
+            $admin = Admin::find($id);
+            if ($detail == "null") {
+                $data = Fixing::all();
+            } else {
+                $data = Fixing::where('detail', 'like', '%' . $detail . '%')->get();
+            }
+            foreach ($data as $value) {
+                $date = substr($value->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                $student = Student::find($value->fk_student);
+                $value->sender = $student->name;
+                $value->admin = $admin->status;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        } else {
+            $admin = Admin::find($id);
+            if ($detail == "null") {
+                $data = Fixing::all();
+            } else {
+                $data = Fixing::where('detail', 'like', '%' . $detail . '%')->get();
+            }
             foreach ($data as $value) {
                 $date = substr($value->created_at, 0, 10);
                 $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');

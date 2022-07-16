@@ -90,6 +90,55 @@ class SuratMasukController extends Controller
         }
     }
 
+    public function getSearch($detail, Request $request)
+    {
+        if ($request->ajax()) {
+            if ($detail == "null") {
+                $data = Incoming::all();
+            } else {
+                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->get();
+            }
+            foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
+                $tanggal = substr($value->created_at, 8, 2);
+                $bulan = $this->month(substr($value->created_at, 5, 2));
+                $tahun = substr($value->created_at, 0, 4);
+                $tanggal_surat = substr($value->letter_date, 8, 2);
+                $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
+                $tahun_surat = substr($value->letter_date, 0, 4);
+                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
+                $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        } else {
+            if ($detail == "null") {
+                $data = Incoming::all();
+            } else {
+                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->get();
+            }
+            foreach ($data as $value) {
+                $value->number_encrypt = Crypt::encrypt($value->number);
+                $value->number_md5 = md5($value->number);
+                $tanggal = substr($value->created_at, 8, 2);
+                $bulan = $this->month(substr($value->created_at, 5, 2));
+                $tahun = substr($value->created_at, 0, 4);
+                $tanggal_surat = substr($value->letter_date, 8, 2);
+                $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
+                $tahun_surat = substr($value->letter_date, 0, 4);
+                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
+                $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        }
+    }
+
     public function read($id)
     {
         $surat = Incoming::find(Crypt::decrypt($id));

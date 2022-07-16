@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
         ];
 
         $fk_user = [
-            'nurhakikiajha@gmail.com',
+            'admin@admin.com',
             'admin2@admin2.com',
         ];
 

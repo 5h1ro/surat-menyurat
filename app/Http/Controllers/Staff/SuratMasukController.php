@@ -67,9 +67,40 @@ class SuratMasukController extends Controller
         }
     }
 
+    public function getSearch($id, Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Disposition::where('fk_staff', $id)->get();
+            foreach ($data as $value) {
+                $value->incoming->number_encrypt = Crypt::encrypt($value->incoming->number);
+                $value->incoming->number_md5 = md5($value->incoming->number);
+                $value->incoming->admin;
+                $date = substr($value->incoming->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                $value->incoming->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        } else {
+            $data = Disposition::where('fk_staff', $id)->get();
+            foreach ($data as $value) {
+                $value->incoming->number_encrypt = Crypt::encrypt($value->incoming->number);
+                $value->incoming->number_md5 = md5($value->incoming->number);
+                $value->incoming->admin;
+                $date = substr($value->incoming->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                $value->incoming->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        }
+    }
+
     public function read($id)
     {
-        $surat = Incoming::where('id', $id)->first();
+        $surat = Incoming::find(Crypt::decrypt($id));
         $surat->status_teacher = 1;
         $surat->save();
         return redirect()->to($surat->letter);

@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'teacher24@teacher24.com',
             'teacher25@teacher25.com',
             'headmaster@headmaster.com',
-            'nurhakikiajha@gmail.com',
+            'admin@admin.com',
             'admin2@admin2.com',
             'student@student.com',
             'yudrax89@gmail.com',

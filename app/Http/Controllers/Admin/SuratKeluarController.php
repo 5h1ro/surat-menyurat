@@ -18,6 +18,7 @@ class SuratKeluarController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $id = $user->admin->nip;
         $data = url('api/admin/surat-keluar/index/get', $user->admin->nip);
         $acc = url('admin/surat-keluar/acc');
         $not_acc = url('admin/surat-keluar/not_acc');
@@ -37,7 +38,7 @@ class SuratKeluarController extends Controller
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
         }
         $count = count($outgoing->where('status', 0));
-        return view('admin.surat_keluar.index', compact('user', 'data', 'acc', 'not_acc', 'outgoing', 'count'));
+        return view('admin.surat_keluar.index', compact('user', 'data', 'acc', 'not_acc', 'outgoing', 'count', 'id'));
     }
 
     public function getData($id, Request $request)
@@ -88,6 +89,64 @@ class SuratKeluarController extends Controller
                 ->make(true);
         }
     }
+
+    public function getSearch($detail, $id, Request $request)
+    {
+        if ($request->ajax()) {
+            $admin = Admin::find($id);
+            if ($detail == "null") {
+                $data = Outgoing::all();
+            } else {
+                $data = Outgoing::where('detail', 'like', '%' . $detail . '%')->get();
+            }
+            foreach ($data as $value) {
+                $date = substr($value->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                if ($value->fk_teacher != null) {
+                    $teacher = Teacher::find($value->fk_teacher);
+                    $value->sender = $teacher->name;
+                } elseif ($value->fk_student != null) {
+                    $student = Student::find($value->fk_student);
+                    $value->sender = $student->name;
+                } else {
+                    $staff = Staff::find($value->fk_staff);
+                    $value->sender = $staff->name;
+                }
+                $value->admin = $admin->status;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        } else {
+            $admin = Admin::find($id);
+            if ($detail == "null") {
+                $data = Outgoing::all();
+            } else {
+                $data = Outgoing::where('detail', 'like', '%' . $detail . '%')->get();
+            }
+            foreach ($data as $value) {
+                $date = substr($value->created_at, 0, 10);
+                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
+                if ($value->fk_teacher != null) {
+                    $teacher = Teacher::find($value->fk_teacher);
+                    $value->sender = $teacher->name;
+                } elseif ($value->fk_student != null) {
+                    $student = Student::find($value->fk_student);
+                    $value->sender = $student->name;
+                } else {
+                    $staff = Staff::find($value->fk_staff);
+                    $value->sender = $staff->name;
+                }
+                $value->admin = $admin->status;
+                $value->type;
+                $value->responsive_id = "";
+            }
+            return DataTables::of($data)
+                ->make(true);
+        }
+    }
+
 
     public function acc($id)
     {
