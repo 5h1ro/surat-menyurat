@@ -14,6 +14,7 @@ use App\Http\Controllers\Staff\SuratKeluarController as STSuratKeluarController;
 use App\Http\Controllers\Staff\SuratMasukController as STSuratMasukController;
 use App\Http\Controllers\Student\PerbaikanSuratController as SPerbaikanSuratController;
 use App\Http\Controllers\Superadmin\RoleController as SURoleController;
+use App\Http\Controllers\Superadmin\DataUserController as SUDataUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +48,4 @@ Route::get('headmaster/surat-keluar/index/get', [HSuratKeluarController::class, 
 Route::get('headmaster/perbaikan-surat/index/get', [HPerbaikanSuratController::class, 'getData'])->name('headmaster.perbaikansurat.index.get');
 Route::get('student/perbaikan-surat/index/get/{id}', [SPerbaikanSuratController::class, 'getData'])->name('student.perbaikansurat.index.get');
 Route::get('superadmin/role/index/get', [SURoleController::class, 'getData'])->name('superadmin.role.index.get');
+Route::get('superadmin/datauser/index/get', [SUDataUserController::class, 'getData'])->name('superadmin.datauser.index.get');

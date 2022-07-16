@@ -468,48 +468,48 @@
                     @if ($user->id_role == 'R-01')
                         <a class="dropdown-item" href="{{ route('teacher.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     @if ($user->id_role == 'R-02')
                         <a class="dropdown-item" href="{{ route('headmaster.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     @if ($user->id_role == 'R-03')
                         <a class="dropdown-item" href="{{ route('admin.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     @if ($user->id_role == 'R-04')
                         <a class="dropdown-item" href="{{ route('student.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     @if ($user->id_role == 'R-05')
                         <a class="dropdown-item" href="{{ route('superadmin.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     @if ($user->id_role == 'R-06')
                         <a class="dropdown-item" href="{{ route('staff.profil.index') }}">
                             <i class="me-50" data-feather="user"> </i>
-                            Profile
+                            Akun
                         </a>
                     @endif
                     <div class="dropdown-divider"></div>
                     @if ($user->id_role == 'R-03')
                         <a class="dropdown-item" href="{{ route('admin.pengaturan.index') }}">
                             <i class="me-50" data-feather="settings"></i>
-                            Settings</a>
+                            Pengaturan</a>
                     @endif
                     <a class="dropdown-item" href="{{ route('end') }}">
                         <i class="me-50" data-feather="power"></i>
-                        Logout</a>
+                        Keluar</a>
                 </div>
             </li>
         </ul>

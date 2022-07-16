@@ -118,41 +118,44 @@
                                     <div class="mb-1">
                                         <div class="d-flex justify-content-between">
                                             <label class="form-label" for="password">Kata Sandi</label>
-
-                                        </div>
-                                        <div class="input-group input-group-merge form-password-toggle">
-                                            <input type="password" class="form-control form-control-merge"
-                                                id="password" name="password" tabindex="2"
-                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" />
-                                            <span class="input-group-text cursor-pointer"><i
-                                                    data-feather="eye"></i></span>
+                                            <a href="{{ route ('password.request')}}" method="GET">
+                                                <small>Forgot Password?</small>
+                                            </a>
                                         </div>
                                     </div>
-                                    @error('email')
-                                        <div class="alert alert-danger mt-1" role="alert">
-                                            <div class="alert-body">
-                                                <strong>{{ $message }}</strong>
-                                            </div>
-                                        </div>
-                                    @enderror
-                                    @error('password')
-                                        <div class="alert alert-danger mt-1" role="alert">
-                                            <div class="alert-body">
-                                                <strong>{{ $message }}</strong>
-                                            </div>
-                                        </div>
-                                    @enderror
-                                    <button class="btn btn-primary w-100" tabindex="4">Masuk</button>
-                                </form>
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input type="password" class="form-control form-control-merge" id="password"
+                                            name="password" tabindex="2"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" />
+                                        <span class="input-group-text cursor-pointer"><i
+                                                data-feather="eye"></i></span>
+                                    </div>
                             </div>
+                            @error('email')
+                                <div class="alert alert-danger mt-1" role="alert">
+                                    <div class="alert-body">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                </div>
+                            @enderror
+                            @error('password')
+                                <div class="alert alert-danger mt-1" role="alert">
+                                    <div class="alert-body">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                </div>
+                            @enderror
+                            <button class="btn btn-primary w-100" tabindex="4">Masuk</button>
+                            </form>
                         </div>
-                        <!-- /Login v1 -->
                     </div>
+                    <!-- /Login v1 -->
                 </div>
-
             </div>
+
         </div>
+    </div>
     </div>
     <!-- END: Content-->
 

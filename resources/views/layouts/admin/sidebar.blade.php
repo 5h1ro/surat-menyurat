@@ -56,11 +56,11 @@
                 <li class="{{ request()->is('teacher/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('teacher') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Beranda</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
-                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <span data-i18n="Apps &amp; Pages">Aplikasi &amp; Laman</span>
                     <i data-feather="more-horizontal"></i>
                 </li>
                 @if ($user->role->incoming == 1)
@@ -92,7 +92,7 @@
                 <li class="{{ request()->is('headmaster/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('headmaster') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Halaman Utama</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
@@ -148,11 +148,11 @@
                 <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('admin') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Beranda</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
-                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <span data-i18n="Apps &amp; Pages">Aplikasi &amp; Laman</span>
                     <i data-feather="more-horizontal"></i>
                 </li>
                 @if ($user->role->incoming == 1)
@@ -204,11 +204,11 @@
                 <li class="{{ request()->is('student/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('student') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Beranda</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
-                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <span data-i18n="Apps &amp; Pages">Aplikasi &amp; Laman</span>
                     <i data-feather="more-horizontal"></i>
                 </li>
                 @if ($user->role->outgoing == 1)
@@ -231,11 +231,11 @@
                 <li class="{{ request()->is('superadmin/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('superadmin') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Beranda</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
-                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <span data-i18n="Apps &amp; Pages">Aplikasi &amp; Laman</span>
                     <i data-feather="more-horizontal"></i>
                 </li>
                 <li
@@ -244,6 +244,24 @@
                         <i data-feather="file-text"></i>
                         <span class="menu-title text-truncate" data-i18n="Surat">Role dan Permission</span>
                     </a>
+                </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                            data-feather="user"></i><span class="menu-title text-truncate"
+                            data-i18n="User">User</span></a>
+                    <ul class="menu content>">
+                        <li
+                            class="{{ request()->is('superadmin/datauser') || request()->is('superadmin/datauser/*') ? 'active' : '' }} nav-item">
+                            <a class="d-flex align-items-center" href="{{ route('superadmin.datauser.index') }}"><i
+                                    data-feather="circle"></i><span class="menu-item text-truncate"
+                                    data-i18n="List">List</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span
+                                    class="menu-item text-truncate" data-i18n="View">View</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span
+                                    class="menu-item text-truncate" data-i18n="Edit">Edit</span></a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -254,11 +272,11 @@
                 <li class="{{ request()->is('staff/dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="{{ route('staff') }}">
                         <i data-feather="home"></i>
-                        <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+                        <span class="menu-title text-truncate" data-i18n="Dashboards">Beranda</span>
                     </a>
                 </li>
                 <li class=" navigation-header">
-                    <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span>
+                    <span data-i18n="Apps &amp; Pages">Aplikasi &amp; Laman</span>
                     <i data-feather="more-horizontal"></i>
                 </li>
                 @if ($user->role->incoming == 1)

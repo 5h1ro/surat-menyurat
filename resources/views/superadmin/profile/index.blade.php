@@ -128,13 +128,14 @@
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email" value=" {{ $user->email }}">
+                        <input class="form-control" type="email" id="email" name="email"
+                            value=" {{ $user->email }}">
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="password">Password</label>
                         <div class="input-group input-group-merge form-password-toggle">
-                            <input type="password" class="form-control form-control-merge" id="password" name="password"
-                                tabindex="2"
+                            <input type="password" class="form-control form-control-merge" id="password"
+                                name="password" tabindex="2"
                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                 aria-describedby="password" />
                             <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
@@ -151,7 +152,8 @@
                         </div>
                         <label class="form-label" for="password" id="message"></label>
                     </div>
-                    <button type="submit" class="btn btn-primary data-submit me-1" id="btn_submit" disabled>Submit</button>
+                    <button type="submit" class="btn btn-primary data-submit me-1" id="btn_submit"
+                        disabled>Submit</button>
                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>

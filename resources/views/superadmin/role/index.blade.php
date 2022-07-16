@@ -50,7 +50,7 @@
                                 <th>ID</th>
                                 <th>Nama Role</th>
                                 <th>Surat Masuk</th>
-                                <th>Surar Keluar</th>
+                                <th>Surat Keluar</th>
                                 <th>Disposisi</th>
                                 <th>Action</th>
                             </tr>
@@ -116,7 +116,8 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary data-submit me-1">Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="reset" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -143,7 +144,8 @@
     <script src="{{ asset('assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 
-    <script src="{{ asset('assets/js/scripts/tables/superadmin/table-superadmin-outgoing-datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts/tables/superadmin/table-superadmin-role&permission-datatables.js') }}">
+    </script>
 
     <script>
         if (document.getElementById("incoming").checked) {

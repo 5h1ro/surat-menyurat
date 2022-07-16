@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Sudarwati, S.Pd, M.Pd',
+            'Sudarwati, S.Sos',
             'Mamik Purnawati',
         ];
 

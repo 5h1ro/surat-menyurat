@@ -76,8 +76,7 @@
                         @csrf
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="exampleModalLabel">Data Disposisi</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">

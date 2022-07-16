@@ -15,7 +15,7 @@ class StaffSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Sudarwati, S.Pd, M.Pd',
+            'Sudarwati, S.Sos',
             'SULISTYANTINAWATI, S.Pd',
             'TRI WAHYU HARTIWI, S.Pd',
             'IMRON BASUKI, S.Pd',

@@ -15,7 +15,7 @@ class SuperadminSeeder extends Seeder
     public function run()
     {
         $name = [
-            'Sudarwati, S.Pd, M.Pd',
+            'Sudarwati, S.Sos',
         ];
 
         $fk_user = [

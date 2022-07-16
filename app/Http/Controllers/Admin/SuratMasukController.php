@@ -107,6 +107,7 @@ class SuratMasukController extends Controller
     {
         $this->validate($request, [
             'letter_number' => "required",
+            'letter_number' => "required",
             'letter_date' => "required|before_or_equal:today",
             'from' => "required",
             'title' => "required",

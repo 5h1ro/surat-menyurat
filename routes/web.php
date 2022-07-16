@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProfileController as AProfileController;
 use App\Http\Controllers\Admin\SettingController as ASettingController;
 use App\Http\Controllers\Admin\SuratKeluarController as ASuratKeluarController;
 use App\Http\Controllers\Admin\SuratMasukController as ASuratMasukController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Headmaster\DashboardController as HDashboardController;
 use App\Http\Controllers\Headmaster\DispositionController as HDispositionController;
 use App\Http\Controllers\Headmaster\PerbaikanSuratController as HPerbaikanSuratController;
@@ -22,12 +23,14 @@ use App\Http\Controllers\Student\DashboardController as SDashboardController;
 use App\Http\Controllers\Student\ProfileController as SProfileController;
 use App\Http\Controllers\Student\PerbaikanSuratController as SPerbaikanSuratController;
 use App\Http\Controllers\Superadmin\DashboardController as SUDashboardController;
+use App\Http\Controllers\Superadmin\DataUserController as SUDataUserController;
 use App\Http\Controllers\Superadmin\ProfileController as SUProfileController;
 use App\Http\Controllers\Superadmin\RoleController as SURoleController;
 use App\Http\Controllers\Teacher\DashboardController as TDashboardController;
 use App\Http\Controllers\Teacher\ProfileController as TProfileController;
 use App\Http\Controllers\Teacher\SuratKeluarController as TSuratKeluarController;
 use App\Http\Controllers\Teacher\SuratMasukController as TSuratMasukController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +48,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 })->name('start');
+// Route::get('/forgot-password', function (){
+//     return view('auth.forgot-password');
+// })->middleware('guest')->name('password.request');
+
 
 Route::get('/end', function () {
     Auth::guard('web')->logout();
@@ -201,6 +208,11 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('profil')->group(function () {
             Route::get('/index', [SUProfileController::class, 'index'])->name('superadmin.profil.index');
             Route::post('/edit/{id}', [SUProfileController::class, 'edit'])->name('superadmin.profil.edit');
+        });
+        Route::prefix('datauser')->group(function () {
+            Route::get('/index', [SUDataUserController::class, 'index'])->name('superadmin.datauser.index');
+            Route::post('/create', [SUDataUserController::class, 'create'])->name('superadmin.user.create');
+            Route::post('/store', [SUDataUserController::class, 'store'])->name('superadmin.user.store');
         });
     });
 });
