@@ -113,11 +113,12 @@
 
                                 <form class="auth-forgot-password-form mt-2" action="{{ route('password.email') }}"
                                     method="POST">
+                                    @csrf
                                     <div class="mb-1">
-                                        <label for="forgot-password-email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="forgot-password-email"
-                                            name="forgot-password-email" placeholder="john@example.com"
-                                            aria-describedby="forgot-password-email" tabindex="1" autofocus />
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            placeholder="john@example.com" aria-describedby="email" tabindex="1"
+                                            autofocus />
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

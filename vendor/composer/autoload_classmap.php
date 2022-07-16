@@ -37,6 +37,7 @@ return array(
     'App\\Http\\Controllers\\Student\\PerbaikanSuratController' => $baseDir . '/app/Http/Controllers/Student/PerbaikanSuratController.php',
     'App\\Http\\Controllers\\Student\\ProfileController' => $baseDir . '/app/Http/Controllers/Student/ProfileController.php',
     'App\\Http\\Controllers\\Superadmin\\DashboardController' => $baseDir . '/app/Http/Controllers/Superadmin/DashboardController.php',
+    'App\\Http\\Controllers\\Superadmin\\DataUserController' => $baseDir . '/app/Http/Controllers/Superadmin/DataUserController.php',
     'App\\Http\\Controllers\\Superadmin\\ProfileController' => $baseDir . '/app/Http/Controllers/Superadmin/ProfileController.php',
     'App\\Http\\Controllers\\Superadmin\\RoleController' => $baseDir . '/app/Http/Controllers/Superadmin/RoleController.php',
     'App\\Http\\Controllers\\Teacher\\DashboardController' => $baseDir . '/app/Http/Controllers/Teacher/DashboardController.php',

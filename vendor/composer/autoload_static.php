@@ -599,6 +599,7 @@ class ComposerStaticInit1f34ccbeb0e45b2c85b9e125a0fd6083
         'App\\Http\\Controllers\\Student\\PerbaikanSuratController' => __DIR__ . '/../..' . '/app/Http/Controllers/Student/PerbaikanSuratController.php',
         'App\\Http\\Controllers\\Student\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Student/ProfileController.php',
         'App\\Http\\Controllers\\Superadmin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Superadmin/DashboardController.php',
+        'App\\Http\\Controllers\\Superadmin\\DataUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Superadmin/DataUserController.php',
         'App\\Http\\Controllers\\Superadmin\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Superadmin/ProfileController.php',
         'App\\Http\\Controllers\\Superadmin\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Superadmin/RoleController.php',
         'App\\Http\\Controllers\\Teacher\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/DashboardController.php',
