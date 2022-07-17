@@ -50,14 +50,21 @@ class IncomingSeeder extends Seeder
             'Undangan pembinaan calon sekolah adiwiyata kabupate, calon sekolah adiwiyata provinsi, dan calon sekolah adiwiyata nasional tahun 2022'
         ];
 
-        for ($i = 0; $i < count($title); $i++) {
+        for ($i = 0; $i < 7984; $i++) {
+            if (strlen($i) < 2) {
+                $number = '00' . $i;
+            } elseif (strlen($i) == 2) {
+                $number = '0' . $i;
+            } elseif (strlen($i) > 2) {
+                $number = $i;
+            }
             $user = Incoming::create([
-                'title'             => $title[$i],
-                'number'             => $number[$i],
-                'letter_number'             => $letter_number[$i],
-                'letter_date'             => $letter_date[$i],
-                'from'             => $from[$i],
-                'detail'             => $detail[$i],
+                'title'             => $title[0],
+                'number'             => '005/' . $number . '/405.07.3.23/2022',
+                'letter_number'             => $letter_number[0],
+                'letter_date'             => $letter_date[0],
+                'from'             => $from[0],
+                'detail'             => $detail[0],
                 'letter'            => $letter[0],
                 'fk_type'           => $fk_type[0],
                 'fk_admin'          => $fk_admin[0],

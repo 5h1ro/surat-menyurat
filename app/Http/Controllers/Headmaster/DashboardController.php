@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $count = count($outgoing = Outgoing::where('status', '>=', 2)->get());
         $incoming->count = count($incoming);
         $outgoing->count = count($outgoing->where('status', 2));
-        $count_incoming = count(Incoming::where([['fk_headmaster', '=', $user->headmaster->nip], ['status', '=', 1]])->get());
+        $count_incoming = count(Incoming::where([['fk_headmaster', '=', $user->headmaster->nip], ['status', '=', 0]])->get());
         $count_outgoing = count(Outgoing::where('status', '>=', 2)->get());
         $count_disposition = count(Disposition::all());
         $count_fixing = count(Fixing::where('status', '>=', 2)->get());

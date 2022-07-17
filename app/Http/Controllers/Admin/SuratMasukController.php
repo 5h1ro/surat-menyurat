@@ -35,18 +35,6 @@ class SuratMasukController extends Controller
         $headmaster = Headmaster::all();
         $teacher = Teacher::all();
         $incoming = Incoming::all();
-        foreach ($incoming as $value) {
-            $tanggal = substr($value->created_at, 8, 2);
-            $bulan = $this->month(substr($value->created_at, 5, 2));
-            $tahun = substr($value->created_at, 0, 4);
-            $tanggal_surat = substr($value->letter_date, 8, 2);
-            $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
-            $tahun_surat = substr($value->letter_date, 0, 4);
-            $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
-            $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
-            $value->type;
-            $value->responsive_id = "";
-        }
         $outgoing = Outgoing::all();
         $count = count($outgoing->where('status', 0));
         return view('admin.surat_masuk.index', compact('user', 'data', 'read', 'role', 'type', 'headmaster', 'teacher', 'delete', 'incoming', 'count'));
@@ -55,36 +43,11 @@ class SuratMasukController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = Incoming::all();
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $tanggal = substr($value->created_at, 8, 2);
-                $bulan = $this->month(substr($value->created_at, 5, 2));
-                $tahun = substr($value->created_at, 0, 4);
-                $tanggal_surat = substr($value->letter_date, 8, 2);
-                $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
-                $tahun_surat = substr($value->letter_date, 0, 4);
-                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
-                $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
-                $value->type;
-                $value->responsive_id = "";
-            }
+            $data = Incoming::limit(10);
             return DataTables::of($data)
                 ->make(true);
         } else {
-            $data = Incoming::all();
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $tanggal = substr($value->created_at, 8, 2);
-                $bulan = $this->month(substr($value->created_at, 5, 2));
-                $tahun = substr($value->created_at, 0, 4);
-                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
-                $value->headmaster;
-                $value->type;
-                $value->responsive_id = "";
-            }
+            $data = Incoming::limit(10);
             return DataTables::of($data)
                 ->make(true);
         }
@@ -94,45 +57,17 @@ class SuratMasukController extends Controller
     {
         if ($request->ajax()) {
             if ($detail == "null") {
-                $data = Incoming::all();
+                $data = Incoming::limit(10);
             } else {
-                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->get();
-            }
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $tanggal = substr($value->created_at, 8, 2);
-                $bulan = $this->month(substr($value->created_at, 5, 2));
-                $tahun = substr($value->created_at, 0, 4);
-                $tanggal_surat = substr($value->letter_date, 8, 2);
-                $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
-                $tahun_surat = substr($value->letter_date, 0, 4);
-                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
-                $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
-                $value->type;
-                $value->responsive_id = "";
+                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
             }
             return DataTables::of($data)
                 ->make(true);
         } else {
             if ($detail == "null") {
-                $data = Incoming::all();
+                $data = Incoming::limit(10);
             } else {
-                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->get();
-            }
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $tanggal = substr($value->created_at, 8, 2);
-                $bulan = $this->month(substr($value->created_at, 5, 2));
-                $tahun = substr($value->created_at, 0, 4);
-                $tanggal_surat = substr($value->letter_date, 8, 2);
-                $bulan_surat = $this->month(substr($value->letter_date, 5, 2));
-                $tahun_surat = substr($value->letter_date, 0, 4);
-                $value->date = $tanggal . ' ' . $bulan . ' ' . $tahun;
-                $value->letter_date = $tanggal_surat . ' ' . $bulan_surat . ' ' . $tahun_surat;
-                $value->type;
-                $value->responsive_id = "";
+                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
             }
             return DataTables::of($data)
                 ->make(true);
@@ -178,7 +113,7 @@ class SuratMasukController extends Controller
             'letter.required' => 'Scan surat tidak boleh kosong',
             'letter.mimes' => 'File harus berformat pdf',
         ]);
-        $last_incoming = Incoming::latest()->first();
+        $last_incoming = Incoming::orderBy('number', 'DESC')->first();
         $letter_date = Carbon::createFromFormat('Y-m-d', $request->letter_date)->isoFormat('DD MMMM Y');
         $date = Carbon::now()->isoformat('DD MMMM Y');
         $number = substr($last_incoming->number, 4, 3);

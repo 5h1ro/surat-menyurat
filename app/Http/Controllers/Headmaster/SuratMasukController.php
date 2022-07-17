@@ -24,11 +24,6 @@ class SuratMasukController extends Controller
         $read = url('headmaster/surat-masuk/read');
         $teacher = Teacher::all();
         $incomings = $user->headmaster->incoming;
-        foreach ($incomings as $value) {
-            $date = substr($value->created_at, 0, 10);
-            $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-            $value->letter_date = Carbon::createFromFormat('Y-m-d', $value->letter_date)->isoFormat('DD MMMM Y');
-        }
         $outgoing = Outgoing::where('status', '>=', 2)->get();
         $outgoing->count = count($outgoing->where('status', 2));
         return view('headmaster.surat_masuk.index', compact('user', 'data', 'read', 'incoming', 'teacher', 'incomings', 'outgoing'));
@@ -37,31 +32,11 @@ class SuratMasukController extends Controller
     public function getData($id, Request $request)
     {
         if ($request->ajax()) {
-            $data = Incoming::where('fk_headmaster', $id)->get();
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $date = substr($value->created_at, 0, 10);
-                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $value->headmaster;
-                $value->admin;
-                $value->type;
-                $value->responsive_id = "";
-            }
+            $data = Incoming::limit(10);
             return DataTables::of($data)
                 ->make(true);
         } else {
-            $data = Incoming::where('fk_headmaster', $id)->get();
-            foreach ($data as $value) {
-                $value->number_encrypt = Crypt::encrypt($value->number);
-                $value->number_md5 = md5($value->number);
-                $date = substr($value->created_at, 0, 10);
-                $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-                $value->headmaster;
-                $value->admin;
-                $value->type;
-                $value->responsive_id = "";
-            }
+            $data = Incoming::limit(10);
             return DataTables::of($data)
                 ->make(true);
         }

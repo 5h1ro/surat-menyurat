@@ -16,7 +16,7 @@ class DispositionSeeder extends Seeder
     {
         $user = Disposition::create([
             'id'                    => 'DP-00001',
-            'fk_incoming'           => '005/034/405.07.3.23/2022',
+            'fk_incoming'           => '005/001/405.07.3.23/2022',
             'letter'                => asset('assets/test.pdf'),
         ]);
         $user->save();
