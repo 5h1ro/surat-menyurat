@@ -50,7 +50,7 @@ class IncomingSeeder extends Seeder
             'Undangan pembinaan calon sekolah adiwiyata kabupate, calon sekolah adiwiyata provinsi, dan calon sekolah adiwiyata nasional tahun 2022'
         ];
 
-        for ($i = 0; $i < 2000; $i++) {
+        for ($i = 0; $i < 523; $i++) {
             if (strlen($i) < 2) {
                 $number = '00' . $i;
             } elseif (strlen($i) == 2) {
