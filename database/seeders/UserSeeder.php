@@ -84,7 +84,7 @@ class UserSeeder extends Seeder
             'R-03',
             'R-03',
             'R-04',
-            'R-05',
+            'R-04',
             'R-05',
             'R-06',
             'R-06',
