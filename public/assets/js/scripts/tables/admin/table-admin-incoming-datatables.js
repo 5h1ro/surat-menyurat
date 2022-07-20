@@ -10,6 +10,7 @@ $(document).ready(function () {
     if (dt_basic_table.length) {
         $('.datatables-basic').DataTable({
             paging: true,
+            searching: false,
             processing: true,
             serverSide: true,
             ajax: assetPath,
