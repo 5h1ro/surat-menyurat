@@ -55,33 +55,151 @@
 @section('content')
     <!-- Basic table -->
     <section id="basic-datatable">
-        <input type="hidden" id="link" value="{{ $data }}" />
+        {{-- <input type="hidden" id="link" value="{{ $data }}" /> --}}
         <input type="hidden" id="read" value="{{ $read }}" />
         <input type="hidden" id="delete" value="{{ $delete }}" />
         <div class=" row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header border-bottom p-1">
+                        <div class="head-label">
+                            <h6 class="mb-0">Data Surat Masuk</h6>
+                        </div>
+                        <div class="dt-action-buttons text-end">
+                            <div class="dt-buttons d-inline-flex"><button
+                                    class="dt-button buttons-collection btn btn-outline-secondary dropdown-toggle me-2"
+                                    tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                                    aria-haspopup="true"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-share font-small-4 me-50">
+                                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                            <polyline points="16 6 12 2 8 6"></polyline>
+                                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                                        </svg>Export</span></button> </div>
+                        </div>
+                    </div>
                     <table class="datatables-basic table">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>ID</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Nama dan Alamat</th>
                                 <th>Surat</th>
-                                <th>Link Surat</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                                <tr class="odd">
+                                    <td>{{ $item->letter_date }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td><a href="{{ $read . '/' . $item->number_encrypt }}"
+                                            class="btn btn-primary waves-effect waves-float waves-light" target="_blank">
+                                            <i data-feather="mail" class="font-small-4"></i>
+                                        </a>
+                                    </td>
+                                    <td><span
+                                            class="badge rounded-pill {{ $item->status == 0 ? 'badge-light-warning' : 'badge-light-success' }}">{{ $item->status == 0 ? 'Belum dibaca' : 'Sudah dibaca' }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex">
+                                            <a class="pe-1 dropdown-toggle hide-arrow text-primary"
+                                                data-bs-toggle="dropdown">
+                                                <i data-feather="more-vertical" class="font-small-4"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item delete-record"
+                                                    onclick="remove('{{ $item->number_encrypt }}')">
+                                                    <i data-feather="trash-2" class="font-small-4 me-50"></i>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a href="" class="item-edit" data-bs-toggle="modal"
+                                            data-bs-target="#detail{{ $item->number_md5 }}">
+                                            <i data-feather="info" class="font-small-4"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
+                    <div class="d-flex justify-content-between mx-1 mt-1 row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }}
+                                entries
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 d-lg-flex justify-content-end">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous {{ $data->previousPageUrl() == null ? 'disabled' : '' }}"
+                                        id="DataTables_Table_0_previous"><a href="{{ $data->previousPageUrl() }}"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
+                                            class="page-link">&nbsp;</a></li>
+                                    {{-- <li class="paginate_button page-item active"><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+                                            class="page-link">{{ $data->currentPage() }}</a></li>
+                                    <li class="paginate_button page-item "><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+                                            class="page-link">2</a></li>
+                                    <li class="paginate_button page-item "><a href="#"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0"
+                                            class="page-link">75</a></li> --}}
+
+                                    @if ($data->currentPage() > 3)
+                                        <li class="paginate_button page-item">
+                                            <a href="{{ $data->url(1) }}" aria-controls="DataTables_Table_0"
+                                                data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                        </li>
+                                    @endif
+                                    @if ($data->currentPage() > 4)
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_0_ellipsis"><a
+                                                href="#" aria-controls="DataTables_Table_0" data-dt-idx="6"
+                                                tabindex="0" class="page-link">…</a></li>
+                                    @endif
+                                    @foreach (range(1, $data->lastPage()) as $i)
+                                        @if ($i >= $data->currentPage() - 1 && $i <= $data->currentPage() + 1)
+                                            @if ($i == $data->currentPage())
+                                                <li class="paginate_button page-item active"><a href="#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+                                                        class="page-link">{{ $data->currentPage() }}</a></li>
+                                            @else
+                                                <li class="paginate_button page-item "><a href="{{ $data->url($i) }}"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+                                                        class="page-link">{{ $i }}</a></li>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                    @if ($data->currentPage() < $data->lastPage() - 3)
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_0_ellipsis"><a
+                                                href="#" aria-controls="DataTables_Table_0" data-dt-idx="6"
+                                                tabindex="0" class="page-link">…</a></li>
+                                    @endif
+                                    @if ($data->currentPage() < $data->lastPage() - 2)
+                                        <li class="paginate_button page-item">
+                                            <a href="{{ $data->url($data->lastPage()) }}"
+                                                aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+                                                class="page-link">{{ $data->lastPage() }}</a>
+                                        </li>
+                                    @endif
+                                    <li class="paginate_button page-item next  {{ $data->nextPageUrl() == null ? 'disabled' : '' }}"
+                                        id="DataTables_Table_0_next"><a href="{{ $data->nextPageUrl() }}"
+                                            aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+                                            class="page-link">&nbsp;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Modal to add new record -->
-        <div class="modal fade text-start" id="modals-slide-in" tabindex="-1" aria-labelledby="myModalLabel33"
-            aria-hidden="true">
+        <div class="modal
+                                            fade text-start" id="modals-slide-in"
+            tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
             <div class="modal-dialog sidebar-sm">
                 <form class="add-new-record modal-content pt-0" method="POST"
                     action="{{ route('admin.suratmasuk.create') }}" enctype="multipart/form-data">
@@ -93,12 +211,14 @@
                     </div>
                     <div class="modal-body flex-grow-1">
                         <div class="mb-1">
-                            <label class="form-label" for="letter_number">Nomor Surat</label>
+                            <label class="form-label" for="letter_number">Nomor
+                                Surat</label>
                             <input required type="text" id="letter_number" name="letter_number" class="form-control"
                                 placeholder="xxx/xxx/xx.xxx/xxxx" />
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="letter_date">Tanggal Surat</label>
+                            <label class="form-label" for="letter_date">Tanggal
+                                Surat</label>
                             <input required type="text" id="letter_date" name="letter_date"
                                 class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
                         </div>
@@ -113,27 +233,32 @@
                                 placeholder="Surat ..." />
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="detail">Isi Pokok Surat</label>
+                            <label class="form-label" for="detail">Isi Pokok
+                                Surat</label>
                             <textarea required class="form-control" id="detail" name="detail" rows="3" placeholder="Textarea"></textarea>
                         </div>
                         <div class="mb-1">
                             <label class="form-label" for="fk_type">Tipe</label>
                             <select required class="form-select" id="fk_type" name="fk_type">
                                 @foreach ($type as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-1" id="headmaster">
-                            <label class="form-label" for="fk_headmaster">Nama Kepala Sekolah</label>
+                            <label class="form-label" for="fk_headmaster">Nama Kepala
+                                Sekolah</label>
                             <select class="form-select" id="fk_headmaster" name="fk_headmaster">
                                 @foreach ($headmaster as $item)
-                                    <option value="{{ $item->nip }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->nip }}">
+                                        {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-1">
-                            <label class="form-label" for="information">Jenis Surat</label>
+                            <label class="form-label" for="information">Jenis
+                                Surat</label>
                             <select class="form-select" id="information" name="information">
                                 <option value="1">Rahasia</option>
                                 <option value="2">Penting</option>
@@ -225,7 +350,7 @@
     <script src="{{ asset('assets') }}/js/scripts/forms/pickers/form-pickers.js"></script>
 
     <script src="{{ asset('assets') }}/vendors/js/extensions/sweetalert2.all.min.js"></script>
-    <script src="{{ asset('assets/js/scripts/tables/admin/table-admin-incoming-datatables.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/scripts/tables/admin/table-admin-incoming-datatables.js') }}"></script> --}}
 
     <script src="{{ asset('assets') }}/vendors/js/extensions/toastr.min.js"></script>
     @if ($errors->any())
@@ -272,282 +397,283 @@
             if (!value) {
                 value = 'null';
             }
-            $('.datatables-basic').DataTable().destroy();
-            $('.datatables-basic').DataTable({
-                paging: true,
-                processing: true,
-                serverSide: true,
-                ajax: "{{ url('api/admin/surat-masuk/index/search=') }}" + value,
-                columns: [{
-                        data: 'responsive_id',
-                        name: 'responsive_id'
-                    },
-                    {
-                        data: 'number'
-                    },
-                    {
-                        data: 'number'
-                    },
-                    {
-                        data: 'date'
-                    },
-                    {
-                        data: 'title'
-                    },
-                    {
-                        data: 'number_encrypt'
-                    },
-                    {
-                        data: 'letter'
-                    },
-                    {
-                        data: 'status'
-                    },
-                    {
-                        data: 'number_md5'
-                    },
-                ],
-                columnDefs: [{
-                        // For Responsive
-                        className: 'control',
-                        orderable: false,
-                        responsivePriority: 2,
-                        targets: 0
-                    },
-                    {
-                        // For Checkboxes
-                        targets: 1,
-                        orderable: false,
-                        responsivePriority: 3,
-                        render: function(data, type, full, meta) {
-                            return (
-                                '<div class="form-check"> <input class="form-check-input dt-checkboxes" type="checkbox" value="" id="checkbox' +
-                                data +
-                                '" /><label class="form-check-label" for="checkbox' +
-                                data +
-                                '"></label></div>'
-                            );
-                        },
-                        checkboxes: {
-                            selectAllRender: '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
-                        }
-                    },
-                    {
-                        targets: 2,
-                        visible: false
-                    },
-                    {
-                        targets: 5,
-                        render: function(data) {
-                            return (
-                                '<a href="' +
-                                read +
-                                '/' +
-                                data +
-                                '" class="btn btn-primary waves-effect waves-float waves-light" target="_blank">' +
-                                feather.icons['mail'].toSvg({
-                                    class: 'font-small-4'
-                                }) +
-                                '</a>'
-                            )
-                        }
-                    },
-                    {
-                        targets: 6,
-                        visible: false
-                    },
-                    {
-                        // Label
-                        targets: -2,
-                        render: function(data, type, full, meta) {
-                            var $status_number = full['status'];
-                            var $status = {
-                                0: {
-                                    title: 'Belum Dibaca',
-                                    class: 'badge-light-warning'
-                                },
-                                1: {
-                                    title: 'Sudah Dibaca',
-                                    class: 'badge-light-success'
-                                },
-                            };
-                            if (typeof $status[$status_number] === 'undefined') {
-                                return data;
-                            }
-                            return (
-                                '<span class="badge rounded-pill ' +
-                                $status[$status_number].class +
-                                '">' +
-                                $status[$status_number].title +
-                                '</span>'
-                            );
-                        }
-                    },
-                    {
-                        // Actions
-                        targets: -1,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function(data, type, full, meta) {
-                            return (
-                                '<div class="d-inline-flex">' +
-                                '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
-                                feather.icons['more-vertical'].toSvg({
-                                    class: 'font-small-4'
-                                }) +
-                                '</a>' +
-                                '<div class="dropdown-menu dropdown-menu-end">' +
-                                '<a class="dropdown-item delete-record" onclick="remove(' +
-                                '/' +
-                                full['number_encrypt'] +
-                                '/)">' +
-                                feather.icons['trash-2'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) +
-                                'Delete</a>' +
-                                '</div>' +
-                                '</div>' +
-                                '<a href="" class="item-edit" data-bs-toggle="modal" data-bs-target="#detail' +
-                                data +
-                                '">' +
-                                feather.icons['info'].toSvg({
-                                    class: 'font-small-4'
-                                }) +
-                                '</a>'
-                            );
-                        }
-                    }
-                ],
-                order: [
-                    [2, 'desc']
-                ],
-                dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                displayLength: 7,
-                lengthMenu: [7, 10, 25, 50, 75, 100],
-                buttons: [{
-                        extend: 'collection',
-                        className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                        text: feather.icons['share'].toSvg({
-                            class: 'font-small-4 me-50'
-                        }) + 'Export',
-                        buttons: [{
-                                extend: 'print',
-                                text: feather.icons['printer'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) + 'Print',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [3, 4, 5, 7]
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                text: feather.icons['file-text'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) + 'Csv',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [3, 4, 5, 7]
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                text: feather.icons['file'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) + 'Excel',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [3, 4, 5, 7]
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                text: feather.icons['clipboard'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) + 'Pdf',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [3, 4, 5, 7]
-                                }
-                            },
-                            {
-                                extend: 'copy',
-                                text: feather.icons['copy'].toSvg({
-                                    class: 'font-small-4 me-50'
-                                }) + 'Copy',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [3, 4, 5, 7]
-                                }
-                            }
-                        ],
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary');
-                            $(node).parent().removeClass('btn-group');
-                            setTimeout(function() {
-                                $(node).closest('.dt-buttons').removeClass('btn-group').addClass(
-                                    'd-inline-flex');
-                            }, 50);
-                        }
-                    },
-                    {
-                        text: feather.icons['plus'].toSvg({
-                            class: 'me-50 font-small-4'
-                        }) + 'Tambah Data',
-                        className: 'create-new btn btn-primary',
-                        attr: {
-                            'data-bs-toggle': 'modal',
-                            'data-bs-target': '#modals-slide-in'
-                        },
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary');
-                        }
-                    }
-                ],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function(row) {
-                                var data = row.data();
-                                return 'Details of ' + data['full_name'];
-                            }
-                        }),
-                        type: 'column',
-                        renderer: function(api, rowIdx, columns) {
-                            var data = $.map(columns, function(col, i) {
-                                return col.title !==
-                                    '' // ? Do not show row in modal popup if title is blank (for check box)
-                                    ?
-                                    '<tr data-dt-row="' +
-                                    col.rowIdx +
-                                    '" data-dt-column="' +
-                                    col.columnIndex +
-                                    '">' +
-                                    '<td>' +
-                                    col.title +
-                                    ':' +
-                                    '</td> ' +
-                                    '<td>' +
-                                    col.data +
-                                    '</td>' +
-                                    '</tr>' :
-                                    '';
-                            }).join('');
+            location.href = "{{ url('admin/surat-masuk/search=') }}" + value;
+            // $('.datatables-basic').destroy();
+            // $('.datatables-basic').DataTable({
+            //     paging: true,
+            //     processing: true,
+            //     serverSide: true,
+            //     ajax: "{{ url('api/admin/surat-masuk/index/search=') }}" + value,
+            //     columns: [{
+            //             data: 'responsive_id',
+            //             name: 'responsive_id'
+            //         },
+            //         {
+            //             data: 'number'
+            //         },
+            //         {
+            //             data: 'number'
+            //         },
+            //         {
+            //             data: 'date'
+            //         },
+            //         {
+            //             data: 'title'
+            //         },
+            //         {
+            //             data: 'number_encrypt'
+            //         },
+            //         {
+            //             data: 'letter'
+            //         },
+            //         {
+            //             data: 'status'
+            //         },
+            //         {
+            //             data: 'number_md5'
+            //         },
+            //     ],
+            //     columnDefs: [{
+            //             // For Responsive
+            //             className: 'control',
+            //             orderable: false,
+            //             responsivePriority: 2,
+            //             targets: 0
+            //         },
+            //         {
+            //             // For Checkboxes
+            //             targets: 1,
+            //             orderable: false,
+            //             responsivePriority: 3,
+            //             render: function(data, type, full, meta) {
+            //                 return (
+            //                     '<div class="form-check"> <input class="form-check-input dt-checkboxes" type="checkbox" value="" id="checkbox' +
+            //                     data +
+            //                     '" /><label class="form-check-label" for="checkbox' +
+            //                     data +
+            //                     '"></label></div>'
+            //                 );
+            //             },
+            //             checkboxes: {
+            //                 selectAllRender: '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
+            //             }
+            //         },
+            //         {
+            //             targets: 2,
+            //             visible: false
+            //         },
+            //         {
+            //             targets: 5,
+            //             render: function(data) {
+            //                 return (
+            //                     '<a href="' +
+            //                     read +
+            //                     '/' +
+            //                     data +
+            //                     '" class="btn btn-primary waves-effect waves-float waves-light" target="_blank">' +
+            //                     feather.icons['mail'].toSvg({
+            //                         class: 'font-small-4'
+            //                     }) +
+            //                     '</a>'
+            //                 )
+            //             }
+            //         },
+            //         {
+            //             targets: 6,
+            //             visible: false
+            //         },
+            //         {
+            //             // Label
+            //             targets: -2,
+            //             render: function(data, type, full, meta) {
+            //                 var $status_number = full['status'];
+            //                 var $status = {
+            //                     0: {
+            //                         title: 'Belum Dibaca',
+            //                         class: 'badge-light-warning'
+            //                     },
+            //                     1: {
+            //                         title: 'Sudah Dibaca',
+            //                         class: 'badge-light-success'
+            //                     },
+            //                 };
+            //                 if (typeof $status[$status_number] === 'undefined') {
+            //                     return data;
+            //                 }
+            //                 return (
+            //                     '<span class="badge rounded-pill ' +
+            //                     $status[$status_number].class +
+            //                     '">' +
+            //                     $status[$status_number].title +
+            //                     '</span>'
+            //                 );
+            //             }
+            //         },
+            //         {
+            //             // Actions
+            //             targets: -1,
+            //             title: 'Actions',
+            //             orderable: false,
+            //             render: function(data, type, full, meta) {
+            //                 return (
+            //                     '<div class="d-inline-flex">' +
+            //                     '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+            //                     feather.icons['more-vertical'].toSvg({
+            //                         class: 'font-small-4'
+            //                     }) +
+            //                     '</a>' +
+            //                     '<div class="dropdown-menu dropdown-menu-end">' +
+            //                     '<a class="dropdown-item delete-record" onclick="remove(' +
+            //                     '/' +
+            //                     full['number_encrypt'] +
+            //                     '/)">' +
+            //                     feather.icons['trash-2'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) +
+            //                     'Delete</a>' +
+            //                     '</div>' +
+            //                     '</div>' +
+            //                     '<a href="" class="item-edit" data-bs-toggle="modal" data-bs-target="#detail' +
+            //                     data +
+            //                     '">' +
+            //                     feather.icons['info'].toSvg({
+            //                         class: 'font-small-4'
+            //                     }) +
+            //                     '</a>'
+            //                 );
+            //             }
+            //         }
+            //     ],
+            //     order: [
+            //         [2, 'desc']
+            //     ],
+            //     dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            //     displayLength: 7,
+            //     lengthMenu: [7, 10, 25, 50, 75, 100],
+            //     buttons: [{
+            //             extend: 'collection',
+            //             className: 'btn btn-outline-secondary dropdown-toggle me-2',
+            //             text: feather.icons['share'].toSvg({
+            //                 class: 'font-small-4 me-50'
+            //             }) + 'Export',
+            //             buttons: [{
+            //                     extend: 'print',
+            //                     text: feather.icons['printer'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) + 'Print',
+            //                     className: 'dropdown-item',
+            //                     exportOptions: {
+            //                         columns: [3, 4, 5, 7]
+            //                     }
+            //                 },
+            //                 {
+            //                     extend: 'csv',
+            //                     text: feather.icons['file-text'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) + 'Csv',
+            //                     className: 'dropdown-item',
+            //                     exportOptions: {
+            //                         columns: [3, 4, 5, 7]
+            //                     }
+            //                 },
+            //                 {
+            //                     extend: 'excel',
+            //                     text: feather.icons['file'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) + 'Excel',
+            //                     className: 'dropdown-item',
+            //                     exportOptions: {
+            //                         columns: [3, 4, 5, 7]
+            //                     }
+            //                 },
+            //                 {
+            //                     extend: 'pdf',
+            //                     text: feather.icons['clipboard'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) + 'Pdf',
+            //                     className: 'dropdown-item',
+            //                     exportOptions: {
+            //                         columns: [3, 4, 5, 7]
+            //                     }
+            //                 },
+            //                 {
+            //                     extend: 'copy',
+            //                     text: feather.icons['copy'].toSvg({
+            //                         class: 'font-small-4 me-50'
+            //                     }) + 'Copy',
+            //                     className: 'dropdown-item',
+            //                     exportOptions: {
+            //                         columns: [3, 4, 5, 7]
+            //                     }
+            //                 }
+            //             ],
+            //             init: function(api, node, config) {
+            //                 $(node).removeClass('btn-secondary');
+            //                 $(node).parent().removeClass('btn-group');
+            //                 setTimeout(function() {
+            //                     $(node).closest('.dt-buttons').removeClass('btn-group').addClass(
+            //                         'd-inline-flex');
+            //                 }, 50);
+            //             }
+            //         },
+            //         {
+            //             text: feather.icons['plus'].toSvg({
+            //                 class: 'me-50 font-small-4'
+            //             }) + 'Tambah Data',
+            //             className: 'create-new btn btn-primary',
+            //             attr: {
+            //                 'data-bs-toggle': 'modal',
+            //                 'data-bs-target': '#modals-slide-in'
+            //             },
+            //             init: function(api, node, config) {
+            //                 $(node).removeClass('btn-secondary');
+            //             }
+            //         }
+            //     ],
+            //     responsive: {
+            //         details: {
+            //             display: $.fn.dataTable.Responsive.display.modal({
+            //                 header: function(row) {
+            //                     var data = row.data();
+            //                     return 'Details of ' + data['full_name'];
+            //                 }
+            //             }),
+            //             type: 'column',
+            //             renderer: function(api, rowIdx, columns) {
+            //                 var data = $.map(columns, function(col, i) {
+            //                     return col.title !==
+            //                         '' // ? Do not show row in modal popup if title is blank (for check box)
+            //                         ?
+            //                         '<tr data-dt-row="' +
+            //                         col.rowIdx +
+            //                         '" data-dt-column="' +
+            //                         col.columnIndex +
+            //                         '">' +
+            //                         '<td>' +
+            //                         col.title +
+            //                         ':' +
+            //                         '</td> ' +
+            //                         '<td>' +
+            //                         col.data +
+            //                         '</td>' +
+            //                         '</tr>' :
+            //                         '';
+            //                 }).join('');
 
-                            return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') :
-                                false;
-                        }
-                    }
-                },
-                language: {
-                    paginate: {
-                        // remove previous & next text from pagination
-                        previous: '&nbsp;',
-                        next: '&nbsp;'
-                    }
-                }
-            });
-            $('div.head-label').html('<h6 class="mb-0">Data Surat Masuk</h6>');
+            //                 return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') :
+            //                     false;
+            //             }
+            //         }
+            //     },
+            //     language: {
+            //         paginate: {
+            //             // remove previous & next text from pagination
+            //             previous: '&nbsp;',
+            //             next: '&nbsp;'
+            //         }
+            //     }
+            // });
+            // $('div.head-label').html('<h6 class="mb-0">Data Surat Masuk</h6>');
         }
     </script>
 @endsection

@@ -27,7 +27,7 @@ class SuratMasukController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = url('api/admin/surat-masuk/index/get');
+        // $data = url('api/admin/surat-masuk/index/get');
         $read = url('admin/surat-masuk/read');
         $delete = url('admin/surat-masuk/delete');
         $role = Role::where([['id', '<=', 2]])->get();
@@ -36,6 +36,7 @@ class SuratMasukController extends Controller
         $teacher = Teacher::all();
         $incoming = Incoming::all();
         $outgoing = Outgoing::all();
+        $data = Incoming::paginate(10);
         $count = count($outgoing->where('status', 0));
         return view('admin.surat_masuk.index', compact('user', 'data', 'read', 'role', 'type', 'headmaster', 'teacher', 'delete', 'incoming', 'count'));
     }
@@ -53,25 +54,45 @@ class SuratMasukController extends Controller
         }
     }
 
-    public function getSearch($detail, Request $request)
+    public function search($detail, Request $request)
     {
-        if ($request->ajax()) {
-            if ($detail == "null") {
-                $data = Incoming::limit(10);
-            } else {
-                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
-            }
-            return DataTables::of($data)
-                ->make(true);
+        // if ($request->ajax()) {
+        //     if ($detail == "null") {
+        //         $data = Incoming::limit(10);
+        //     } else {
+        //         $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
+        //     }
+        //     return DataTables::of($data)
+        //         ->make(true);
+        // } else {
+        //     if ($detail == "null") {
+        //         $data = Incoming::limit(10);
+        //     } else {
+        //         $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
+        //     }
+        //     return DataTables::of($data)
+        //         ->make(true);
+        // }
+
+
+        $user = Auth::user();
+        // $data = url('api/admin/surat-masuk/index/get');
+        $read = url('admin/surat-masuk/read');
+        $delete = url('admin/surat-masuk/delete');
+        $role = Role::where([['id', '<=', 2]])->get();
+        $type = IncomingType::all();
+        $headmaster = Headmaster::all();
+        $teacher = Teacher::all();
+        $incoming = Incoming::all();
+        $outgoing = Outgoing::all();
+
+        if ($detail == "null") {
+            $data = Incoming::paginate(10);
         } else {
-            if ($detail == "null") {
-                $data = Incoming::limit(10);
-            } else {
-                $data = Incoming::where('detail', 'like', '%' . $detail . '%')->limit(10);
-            }
-            return DataTables::of($data)
-                ->make(true);
+            $data = Incoming::where('detail', 'like', '%' . $detail . '%')->paginate(10);
         }
+        $count = count($outgoing->where('status', 0));
+        return view('admin.surat_masuk.index', compact('user', 'data', 'read', 'role', 'type', 'headmaster', 'teacher', 'delete', 'incoming', 'count'));
     }
 
     public function read($id)

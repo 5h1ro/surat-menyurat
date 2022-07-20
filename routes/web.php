@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/index', [ASuratMasukController::class, 'index'])->name('admin.suratmasuk.index');
                 Route::get('/read/{id}', [ASuratMasukController::class, 'read'])->name('admin.suratmasuk.read');
                 Route::post('/create', [ASuratMasukController::class, 'create'])->name('admin.suratmasuk.create');
+                Route::get('/search={value}', [ASuratMasukController::class, 'search'])->name('admin.suratmasuk.search');
                 Route::get('/delete/{id}', [ASuratMasukController::class, 'delete'])->name('admin.suratmasuk.delete');
             });
 
