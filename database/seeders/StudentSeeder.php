@@ -16,45 +16,57 @@ class StudentSeeder extends Seeder
     {
         $name = [
             'Syadhach Amaliya',
+            'Tiara'
         ];
 
         $fk_user = [
             'student@student.com',
+            'yudrax89@gmail.com'
         ];
 
         $birthplace = [
             'Ponorogo',
+            'malang'
         ];
 
         $birthday = [
             '2005-10-08',
+            '2003-8-07',
         ];
 
         $ni = [
             '7421',
+            '7689'
         ];
 
         $class = [
             'IX',
+            'VII'
         ];
 
         $nisn = [
             '0058947401',
+            '0890987645'
         ];
         $gender = [
+            'Perempuan',
             'Perempuan',
         ];
         $religion = [
             'Hindu',
+            'Islam'
         ];
         $parent = [
             'Takanome Akani',
+            'Paijo'
         ];
         $parent_job = [
             'Fisikawan',
+            'Pengusaha'
         ];
         $address = [
             'Jl.Sumbawa RT.007/RW.002 Ds.Slahung,Kec.Slahung',
+            'Balong'
         ];
 
 

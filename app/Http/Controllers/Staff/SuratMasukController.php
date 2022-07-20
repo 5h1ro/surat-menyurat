@@ -31,7 +31,7 @@ class SuratMasukController extends Controller
         foreach ($incomings as $value) {
             $date = substr($value->incoming->created_at, 0, 10);
             $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
-            $value->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $value->incoming->letter_date)->isoFormat('DD MMMM Y');
+            
         }
         $data = url('api/staff/surat-masuk/index/get', $user->staff->nip);
         $read = url('staff/surat-masuk/read');

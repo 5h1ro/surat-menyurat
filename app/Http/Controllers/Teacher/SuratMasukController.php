@@ -31,7 +31,6 @@ class SuratMasukController extends Controller
         $incomings = $user->teacher->disposition;
         foreach ($incomings as $value) {
             $date = substr($value->incoming->created_at, 0, 10);
-            $value->date = Carbon::createFromFormat('Y-m-d', $date)->isoFormat('DD MMMM Y');
             $value->incoming->letter_date = Carbon::createFromFormat('Y-m-d', $value->incoming->letter_date)->isoFormat('DD MMMM Y');
         }
         $data = url('api/teacher/surat-masuk/index/get', $user->teacher->nip);
